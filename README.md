@@ -53,7 +53,7 @@
 
 <!-- ABOUT THE PROJECT -->
 
-![image]()
+![image](demo.jpg)
 
 
 ## Inspiration
@@ -79,37 +79,13 @@
 
 <!-- PREREQUISITES -->
 ## Prerequisites
-* Install Desktop development with c++ workload on Visual studio
-* Git CLI
-
-## Installation
-* `git clone https://github.com/hussaino03/Devspace`
-* In project directory run `npm install`
-* Run `npm start`
-
-## Available Scripts
-
-In the project directory, you can run:
-
-`npm install`
-
-This will install all the required modules
-
-`npm start`
-
-This will start the server
-
-Runs the app in the development mode.
-
-Open [http://localhost:1234](http://localhost:1234) to view it in your browser.
+* Install JavaFX components 
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [✅] Integrate camera/mic option
-- [✅] Integrate a whiteboard
-- [✅] Integrate emojis
-- [✅] Integrate disable/enable option for both the video and microphone 
+- [✅] [insert task]
+- [✅] [insert task]
 
 <!-- LICENSE -->
 ## License
@@ -123,10 +99,10 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/hussaino03/Devspace?color=%23&style=for-the-badge
-[contributors-url]: https://github.com/hussaino03/Devspace/graphs/contributors
-[issues-shield]: https://img.shields.io/github/issues/hussaino03/Devspace?style=for-the-badge
-[issues-url]: https://github.com/hussaino03/Devspace/issues
+[contributors-shield]: https://img.shields.io/github/contributors/hussaino03/CSC207-Project?color=%23&style=for-the-badge
+[contributors-url]: https://github.com/hussaino03/CSC207-Project/graphs/contributors
+[issues-shield]: https://img.shields.io/github/issues/hussaino03/CSC207-Project?style=for-the-badge
+[issues-url]: https://github.com/hussaino03/CSC207-Project/issues
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/hussaino03/Devspace/blob/main/LICENSE.txt
+[license-url]: https://github.com/hussaino03/CSC207-Project/blob/main/LICENSE.txt
 [product-screenshot]: loginpage.png
