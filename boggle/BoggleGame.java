@@ -31,7 +31,7 @@ public class BoggleGame {
                     "DHLNOR", "EIIITT", "EMOTTT", "ENSSSU", "FIPRSY", "GORRVW", "HIPRRY", "NOOTUW", "OOOTTU"};
 
     /** dice used to randomize letter assignments for a 6x6 grid
-     */
+     */ 
     private final String[] six_by_six_grid =
             {"MNPQWR", "ABBJOO", "ACHOPS", "AFFKPS", "AOOTTW", "CIMOTU", "DELRVY",
                     "DISTTY", "EEGHNW", "EEINSU", "EHRTVW", "EIOSST", "ELRTTY", "HIMNQU", "AAAFRS", "HJKGBN", "ADENNN", "KLFGVC", "AEEGMU", "AEGMNN", "AFIRSY",
