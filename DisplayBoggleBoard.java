@@ -1,56 +1,63 @@
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.util.Timer;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
-public class DisplayBoggleBoard {
-    JFrame frame = new JFrame("Boggle Game");
+public class DisplayBoggleBoard implements Runnable {
 
+    // run method for the interface
+    @Override
+    public void run() {
 
-    // Constructor (Skeleton: Add more attributes in Week 2)
-    public DisplayBoggleBoard(){
-    }
-
-    // run method for GUI
-    public void run(){
-
-        // GUI logistics
-        frame.setSize(600,600);
-
-        // Set the frame layout to be a grid
-        frame.setLayout(new GridLayout(4, 2, 1, 1));
-
-        // Add buttons to display
-        frame.add(new JButton("1"));
-        frame.add(new JButton("2"));
-        frame.add(new JButton("3"));
-        frame.add(new JButton("4"));
-        frame.add(new JButton("5"));
-        frame.add(new JButton("6"));
-        frame.add(new JButton("7"));
-        frame.add(new JButton("8"));
-        frame.add(new JButton("9"));
-
-
-
-        // Display the frame
-        frame.setVisible(true);
+        // GUI Logistics
+        JFrame frame = new JFrame("Boggle Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        TextInput();
+
+        // Add the panels in the respected positions
+        frame.add(createGridPanel(), BorderLayout.CENTER);
+        frame.add(createTextPanel(), BorderLayout.SOUTH);
+
+        frame.pack();
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
     }
 
-    // Method for userInput (Textbox)
-    public void TextInput(){
-        JTextField t1;
-        t1=new JTextField("Please Enter Your Input!");
-        t1.setBounds(100,100, 600,30);
-        frame.add(t1);
+    // Method to create the BoggleGrid
+    private JPanel createGridPanel() {
+        // Use GridLayout to align the buttons (words) in a grid manner
+        JPanel panel = new JPanel(new GridLayout(0, 3, 1, 1));
+        panel.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
 
+        // Generate a total of 9 buttons to display
+        for (int index = 0; index < 9; index++) {
+            JButton button = new JButton(Integer.toString(index + 1));
+            button.setPreferredSize(new Dimension(96, 96));
+            panel.add(button);
+        }
+
+        return panel;
     }
-    public static void main(String[] args){
-        DisplayBoggleBoard b = new DisplayBoggleBoard();
-        b.run();
+
+    // Create a textbox prompting the user to enter words
+    private JPanel createTextPanel() {
+        JPanel panel = new JPanel(new FlowLayout());
+        panel.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
+
+        JTextField t1 = new JTextField("Please Type in Words!");
+        panel.add(t1);
+
+        return panel;
     }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new DisplayBoggleBoard());
+    }
+
 }
