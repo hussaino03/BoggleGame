@@ -17,18 +17,25 @@ public class BoggleGame {
     private BoggleStats gameStats;
 
     /**
-     * dice used to randomize letter assignments for a small grid
+     * dice used to randomize letter assignments for a 4x4 grid
      */ 
-    private final String[] dice_small_grid= //dice specifications, for small and large grids
+    private final String[] four_by_four_grid= //dice specifications, for small and large grids
             {"AAEEGN", "ABBJOO", "ACHOPS", "AFFKPS", "AOOTTW", "CIMOTU", "DEILRX", "DELRVY",
                     "DISTTY", "EEGHNW", "EEINSU", "EHRTVW", "EIOSST", "ELRTTY", "HIMNQU", "HLNNRZ"};
     /**
-     * dice used to randomize letter assignments for a big grid
+     * dice used to randomize letter assignments for a 5x5 grid
      */ 
-    private final String[] dice_big_grid =
+    private final String[] five_by_five_grid =
             {"AAAFRS", "AAEEEE", "AAFIRS", "ADENNN", "AEEEEM", "AEEGMU", "AEGMNN", "AFIRSY",
                     "BJKQXZ", "CCNSTW", "CEIILT", "CEILPT", "CEIPST", "DDLNOR", "DDHNOT", "DHHLOR",
                     "DHLNOR", "EIIITT", "EMOTTT", "ENSSSU", "FIPRSY", "GORRVW", "HIPRRY", "NOOTUW", "OOOTTU"};
+
+    /** dice used to randomize letter assignments for a 6x6 grid
+     */ 
+    private final String[] six_by_six_grid =
+            {"MNPQWR", "ABBJOO", "ACHOPS", "AFFKPS", "AOOTTW", "CIMOTU", "DELRVY",
+                    "DISTTY", "EEGHNW", "EEINSU", "EHRTVW", "EIOSST", "ELRTTY", "HIMNQU", "AAAFRS", "HJKGBN", "ADENNN", "KLFGVC", "AEEGMU", "AEGMNN", "AFIRSY",
+                    "BJKQXZ", "CCNSTW", "CEIILT", "CEILPT", "CEIPST", "DDHNOT", "DHHLOR", "DHLNOR", "EIIITT", "EMOTTT", "ENSSSU", "FIPRSY", "GORRVW", "HIPRRY", "NOOTUW", "OOOTTU"};
 
     /* 
      * BoggleGame constructor
@@ -63,26 +70,31 @@ public class BoggleGame {
     public void playGame(){
         int boardSize;
         while(true){
-            System.out.println("Enter 1 to play on a big (5x5) grid; 2 to play on a small (4x4) one:");
+            System.out.println("Enter 1 to play on a (4x4) grid; 2 to play on a (5x5) grid; 3 to play on a (6x6) grid:");
             String choiceGrid = scanner.nextLine();
 
             //get grid size preference
             if(choiceGrid == "") break; //end game if user inputs nothing
-            while(!choiceGrid.equals("1") && !choiceGrid.equals("2")){
+            while(!choiceGrid.equals("1") && !choiceGrid.equals("2") && !choiceGrid.equals("3")){
                 System.out.println("Please try again.");
-                System.out.println("Enter 1 to play on a big (5x5) grid; 2 to play on a small (4x4) one:");
+                System.out.println("Enter 1 to play on a (4x4) grid; 2 to play on a (5x5) grid; 3 to play on a (6x6) grid:");
                 choiceGrid = scanner.nextLine();
             }
 
-            if(choiceGrid.equals("1")) boardSize = 5;
-            else boardSize = 4;
+            if(choiceGrid.equals("1")) {
+                boardSize = 4;
+            } else if (choiceGrid.equals("2")) {
+                boardSize = 5;
+            } else {
+                boardSize = 6;
+            }
 
             //get letter choice preference
             System.out.println("Enter 1 to randomly assign letters to the grid; 2 to provide your own.");
             String choiceLetters = scanner.nextLine();
 
             if(choiceLetters == "") break; //end game if user inputs nothing
-            while(!choiceLetters.equals("1") && !choiceLetters.equals("2")){
+            while(!choiceLetters.equals("1") && !choiceLetters.equals("2") && !choiceLetters.equals("3")){
                 System.out.println("Please try again.");
                 System.out.println("Enter 1 to randomly assign letters to the grid; 2 to provide your own.");
                 choiceLetters = scanner.nextLine();
@@ -158,28 +170,38 @@ public class BoggleGame {
      * @return String a String of random letters (length 16 or 25 depending on the size of the grid)
      */
     private String randomizeLetters(int size){
-        List<String> smalldice = Arrays.asList(dice_small_grid);
-        List<String> bigdice = Arrays.asList(dice_big_grid);
+        List<String> four = Arrays.asList(four_by_four_grid);
+        List<String> five = Arrays.asList(five_by_five_grid);
+        List<String> six = Arrays.asList(six_by_six_grid);
 
-        Collections.shuffle(smalldice);
-        Collections.shuffle(bigdice);
+        Collections.shuffle(four);
+        Collections.shuffle(five);
+        Collections.shuffle(six);
 
-        StringBuilder small = new StringBuilder(size*size);
-        StringBuilder big = new StringBuilder(size*size);
+        StringBuilder fourRes = new StringBuilder(size*size);
+        StringBuilder fiveRes = new StringBuilder(size*size);
+        StringBuilder sixRes = new StringBuilder(size*size);
 
         if (size == 4){
-            for (String str: smalldice){
+            for (String str: four){
                 int i = (int)(str.length() * Math.random());
-                small.append(str.charAt(i));
+                fourRes.append(str.charAt(i));
             }
-            return small.toString();
+            return fourRes.toString();
         }
         else if (size == 5){
-            for (String str: bigdice){
+            for (String str: five){
                 int i = (int)(str.length() * Math.random());
-                big.append(str.charAt(i));
+                fiveRes.append(str.charAt(i));
             }
-            return big.toString();
+            return fiveRes.toString();
+        }
+        else if (size == 6){
+            for (String str: six){
+                int i = (int)(str.length() * Math.random());
+                sixRes.append(str.charAt(i));
+            }
+            return sixRes.toString();
         }
         return "";
     }
