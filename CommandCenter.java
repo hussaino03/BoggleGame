@@ -5,7 +5,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class CommandCenter implements EventHandler<ActionEvent> {
@@ -26,19 +25,23 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     private void execute() {
         for (Command c : this.commandQueue) {
             c.execute();
+            commandQueue.remove(c);
         }
     }
     // handle method which processes commands
     @Override
     public void handle(ActionEvent actionEvent) {
         Node event = (Node) actionEvent.getSource();
-        String newScene = event.getId().split(", ")[1];
-        System.out.println(newScene);
-        Stage stage = gameWindow.primaryStage;
-        Scene transition = gameWindow.scenes.get(newScene);
-        String title = gameWindow.sceneTitles.get(transition);
-        this.setCommand(new RedirectScreenCommand(stage, transition, title));
-        this.execute();
+        String Id = event.getId();
+        if (Id.contains(", ") && Id.length() >= 3) {
+            String newScene = Id.split(", ")[1];
+            Stage stage = gameWindow.primaryStage;
+            Scene transition = gameWindow.scenes.get(newScene);
+            String title = gameWindow.sceneTitles.get(transition);
+            this.setCommand(new RedirectScreenCommand(stage, transition, title));
+            this.execute();
+        }
+
         }
 
     }
