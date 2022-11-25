@@ -43,12 +43,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
             this.setCommand(new RedirectScreenCommand(stage, transition, title));
             this.execute();
         }
-
         }
-
-    public void handle(KeyEvent keyEvent) {
-
-    }
 
     }
 
