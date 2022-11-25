@@ -12,7 +12,10 @@ import javax.swing.SwingUtilities;
 
 public class DisplayBoggleBoard implements Runnable {
 
-    // run method for the interface
+
+    /**
+     * Method to display the GUI setup and panels
+     */
     @Override
     public void run() {
 
@@ -29,7 +32,10 @@ public class DisplayBoggleBoard implements Runnable {
         frame.setVisible(true);
     }
 
-    // Method to create the BoggleGrid
+    /**
+     * Method to create a grid-layout for the boggle board (currently buttons which can be switched with text)
+     * @return JPanel: a panel consisting of the grid-layout of elements (currently buttons)
+     */
     private JPanel createGridPanel() {
         // Use GridLayout to align the buttons (words) in a grid manner
         JPanel panel = new JPanel(new GridLayout(0, 3, 1, 1));
@@ -45,7 +51,10 @@ public class DisplayBoggleBoard implements Runnable {
         return panel;
     }
 
-    // Create a textbox prompting the user to enter words
+    /**
+     * Create the User Input textbox to allow the user to type words
+     * @return JPanel: a Panel that consists of a Textbox for the user to input any words.
+     */
     private JPanel createTextPanel() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
