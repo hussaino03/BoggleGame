@@ -1,5 +1,8 @@
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -23,16 +26,16 @@ public class gameWindow extends Application {
         stage.setTitle("Main Menu"); // Stage setup
 
         // Four different buttons the user can select
-        Button howToPlayButton = new Button("How to Play");
+        Button howToPlayButton = new Button("How to Play [A]");
         howToPlayButton.setId("How to Play, How To Play Scene");
 
-        Button statsButton = new Button("Stats");
+        Button statsButton = new Button("Stats [S]");
         statsButton.setId("Stats, Stats Scene");
 
-        Button normalModeButton = new Button("Normal Mode");
+        Button normalModeButton = new Button("Normal Mode [Q]");
         normalModeButton.setId("Normal Mode, Grid Selection Scene");
 
-        Button timedModeButton = new Button("Timed Mode");
+        Button timedModeButton = new Button("Timed Mode [W]");
         timedModeButton.setId("Timed Mode, Grid Selection Scene");
 
         // Setup for the main scene and layout [Contains the four buttons]
@@ -79,7 +82,7 @@ public class gameWindow extends Application {
                 "game instructions. \n You can also go to the Stats Page to review your success across" +
                 " all games.");
 
-        Button goBackFromHTPButton = new Button("Return to Main Menu");
+        Button goBackFromHTPButton = new Button("Return to Main Menu [R]");
         goBackFromHTPButton.setId("Return to Main Menu, Main Scene");
         howToPlayLayout.add(gameInstructions, 0, 0);
         howToPlayLayout.add(goBackFromHTPButton, 0, 1);
@@ -94,7 +97,7 @@ public class gameWindow extends Application {
         sceneTitles.put(statsScene, "Stats");
 
         // Add button to stats layout
-        Button goBackFromStatsButton = new Button("Return to Main Menu");
+        Button goBackFromStatsButton = new Button("Return to Main Menu [R]");
         goBackFromStatsButton.setId("Return to Main Menu, Main Scene");
         statsLayout.add(goBackFromStatsButton, 5, 5);
 
@@ -108,7 +111,7 @@ public class gameWindow extends Application {
         sceneTitles.put(gridSelectionScene, "Grid Selection");
 
         // add button to grid selection layout
-        Button goBackFromGridSelectionButton = new Button("Return to Main Menu");
+        Button goBackFromGridSelectionButton = new Button("Return to Main Menu [R]");
         goBackFromGridSelectionButton.setId("Return to Main Menu, Main Scene");
         gridSelectionLayout.add(goBackFromGridSelectionButton, 5, 5);
 
@@ -121,6 +124,42 @@ public class gameWindow extends Application {
         goBackFromHTPButton.setOnAction(commandCenter);
         goBackFromStatsButton.setOnAction(commandCenter);
         goBackFromGridSelectionButton.setOnAction(commandCenter);
+
+        // Allow buttons to be fired through keyboard to make the program more accessible
+        mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent keyEvent) {
+                switch (keyEvent.getCode()) {
+                    case Q: normalModeButton.fire();
+                    case W: timedModeButton.fire();
+                    case A: howToPlayButton.fire();
+                    case S: statsButton.fire();
+                }
+            }
+        });
+
+        gridSelectionScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.R) {
+                    goBackFromGridSelectionButton.fire();
+                }
+            }
+        });
+
+        howToPlayScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.R) {
+                    goBackFromHTPButton.fire();
+                }
+            }
+        });
+
+        statsScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.R) {
+                    goBackFromStatsButton.fire();
+                }
+            }
+        });
 
         // Set the scene to the main scene when first running the game
         stage.setScene(mainScene);
