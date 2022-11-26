@@ -36,16 +36,22 @@ public class CommandCenter implements EventHandler<ActionEvent> {
         Node event = (Node) actionEvent.getSource();
         String Id = event.getId();
         if (Id.contains(", ") && Id.length() >= 3) {
-            String newScene = Id.split(", ")[1];
+            String[] idVariables = Id.split(", ");
+            String newScene = idVariables[1];
             Stage stage = gameWindow.primaryStage;
             Scene transition = gameWindow.scenes.get(newScene);
             String title = gameWindow.sceneTitles.get(transition);
             this.setCommand(new RedirectScreenCommand(stage, transition, title));
             this.execute();
+            if (idVariables.length == 3) { // Store info
+                String choice = idVariables[2];
+                this.setCommand(new ProcessInformationCommand(stage, choice));
+                this.execute();
+            }
         }
 
-        }
 
+        }
 
     }
 
