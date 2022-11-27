@@ -165,15 +165,15 @@ public class gameWindow extends Application {
         Button fiveByFiveButton = new Button("5x5 [2]");
         fiveByFiveButton.setId("Five By Five Button, Main Scene, Grid Size, five");
 
-        Button sixBysixButton = new Button("6x6 [3]");
-        sixBysixButton.setId("Four By Four Button, Main Scene, Grid Size, six");
+        Button sixBySixButton = new Button("6x6 [3]");
+        sixBySixButton.setId("Four By Four Button, Main Scene, Grid Size, six");
 
         Button goBackFromGridSelectionButton = new Button("Return to Main Menu [R]");
         goBackFromGridSelectionButton.setId("Return to Main Menu, Main Scene");
         gridSelectionLayout.add(goBackFromGridSelectionButton, 5, 5);
         gridSelectionLayout.add(fourByFourButton, 5, 2);
         gridSelectionLayout.add(fiveByFiveButton, 5, 3);
-        gridSelectionLayout.add(sixBysixButton, 5, 4);
+        gridSelectionLayout.add(sixBySixButton, 5, 4);
 
         // Send all button clicks to commandCenter for these commands to be handled
         CommandCenter commandCenter = new CommandCenter(this);
@@ -186,7 +186,7 @@ public class gameWindow extends Application {
         goBackFromGridSelectionButton.setOnAction(commandCenter);
         fourByFourButton.setOnAction(commandCenter);
         fiveByFiveButton.setOnAction(commandCenter);
-        sixBysixButton.setOnAction(commandCenter);
+        sixBySixButton.setOnAction(commandCenter);
 
         // Allow buttons to be fired through keyboard to make the program more accessible
         mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -210,8 +210,18 @@ public class gameWindow extends Application {
 
         gridSelectionScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent keyEvent) {
-                switch (keyEvent.getCode()) {
-                    case R: goBackFromGridSelectionButton.fire();
+                char c = keyEvent.getText().charAt(0);
+                if (keyEvent.getCode() == KeyCode.R) {
+                    goBackFromGridSelectionButton.fire();
+                }
+                else if (c == '1') {
+                    fourByFourButton.fire();
+                }
+                else if (c == '2') {
+                    fiveByFiveButton.fire();
+                }
+                else if (c == '3') {
+                    sixBySixButton.fire();
                 }
             }
         });
