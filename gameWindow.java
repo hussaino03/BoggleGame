@@ -1,25 +1,33 @@
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.Scene;
 import java.util.HashMap;
 
+/**
+ * gameWindow controls the flow of the program
+ */
 
 public class gameWindow extends Application {
 
     HashMap<String, Scene> scenes = new HashMap<String, Scene>();
     HashMap<Scene, String> sceneTitles = new HashMap<Scene, String>();
     Stage primaryStage;
+    private TableView table = new TableView();
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * The start() method makes the window run
+     * @param stage The game window to be displayed
+     * @throws Exception Thrown if game does not run
+     */
     @Override
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
@@ -33,10 +41,10 @@ public class gameWindow extends Application {
         statsButton.setId("Stats, Stats Scene");
 
         Button normalModeButton = new Button("Normal Mode [Q]");
-        normalModeButton.setId("Normal Mode, Grid Selection Scene");
+        normalModeButton.setId("Normal Mode, Grid Selection Scene, normal");
 
         Button timedModeButton = new Button("Timed Mode [W]");
-        timedModeButton.setId("Timed Mode, Grid Selection Scene");
+        timedModeButton.setId("Timed Mode, Grid Selection Scene, timed");
 
         // Setup for the main scene and layout [Contains the four buttons]
         GridPane mainLayout =  new GridPane();
@@ -49,7 +57,7 @@ public class gameWindow extends Application {
 
         // add buttons to main layout
         // buttonIds are used to encapsulate commands via the following ID format:
-        // "ID, Scene to transition to"
+        // "ID, Scene to transition to, choice"
         mainLayout.add(normalModeButton, 10, 10);
         mainLayout.add(timedModeButton, 11, 10);
         mainLayout.add(howToPlayButton, 10, 11);
@@ -88,20 +96,40 @@ public class gameWindow extends Application {
         howToPlayLayout.add(goBackFromHTPButton, 0, 1);
 
         // Setup for stats scene and layout
-        GridPane statsLayout =  new GridPane();
-        statsLayout.setPadding(new Insets(10,10,10,10));
-        statsLayout.setVgap(20);
-        statsLayout.setHgap(20);
-        Scene statsScene = new Scene(statsLayout, 700, 700);
+
+        //set table to non-editable
+        table.setEditable(false);
+
+        //normal stats column
+        TableColumn<String, String> normalStatColumn = new TableColumn<>("Normal Stat");
+        normalStatColumn.setMaxWidth(60);
+
+        //normal stats values column
+        TableColumn<String, Double> normalValueColumn = new TableColumn<>("Values");
+        normalValueColumn.setMaxWidth(60);
+
+        //timed stats column
+        TableColumn<String, String> timedStatColumn = new TableColumn<>("Values");
+        timedStatColumn.setMaxWidth(60);
+
+        //timed stats values column
+        TableColumn<String, Double> timedValueColumn = new TableColumn<>("Values");
+        timedValueColumn.setMaxWidth(60);
+
+        //add columns to table
+        table.getColumns().addAll(normalStatColumn, normalValueColumn, timedStatColumn, timedValueColumn);
+
+        Scene statsScene = new Scene(table, 700, 700);
         scenes.put("Stats Scene", statsScene);
         sceneTitles.put(statsScene, "Stats");
 
         // Add button to stats layout
         Button goBackFromStatsButton = new Button("Return to Main Menu [R]");
         goBackFromStatsButton.setId("Return to Main Menu, Main Scene");
-        statsLayout.add(goBackFromStatsButton, 5, 5);
+//        statsLayout.add(goBackFromStatsButton, 5, 5);
 
         // Setup for grid selection scene and layout
+
         GridPane gridSelectionLayout =  new GridPane();
         gridSelectionLayout.setPadding(new Insets(10,10,10,10));
         gridSelectionLayout.setVgap(20);
@@ -110,10 +138,31 @@ public class gameWindow extends Application {
         scenes.put("Grid Selection Scene", gridSelectionScene);
         sceneTitles.put(gridSelectionScene, "Grid Selection");
 
-        // add button to grid selection layout
+        // Label to explain how to choose grid size
+        Label gridInstructions = new Label("Enter 1 to play on a (4x4) grid; 2 to play on a (5x5) grid;" +
+                " 3 to play on a (6x6) grid:");
+        gridSelectionLayout.add(gridInstructions,0,1);
+
+        //textbox to input size
+//        TextField inpGrid = new TextField("Input here");
+//        gridSelectionLayout.add(inpGrid,1,1);
+
+        // add buttons to grid selection layout
+        Button fourByFourButton = new Button("4x4 [1]");
+        fourByFourButton.setId("Four By Four Button, Main Scene, four");
+
+        Button fiveByFiveButton = new Button("5x5 [2]");
+        fiveByFiveButton.setId("Five By Five Button, Main Scene, five");
+
+        Button sixBysixButton = new Button("6x6 [3]");
+        sixBysixButton.setId("Four By Four Button, Main Scene, six");
+
         Button goBackFromGridSelectionButton = new Button("Return to Main Menu [R]");
         goBackFromGridSelectionButton.setId("Return to Main Menu, Main Scene");
         gridSelectionLayout.add(goBackFromGridSelectionButton, 5, 5);
+        gridSelectionLayout.add(fourByFourButton, 5, 2);
+        gridSelectionLayout.add(fiveByFiveButton, 5, 3);
+        gridSelectionLayout.add(sixBysixButton, 5, 4);
 
         // Send all button clicks to commandCenter for these commands to be handled
         CommandCenter commandCenter = new CommandCenter(this);
@@ -124,23 +173,34 @@ public class gameWindow extends Application {
         goBackFromHTPButton.setOnAction(commandCenter);
         goBackFromStatsButton.setOnAction(commandCenter);
         goBackFromGridSelectionButton.setOnAction(commandCenter);
+        fourByFourButton.setOnAction(commandCenter);
+        fiveByFiveButton.setOnAction(commandCenter);
+        sixBysixButton.setOnAction(commandCenter);
 
         // Allow buttons to be fired through keyboard to make the program more accessible
         mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
             public void handle(KeyEvent keyEvent) {
-                switch (keyEvent.getCode()) {
-                    case Q: normalModeButton.fire();
-                    case W: timedModeButton.fire();
-                    case A: howToPlayButton.fire();
-                    case S: statsButton.fire();
+                KeyCode c = keyEvent.getCode();
+                if (c == KeyCode.Q) {
+                    normalModeButton.fire();
+                }
+                else if (c == KeyCode.W) {
+                    timedModeButton.fire();
+                }
+                else if (c == KeyCode.A) {
+                    howToPlayButton.fire();
+                }
+                else if (c == KeyCode.S) {
+                    statsButton.fire();
                 }
             }
         });
 
         gridSelectionScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.R) {
-                    goBackFromGridSelectionButton.fire();
+                switch (keyEvent.getCode()) {
+                    case R: goBackFromGridSelectionButton.fire();
                 }
             }
         });

@@ -2,10 +2,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class RedirectScreenCommand implements Command {
-    Stage stage;
-    Scene transitionScene;
+    public Stage stage;
+    public Scene transitionScene;
 
-    String transitionTitle;
+    public String transitionTitle;
 
     public RedirectScreenCommand(Stage currStage, Scene newScene, String title) {
         this.stage = currStage;
@@ -14,6 +14,7 @@ public class RedirectScreenCommand implements Command {
     }
     @Override
     public void execute() {
+        System.out.println("Redirected Screen");
         stage.setScene(transitionScene);
         stage.setTitle(transitionTitle);
     }
