@@ -16,7 +16,7 @@ public class RedirectScreenCommand implements Command {
     }
     @Override
     public void execute() {
-        System.out.println("Redirected Screen");
+//        System.out.println("Redirected Screen");
         stage.setScene(transitionScene);
         stage.setTitle(transitionTitle);
     }

@@ -104,6 +104,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
                 String choiceType = idVariables[2];
                 String choice = idVariables[3];
 
+
                 this.setCommand(new RedirectScreenCommand(stage, transition, title));
                 this.execute(); // Execute RedirectScreenCommand
 
@@ -112,6 +113,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
 
                 this.setCommand(new StartGameCommand(game));
                 this.execute(); // Execute StartGameCommand
+
             }
         }
         }

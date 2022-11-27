@@ -47,9 +47,11 @@ public class BoggleGame {
         this.gameStats = new BoggleStats();
     }
 
-    /* 
+    /*
      * Provide instructions to the user, so they know how to play the game.
      */
+
+    // This is obsolete because of the How To Play screen
     public void giveInstructions()
     {
         System.out.println("The Boggle board contains a grid of letters that are randomly placed.");
@@ -65,25 +67,17 @@ public class BoggleGame {
     }
 
 
-    /* 
+    /**
      * Gets information from the user to initialize a new Boggle game.
      * It will loop until the user indicates they are done playing.
      */
     public void playGame(){
         int boardSize = 0;
         while(true){
-//            System.out.println("Enter 1 to play on a (4x4) grid; 2 to play on a (5x5) grid; 3 to play on a (6x6) grid:");
-//            String choiceGrid = scanner.nextLine();
             String gameMode = choiceProcessor.get("Game Mode");
             String gridSize = choiceProcessor.get("Grid Size");
 
             //get grid size preference
-//            if(choiceGrid == "") break; //end game if user inputs nothing
-//            while(!choiceGrid.equals("1") && !choiceGrid.equals("2") && !choiceGrid.equals("3")){
-//                System.out.println("Please try again.");
-//                System.out.println("Enter 1 to play on a (4x4) grid; 2 to play on a (5x5) grid; 3 to play on a (6x6) grid:");
-//                choiceGrid = scanner.nextLine();
-//            }
 
             if(gridSize.equals("four")) {
                 boardSize = 4;
@@ -125,27 +119,28 @@ public class BoggleGame {
 
             //round is over! So, store the statistics, and end the round.
 
-//            //Shall we repeat?
-//            System.out.println("Play again? Type 'Y' or 'N'");
-//            String choiceRepeat = scanner.nextLine().toUpperCase();
-//
-//            if(choiceRepeat == "") break; //end game if user inputs nothing
-//            while(!choiceRepeat.equals("Y") && !choiceRepeat.equals("N")){
-//                System.out.println("Please try again.");
-//                System.out.println("Play again? Type 'Y' or 'N'");
-//                choiceRepeat = scanner.nextLine().toUpperCase();
-//            }
-//
-//            if(choiceRepeat == "" || choiceRepeat.equals("N")) break; //end game if user inputs nothing
+            //Shall we repeat?
+            System.out.println("Play again? Type 'Y' or 'N'");
+            Scanner sc = new Scanner(System.in);
+            String choiceRepeat = sc.nextLine().toUpperCase();
+
+            if(choiceRepeat == "") break; //end game if user inputs nothing
+            while(!choiceRepeat.equals("Y") && !choiceRepeat.equals("N")){
+                System.out.println("Please try again.");
+                System.out.println("Play again? Type 'Y' or 'N'");
+                choiceRepeat = sc.nextLine().toUpperCase();
+            }
+
+            if(choiceRepeat == "" || choiceRepeat.equals("N")) break; //end game if user inputs nothing
 
         }
 
         //we are done with the game! So, summarize all the play that has transpired and exit.
-//        this.gameStats.summarizeGame();
-//        System.out.println("Thanks for playing!");
+        this.gameStats.summarizeGame();
+        System.out.println("Thanks for playing!");
     }
 
-    /* 
+    /**
      * Play a round of Boggle.
      * This initializes the main objects: the board, the dictionary, the map of all
      * words on the board, and the set of words found by the user. These objects are
@@ -162,12 +157,12 @@ public class BoggleGame {
         findAllWords(allWords, boggleDict, grid);
         System.out.println("round");
         //step 4. allow the user to try to find some words on the grid
-//        humanMove(grid, allWords);
+        humanMove(grid, allWords);
 //        //step 5. allow the computer to identify remaining words
-//        computerMove(allWords);
+        computerMove(allWords);
     }
 
-    /*
+    /**
      * This method should return a String of letters (length 16 or 25 depending on the size of the grid).
      * There will be one letter per grid position, and they will be organized left to right,
      * top to bottom. A strategy to make this string of letters is as follows:
@@ -216,7 +211,7 @@ public class BoggleGame {
     }
 
 
-    /* 
+    /**
      * This should be a recursive function that finds all valid words on the boggle board.
      * Every word should be valid (i.e. in the boggleDict) and of length 4 or more.
      * Words that are found should be entered into the allWords HashMap.  This HashMap
@@ -253,7 +248,7 @@ public class BoggleGame {
             for (int j = 0; j < boggleGrid.numCols(); j++)
                 traverse(allWords, boggleGrid, tracker, i, j, str, boggleDict);
     }
-    /*
+    /**
      * A helper function for findAllWords that traverses the Boggle board and recursively builds up the valid words
      * It takes the current position and searches 8 adjacent cells around it to build up valid words
      * @param allWords A mutable list of all legal words that can be found, given the boggleGrid grid letters
@@ -310,7 +305,7 @@ public class BoggleGame {
         tracker[row][col] = false;
     }
 
-    /*
+    /**
      * Gets words from the user.  As words are input, check to see that they are valid.
      * If yes, add the word to the player's word list (in boggleStats) and increment
      * the player's score (in boggleStats).
@@ -347,13 +342,13 @@ public class BoggleGame {
     }
 
 
-    /* 
+    /**
      * Gets words from the computer.  The computer should find words that are
      * both valid and not in the player's word list.  For each word that the computer
      * finds, update the computer's word list and increment the
      * computer's score (stored in boggleStats).
      *
-     * @param allWords A mutable list of all legal words that can be found, given the boggleGrid grid letters
+     * @param all_words A mutable list of all legal words that can be found, given the boggleGrid grid letters
      */
     private void computerMove(Map<String,ArrayList<Position>> all_words){
         for (String i: all_words.keySet()){

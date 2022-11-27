@@ -29,11 +29,12 @@ public class gameWindow extends Application {
     /**
      * The start() method makes the window run
      * Note that button IDs have the following format:
-     * "buttonName, transitionScene, choiceType, choice"
+     * "buttonName, transitionScene, choiceType, choice, gameState"
      * buttonName refers to what button this is (e.g "Normal Mode")
      * transitionScene refers to which scene to transition to (e.g. "Grid Selection Scene")
      * choiceType refers to what kind of choice needs to be updated (e.g. "Game Mode")
      * choice refers to the choice made by the user of a specific choiceType (e.g. "normal")
+     * gameState refers to how the gameState should be changed (e.g. "start")
      * @param stage The game window to be displayed
      * @throws Exception Thrown if game does not run
      */
@@ -160,13 +161,13 @@ public class gameWindow extends Application {
 
         // add buttons to grid selection layout
         Button fourByFourButton = new Button("4x4 [1]");
-        fourByFourButton.setId("Four By Four Button, Main Scene, Grid Size, four");
+        fourByFourButton.setId("Four By Four Button, Main Scene, Grid Size, four, start");
 
         Button fiveByFiveButton = new Button("5x5 [2]");
-        fiveByFiveButton.setId("Five By Five Button, Main Scene, Grid Size, five");
+        fiveByFiveButton.setId("Five By Five Button, Main Scene, Grid Size, five, start");
 
         Button sixBySixButton = new Button("6x6 [3]");
-        sixBySixButton.setId("Four By Four Button, Main Scene, Grid Size, six");
+        sixBySixButton.setId("Four By Four Button, Main Scene, Grid Size, six, start");
 
         Button goBackFromGridSelectionButton = new Button("Return to Main Menu [R]");
         goBackFromGridSelectionButton.setId("Return to Main Menu, Main Scene");
