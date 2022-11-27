@@ -181,11 +181,18 @@ public class gameWindow extends Application {
         mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                switch (keyEvent.getCode()) {
-                    case Q: normalModeButton.fire();
-                    case W: timedModeButton.fire();
-                    case A: howToPlayButton.fire();
-                    case S: statsButton.fire();
+                KeyCode c = keyEvent.getCode();
+                if (c == KeyCode.Q) {
+                    normalModeButton.fire();
+                }
+                else if (c == KeyCode.W) {
+                    timedModeButton.fire();
+                }
+                else if (c == KeyCode.A) {
+                    howToPlayButton.fire();
+                }
+                else if (c == KeyCode.S) {
+                    statsButton.fire();
                 }
             }
         });
