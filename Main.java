@@ -10,7 +10,7 @@ public class Main {
      **/
     public static void main(String[] args) {
         BoggleGame b = new BoggleGame();
-        b.giveInstructions();
+//        b.giveInstructions();
         b.playGame();
     }
 

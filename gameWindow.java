@@ -1,3 +1,4 @@
+import boggle.BoggleGame;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -19,12 +20,20 @@ public class gameWindow extends Application {
     HashMap<Scene, String> sceneTitles = new HashMap<Scene, String>();
     Stage primaryStage;
     private TableView table = new TableView();
+
+    public BoggleGame game;
     public static void main(String[] args) {
         launch(args);
     }
 
     /**
      * The start() method makes the window run
+     * Note that button IDs have the following format:
+     * "buttonName, transitionScene, choiceType, choice"
+     * buttonName refers to what button this is (e.g "Normal Mode")
+     * transitionScene refers to which scene to transition to (e.g. "Grid Selection Scene")
+     * choiceType refers to what kind of choice needs to be updated (e.g. "Game Mode")
+     * choice refers to the choice made by the user of a specific choiceType (e.g. "normal")
      * @param stage The game window to be displayed
      * @throws Exception Thrown if game does not run
      */
@@ -32,6 +41,8 @@ public class gameWindow extends Application {
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
         stage.setTitle("Main Menu"); // Stage setup
+
+        this.game = new BoggleGame(); // Ready the game for the player
 
         // Four different buttons the user can select
         Button howToPlayButton = new Button("How to Play [A]");
@@ -41,10 +52,10 @@ public class gameWindow extends Application {
         statsButton.setId("Stats, Stats Scene");
 
         Button normalModeButton = new Button("Normal Mode [Q]");
-        normalModeButton.setId("Normal Mode, Grid Selection Scene, normal");
+        normalModeButton.setId("Normal Mode, Grid Selection Scene, Game Mode, normal");
 
         Button timedModeButton = new Button("Timed Mode [W]");
-        timedModeButton.setId("Timed Mode, Grid Selection Scene, timed");
+        timedModeButton.setId("Timed Mode, Grid Selection Scene, Game Mode, normal");
 
         // Setup for the main scene and layout [Contains the four buttons]
         GridPane mainLayout =  new GridPane();
@@ -149,13 +160,13 @@ public class gameWindow extends Application {
 
         // add buttons to grid selection layout
         Button fourByFourButton = new Button("4x4 [1]");
-        fourByFourButton.setId("Four By Four Button, Main Scene, four");
+        fourByFourButton.setId("Four By Four Button, Main Scene, Grid Size, four");
 
         Button fiveByFiveButton = new Button("5x5 [2]");
-        fiveByFiveButton.setId("Five By Five Button, Main Scene, five");
+        fiveByFiveButton.setId("Five By Five Button, Main Scene, Grid Size, five");
 
         Button sixBysixButton = new Button("6x6 [3]");
-        sixBysixButton.setId("Four By Four Button, Main Scene, six");
+        sixBysixButton.setId("Four By Four Button, Main Scene, Grid Size, six");
 
         Button goBackFromGridSelectionButton = new Button("Return to Main Menu [R]");
         goBackFromGridSelectionButton.setId("Return to Main Menu, Main Scene");
@@ -224,5 +235,6 @@ public class gameWindow extends Application {
         // Set the scene to the main scene when first running the game
         stage.setScene(mainScene);
         stage.show();
+
     }
 }

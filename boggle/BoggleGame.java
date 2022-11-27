@@ -8,9 +8,9 @@ import java.util.*;
 public class BoggleGame {
 
     /**
-     * scanner used to interact with the user via console
+     * Choice Processor used to interact with the user by storing their decisions
      */ 
-    public Scanner scanner; 
+    public HashMap<String, String> choiceProcessor;
     /**
      * stores game statistics
      */ 
@@ -41,7 +41,9 @@ public class BoggleGame {
      * BoggleGame constructor
      */
     public BoggleGame() {
-        this.scanner = new Scanner(System.in);
+        this.choiceProcessor = new HashMap<String, String>();
+        this.choiceProcessor.put("Game Mode", "");
+        this.choiceProcessor.put("Grid Size", "");
         this.gameStats = new BoggleStats();
     }
 
@@ -68,73 +70,79 @@ public class BoggleGame {
      * It will loop until the user indicates they are done playing.
      */
     public void playGame(){
-        int boardSize;
+        int boardSize = 0;
         while(true){
-            System.out.println("Enter 1 to play on a (4x4) grid; 2 to play on a (5x5) grid; 3 to play on a (6x6) grid:");
-            String choiceGrid = scanner.nextLine();
+//            System.out.println("Enter 1 to play on a (4x4) grid; 2 to play on a (5x5) grid; 3 to play on a (6x6) grid:");
+//            String choiceGrid = scanner.nextLine();
+            String gameMode = choiceProcessor.get("Game Mode");
+            String gridSize = choiceProcessor.get("Grid Size");
 
             //get grid size preference
-            if(choiceGrid == "") break; //end game if user inputs nothing
-            while(!choiceGrid.equals("1") && !choiceGrid.equals("2") && !choiceGrid.equals("3")){
-                System.out.println("Please try again.");
-                System.out.println("Enter 1 to play on a (4x4) grid; 2 to play on a (5x5) grid; 3 to play on a (6x6) grid:");
-                choiceGrid = scanner.nextLine();
-            }
+//            if(choiceGrid == "") break; //end game if user inputs nothing
+//            while(!choiceGrid.equals("1") && !choiceGrid.equals("2") && !choiceGrid.equals("3")){
+//                System.out.println("Please try again.");
+//                System.out.println("Enter 1 to play on a (4x4) grid; 2 to play on a (5x5) grid; 3 to play on a (6x6) grid:");
+//                choiceGrid = scanner.nextLine();
+//            }
 
-            if(choiceGrid.equals("1")) {
+            if(gridSize.equals("four")) {
                 boardSize = 4;
-            } else if (choiceGrid.equals("2")) {
+            } else if (gridSize.equals("five")) {
                 boardSize = 5;
-            } else {
+            } else if (gridSize.equals("six")){
                 boardSize = 6;
             }
 
-            //get letter choice preference
-            System.out.println("Enter 1 to randomly assign letters to the grid; 2 to provide your own.");
-            String choiceLetters = scanner.nextLine();
-
-            if(choiceLetters == "") break; //end game if user inputs nothing
-            while(!choiceLetters.equals("1") && !choiceLetters.equals("2") && !choiceLetters.equals("3")){
-                System.out.println("Please try again.");
-                System.out.println("Enter 1 to randomly assign letters to the grid; 2 to provide your own.");
-                choiceLetters = scanner.nextLine();
+            if (!(gridSize.equals(""))) {
+                playRound(boardSize, randomizeLetters(boardSize));
+                this.gameStats.summarizeRound();
+                this.gameStats.endRound();
             }
 
-            if(choiceLetters.equals("1")){
-                playRound(boardSize,randomizeLetters(boardSize));
-            } else {
-                System.out.println("Input a list of " + boardSize*boardSize + " letters:");
-                choiceLetters = scanner.nextLine();
-                while(!(choiceLetters.length() == boardSize*boardSize)){
-                    System.out.println("Sorry, bad input. Please try again.");
-                    System.out.println("Input a list of " + boardSize*boardSize + " letters:");
-                    choiceLetters = scanner.nextLine();
-                }
-                playRound(boardSize,choiceLetters.toUpperCase());
-            }
+//            //get letter choice preference
+//            System.out.println("Enter 1 to randomly assign letters to the grid; 2 to provide your own.");
+//            String choiceLetters = scanner.nextLine();
+//
+//            if(choiceLetters == "") break; //end game if user inputs nothing
+//            while(!choiceLetters.equals("1") && !choiceLetters.equals("2") && !choiceLetters.equals("3")){
+//                System.out.println("Please try again.");
+//                System.out.println("Enter 1 to randomly assign letters to the grid; 2 to provide your own.");
+//                choiceLetters = scanner.nextLine();
+//            }
+//
+//            if(choiceLetters.equals("1")){
+//                playRound(boardSize,randomizeLetters(boardSize));
+//            } else {
+//                System.out.println("Input a list of " + boardSize*boardSize + " letters:");
+//                choiceLetters = scanner.nextLine();
+//                while(!(choiceLetters.length() == boardSize*boardSize)){
+//                    System.out.println("Sorry, bad input. Please try again.");
+//                    System.out.println("Input a list of " + boardSize*boardSize + " letters:");
+//                    choiceLetters = scanner.nextLine();
+//                }
+//                playRound(boardSize,choiceLetters.toUpperCase());
+//            }
 
             //round is over! So, store the statistics, and end the round.
-            this.gameStats.summarizeRound();
-            this.gameStats.endRound();
 
-            //Shall we repeat?
-            System.out.println("Play again? Type 'Y' or 'N'");
-            String choiceRepeat = scanner.nextLine().toUpperCase();
-
-            if(choiceRepeat == "") break; //end game if user inputs nothing
-            while(!choiceRepeat.equals("Y") && !choiceRepeat.equals("N")){
-                System.out.println("Please try again.");
-                System.out.println("Play again? Type 'Y' or 'N'");
-                choiceRepeat = scanner.nextLine().toUpperCase();
-            }
-
-            if(choiceRepeat == "" || choiceRepeat.equals("N")) break; //end game if user inputs nothing
+//            //Shall we repeat?
+//            System.out.println("Play again? Type 'Y' or 'N'");
+//            String choiceRepeat = scanner.nextLine().toUpperCase();
+//
+//            if(choiceRepeat == "") break; //end game if user inputs nothing
+//            while(!choiceRepeat.equals("Y") && !choiceRepeat.equals("N")){
+//                System.out.println("Please try again.");
+//                System.out.println("Play again? Type 'Y' or 'N'");
+//                choiceRepeat = scanner.nextLine().toUpperCase();
+//            }
+//
+//            if(choiceRepeat == "" || choiceRepeat.equals("N")) break; //end game if user inputs nothing
 
         }
 
         //we are done with the game! So, summarize all the play that has transpired and exit.
-        this.gameStats.summarizeGame();
-        System.out.println("Thanks for playing!");
+//        this.gameStats.summarizeGame();
+//        System.out.println("Thanks for playing!");
     }
 
     /* 
@@ -152,10 +160,11 @@ public class BoggleGame {
         //step 3. find all legal words on the board, given the dictionary and grid arrangement.
         Map<String, ArrayList<Position>> allWords = new HashMap<String, ArrayList<Position>>();
         findAllWords(allWords, boggleDict, grid);
+        System.out.println("round");
         //step 4. allow the user to try to find some words on the grid
-        humanMove(grid, allWords);
-        //step 5. allow the computer to identify remaining words
-        computerMove(allWords);
+//        humanMove(grid, allWords);
+//        //step 5. allow the computer to identify remaining words
+//        computerMove(allWords);
     }
 
     /*
@@ -352,5 +361,18 @@ public class BoggleGame {
                 gameStats.addWord(i, BoggleStats.Player.Computer);
             }
         }
+    }
+
+    /**
+     * This method checks if the game has received all the information necessary to begin.
+     * @return Returns true if the game is ready to begin and false otherwise
+     */
+    public boolean ready() { // the game is ready to start iff the choiceProcessor is fully populated
+        for (String info : this.choiceProcessor.values()) { // go through each choice in choiceProcessor
+            if (info.equals("")) { // if a choice has not been made, the game is not ready to begin
+                return false;
+            }
+        }
+        return true; // if all choices have been made, the game is ready to start
     }
 }

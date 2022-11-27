@@ -1,10 +1,13 @@
+import boggle.BoggleGame;
+import command.Command;
+import command.RedirectScreenCommand;
+import command.UpdateUserChoiceCommand;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 
-import java.util.LinkedList;
 import java.util.Queue;
 import java.util.PriorityQueue;
 import java.util.Comparator;
@@ -38,6 +41,12 @@ public class CommandCenter implements EventHandler<ActionEvent> {
         }
     }
     // handle method which processes commands
+
+    /**
+     * the handle() method processes events triggered by the user in the gameWindow application in order to
+     * encapsulate these events into specific commands
+     * @param actionEvent the event that was set off (e.g. button was pressed)
+     */
     @Override
     public void handle(ActionEvent actionEvent) {
         Node event = (Node) actionEvent.getSource();
@@ -51,9 +60,11 @@ public class CommandCenter implements EventHandler<ActionEvent> {
             String title = gameWindow.sceneTitles.get(transition);
             this.setCommand(new RedirectScreenCommand(stage, transition, title));
             this.execute();
-            if (idVariables.length == 3) { // Store info
-                String choice = idVariables[2];
-                this.setCommand(new ProcessInformationCommand(stage, choice));
+            if (idVariables.length > 2) { // Store info
+                BoggleGame game = gameWindow.game;
+                String choiceType = idVariables[2];
+                String choice = idVariables[3];
+                this.setCommand(new UpdateUserChoiceCommand(stage, game, choiceType, choice));
                 this.execute();
             }
         }
