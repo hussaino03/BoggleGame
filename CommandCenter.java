@@ -1,5 +1,3 @@
-import javafx.event.Event;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.event.ActionEvent;
@@ -8,6 +6,8 @@ import javafx.scene.Node;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.PriorityQueue;
+import java.util.Comparator;
 
 public class CommandCenter implements EventHandler<ActionEvent> {
 
@@ -15,9 +15,16 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     private gameWindow gameWindow;
     private Queue<Command> commandQueue;
 
+    private Comparator<Command> commandComparator = new Comparator<Command>() {
+        @Override
+        public int compare(Command c1, Command c2) {
+            return 1;
+        }
+    };
+
     public CommandCenter(gameWindow g) {
         this.gameWindow = g;
-        commandQueue = new LinkedList<Command>();
+        commandQueue = new PriorityQueue<Command>(commandComparator);
     }
 
     private void setCommand(Command command) {
@@ -26,8 +33,8 @@ public class CommandCenter implements EventHandler<ActionEvent> {
 
     private void execute() {
         for (Command c : this.commandQueue) {
-            c.execute();
             commandQueue.remove(c);
+            c.execute();
         }
     }
     // handle method which processes commands
@@ -35,6 +42,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     public void handle(ActionEvent actionEvent) {
         Node event = (Node) actionEvent.getSource();
         String Id = event.getId();
+        System.out.println(Id);
         if (Id.contains(", ") && Id.length() >= 3) {
             String[] idVariables = Id.split(", ");
             String newScene = idVariables[1];
