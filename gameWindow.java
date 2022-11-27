@@ -19,6 +19,15 @@ public class gameWindow extends Application {
     HashMap<Scene, String> sceneTitles = new HashMap<Scene, String>();
     Stage primaryStage;
     private TableView table = new TableView();
+    private int roundNumber;
+    private int roundScore;
+    private int totalScore;
+    private int compScore;
+
+    public int getRoundNumber() {return roundNumber;}
+    public int getRoundScore() {return roundScore;}
+    public int getTotalScore() {return totalScore;}
+    public int getCompScore() {return compScore;}
     public static void main(String[] args) {
         launch(args);
     }
@@ -95,6 +104,23 @@ public class gameWindow extends Application {
         howToPlayLayout.add(gameInstructions, 0, 0);
         howToPlayLayout.add(goBackFromHTPButton, 0, 1);
 
+        // Normal Gamemode Scene and Layout
+
+        GridPane normalGamemodeLayout =  new GridPane();
+        normalGamemodeLayout.setPadding(new Insets(10,10,10,10));
+        normalGamemodeLayout.setVgap(20);
+        normalGamemodeLayout.setHgap(20);
+        Scene normalGamemodeScene = new Scene(normalGamemodeLayout, 700, 700);
+        scenes.put("Normal Gamemode Scene", normalGamemodeScene);
+        sceneTitles.put(normalGamemodeScene, "Normal Gamemode");
+        Label normalGamemodeStats = new Label("Round Number: " + roundNumber +" | Round Score: " + roundScore+ " | " +
+                "Total Score: " + totalScore + " | Computer Score: " + compScore);
+        Button goBackFromNormalGamemode = new Button("Return to Main Menu [R]");
+        goBackFromNormalGamemode.setId("Return to Main Menu, Main Scene");
+        normalGamemodeLayout.add(normalGamemodeStats, 0, 0);
+        normalGamemodeLayout.add(goBackFromNormalGamemode, 0, 1);
+
+
         // Setup for stats scene and layout
 
         //set table to non-editable
@@ -149,13 +175,13 @@ public class gameWindow extends Application {
 
         // add buttons to grid selection layout
         Button fourByFourButton = new Button("4x4 [1]");
-        fourByFourButton.setId("Four By Four Button, Main Scene, four");
+        fourByFourButton.setId("Four By Four Button, Normal Gamemode Scene, four");
 
         Button fiveByFiveButton = new Button("5x5 [2]");
-        fiveByFiveButton.setId("Five By Five Button, Main Scene, five");
+        fiveByFiveButton.setId("Five By Five Button, Normal Gamemode Scene, five");
 
         Button sixBysixButton = new Button("6x6 [3]");
-        sixBysixButton.setId("Four By Four Button, Main Scene, six");
+        sixBysixButton.setId("Four By Four Button, Normal Gamemode Scene, six");
 
         Button goBackFromGridSelectionButton = new Button("Return to Main Menu [R]");
         goBackFromGridSelectionButton.setId("Return to Main Menu, Main Scene");
@@ -172,6 +198,7 @@ public class gameWindow extends Application {
         timedModeButton.setOnAction(commandCenter);
         goBackFromHTPButton.setOnAction(commandCenter);
         goBackFromStatsButton.setOnAction(commandCenter);
+        goBackFromNormalGamemode.setOnAction(commandCenter);
         goBackFromGridSelectionButton.setOnAction(commandCenter);
         fourByFourButton.setOnAction(commandCenter);
         fiveByFiveButton.setOnAction(commandCenter);
