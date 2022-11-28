@@ -1,10 +1,14 @@
+import boggle.BoggleStats;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import java.util.HashMap;
@@ -19,6 +23,7 @@ public class gameWindow extends Application {
     HashMap<Scene, String> sceneTitles = new HashMap<Scene, String>();
     Stage primaryStage;
     private TableView table = new TableView();
+    BoggleStats stat = new BoggleStats();
     public static void main(String[] args) {
         launch(args);
     }
@@ -41,6 +46,7 @@ public class gameWindow extends Application {
         statsButton.setId("Stats, Stats Scene");
 
         Button normalModeButton = new Button("Normal Mode [Q]");
+        // Grid Selection Scene (change it to this)
         normalModeButton.setId("Normal Mode, Grid Selection Scene, normal");
 
         Button timedModeButton = new Button("Timed Mode [W]");
@@ -123,6 +129,86 @@ public class gameWindow extends Application {
         scenes.put("Stats Scene", statsScene);
         sceneTitles.put(statsScene, "Stats");
 
+        // Start Normal Game Mode Round Summary Screen
+        // -----------------------------------------------------------------------------------------------------------//
+        Button goBackFromGameRoundSummaryButton = new Button("Return to Main Menu [R]");
+        goBackFromGameRoundSummaryButton.setId("Return to Main Menu, Main Scene");
+
+        // add grid panels
+        GridPane normalSummaryLayout =  new GridPane();
+        normalSummaryLayout.setPadding(new Insets(10,10,10,10));
+        normalSummaryLayout.setVgap(20);
+        normalSummaryLayout.setHgap(20);
+        normalSummaryLayout.add(goBackFromGameRoundSummaryButton, 0, 2);
+
+        // create a new scene
+        Scene normalSummary = new Scene(normalSummaryLayout, 700, 700);
+        scenes.put("Normal Game Mode Round Summary Scene", normalSummary);
+        sceneTitles.put(normalSummary, "Normal Game Mode Round Summary");
+
+        Label IntroText = new Label("The stats for the normal game mode round summary screen are displayed as follows:");
+        IntroText.setTextAlignment(TextAlignment.CENTER);
+
+        normalSummaryLayout.add(IntroText, 0, 0);
+
+        Label pscore = new Label(stat.PScore());
+        Label cscore = new Label(stat.CScore());
+        Label csize = new Label(stat.computerwordsSize());
+        Label psize = new Label(stat.playerwordsSize());
+        Label cwords = new Label(stat.computerwords());
+        Label pwords = new Label(stat.playerwords());
+
+
+        normalSummaryLayout.add(pscore, 2, 4);
+        normalSummaryLayout.add(cscore, 2, 5);
+        normalSummaryLayout.add(csize, 2, 6);
+        normalSummaryLayout.add(psize, 2, 7);
+        normalSummaryLayout.add(cwords, 2, 8);
+        normalSummaryLayout.add(pwords, 2, 9);
+
+        // -----------------------------------------------------------------------------------------------------------//
+
+        // Start Normal Game Mode Game Summary Screen
+        // -----------------------------------------------------------------------------------------------------------//
+
+        Button goBackFromGameRoundButton = new Button("Return to Main Menu [R]");
+        goBackFromGameRoundButton.setId("Return to Main Menu, Main Scene");
+
+        // add grid panels
+        GridPane normalEndLayout =  new GridPane();
+        normalEndLayout.setPadding(new Insets(10,10,10,10));
+        normalEndLayout.setVgap(20);
+        normalEndLayout.setHgap(20);
+
+        normalEndLayout.add(goBackFromGameRoundButton, 0, 2);
+
+        // create a new scene
+        Scene normalEndScene = new Scene(normalEndLayout, 700, 700);
+        scenes.put("Normal Game Mode Game Summary Scene", normalEndScene);
+        sceneTitles.put(normalEndScene, "Normal Game Mode Game Summary");
+
+        Label IntrText = new Label("The stats for the normal game mode Game summary screen are displayed as follows:");
+        IntrText.setTextAlignment(TextAlignment.CENTER);
+
+        normalEndLayout.add(IntrText, 0, 0);
+
+        Label tRound = new Label(stat.Totalround());
+        Label pscoreT = new Label(stat.pScoreTotal());
+        Label cscoreT = new Label(stat.cScoreTotal());
+        Label pAverage = new Label(stat.pAverageWords());
+        Label cAverage = new Label(stat.cAverageWords());
+
+
+        normalEndLayout.add(tRound, 2, 4);
+        normalEndLayout.add(pscoreT, 2, 5);
+        normalEndLayout.add(cscoreT, 2, 6);
+        normalEndLayout.add(pAverage, 2, 8);
+        normalEndLayout.add(cAverage, 2, 9);
+
+
+        // -----------------------------------------------------------------------------------------------------------//
+
+
         // Add button to stats layout
         Button goBackFromStatsButton = new Button("Return to Main Menu [R]");
         goBackFromStatsButton.setId("Return to Main Menu, Main Scene");
@@ -171,11 +257,13 @@ public class gameWindow extends Application {
         normalModeButton.setOnAction(commandCenter);
         timedModeButton.setOnAction(commandCenter);
         goBackFromHTPButton.setOnAction(commandCenter);
+        goBackFromGameRoundButton.setOnAction(commandCenter);
         goBackFromStatsButton.setOnAction(commandCenter);
         goBackFromGridSelectionButton.setOnAction(commandCenter);
         fourByFourButton.setOnAction(commandCenter);
         fiveByFiveButton.setOnAction(commandCenter);
         sixBysixButton.setOnAction(commandCenter);
+        goBackFromGameRoundSummaryButton.setOnAction(commandCenter);
 
         // Allow buttons to be fired through keyboard to make the program more accessible
         mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {

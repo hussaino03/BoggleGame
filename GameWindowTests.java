@@ -26,4 +26,11 @@ public class GameWindowTests {
         testButton.fire();
         assertDoesNotThrow(() -> {});
     }
+    @Test
+    void TestStatAttributes() {
+        gameWindow w = new gameWindow();
+        assertEquals(Character.getNumericValue(w.stat.CScore().charAt(w.stat.CScore().length() - 1)), 0);
+        assertEquals(Character.getNumericValue(w.stat.PScore().charAt(w.stat.PScore().length() - 1)), 0);
+
+    }
 }
