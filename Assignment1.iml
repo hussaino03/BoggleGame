@@ -34,6 +34,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="junit.jupiter" level="project" />
-    <orderEntry type="library" name="javafx-swt" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>
