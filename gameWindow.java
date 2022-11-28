@@ -1,3 +1,4 @@
+import boggle.BoggleGame;
 import boggle.BoggleStats;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -23,22 +24,30 @@ public class gameWindow extends Application {
     HashMap<Scene, String> sceneTitles = new HashMap<Scene, String>();
     Stage primaryStage;
     private TableView table = new TableView();
-     private int roundNumber;
+    public BoggleGame game;
+    private int roundNumber;
     private int roundScore;
     private int totalScore;
     private int compScore;
-
     public int getRoundNumber() {return roundNumber;}
     public int getRoundScore() {return roundScore;}
     public int getTotalScore() {return totalScore;}
     public int getCompScore() {return compScore;}
     BoggleStats stat = new BoggleStats();
+
     public static void main(String[] args) {
         launch(args);
     }
 
     /**
      * The start() method makes the window run
+     * Note that button IDs have the following format:
+     * "buttonName, transitionScene, choiceType, choice, gameState"
+     * buttonName refers to what button this is (e.g "Normal Mode")
+     * transitionScene refers to which scene to transition to (e.g. "Grid Selection Scene")
+     * choiceType refers to what kind of choice needs to be updated (e.g. "Game Mode")
+     * choice refers to the choice made by the user of a specific choiceType (e.g. "normal")
+     * gameState refers to how the gameState should be changed (e.g. "start")
      * @param stage The game window to be displayed
      * @throws Exception Thrown if game does not run
      */
@@ -46,6 +55,8 @@ public class gameWindow extends Application {
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
         stage.setTitle("Main Menu"); // Stage setup
+
+        this.game = new BoggleGame(); // Ready the game for the player
 
         // Four different buttons the user can select
         Button howToPlayButton = new Button("How to Play [A]");
@@ -55,11 +66,10 @@ public class gameWindow extends Application {
         statsButton.setId("Stats, Stats Scene");
 
         Button normalModeButton = new Button("Normal Mode [Q]");
-        // Grid Selection Scene (change it to this)
-        normalModeButton.setId("Normal Mode, Grid Selection Scene, normal");
+        normalModeButton.setId("Normal Mode, Grid Selection Scene, Game Mode, normal");
 
         Button timedModeButton = new Button("Timed Mode [W]");
-        timedModeButton.setId("Timed Mode, Grid Selection Scene, timed");
+        timedModeButton.setId("Timed Mode, Grid Selection Scene, Game Mode, normal");
 
         // Setup for the main scene and layout [Contains the four buttons]
         GridPane mainLayout =  new GridPane();
@@ -263,20 +273,20 @@ public class gameWindow extends Application {
 
         // add buttons to grid selection layout
         Button fourByFourButton = new Button("4x4 [1]");
-        fourByFourButton.setId("Four By Four Button, Normal Gamemode, four");
+        fourByFourButton.setId("Four By Four Button, Main Scene, Grid Size, four, start");
 
         Button fiveByFiveButton = new Button("5x5 [2]");
-        fiveByFiveButton.setId("Five By Five Button, Normal Gamemode, five");
+        fiveByFiveButton.setId("Five By Five Button, Main Scene, Grid Size, five, start");
 
-        Button sixBysixButton = new Button("6x6 [3]");
-        sixBysixButton.setId("Four By Four Button, Normal Gamemode, six");
+        Button sixBySixButton = new Button("6x6 [3]");
+        sixBySixButton.setId("Four By Four Button, Main Scene, Grid Size, six, start");
 
         Button goBackFromGridSelectionButton = new Button("Return to Main Menu [R]");
         goBackFromGridSelectionButton.setId("Return to Main Menu, Main Scene");
         gridSelectionLayout.add(goBackFromGridSelectionButton, 5, 5);
         gridSelectionLayout.add(fourByFourButton, 5, 2);
         gridSelectionLayout.add(fiveByFiveButton, 5, 3);
-        gridSelectionLayout.add(sixBysixButton, 5, 4);
+        gridSelectionLayout.add(sixBySixButton, 5, 4);
 
         // Send all button clicks to commandCenter for these commands to be handled
         CommandCenter commandCenter = new CommandCenter(this);
@@ -291,7 +301,7 @@ public class gameWindow extends Application {
         goBackFromGridSelectionButton.setOnAction(commandCenter);
         fourByFourButton.setOnAction(commandCenter);
         fiveByFiveButton.setOnAction(commandCenter);
-        sixBysixButton.setOnAction(commandCenter);
+        sixBySixButton.setOnAction(commandCenter);
         goBackFromGameRoundSummaryButton.setOnAction(commandCenter);
 
         // Allow buttons to be fired through keyboard to make the program more accessible
@@ -316,8 +326,18 @@ public class gameWindow extends Application {
 
         gridSelectionScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent keyEvent) {
-                switch (keyEvent.getCode()) {
-                    case R: goBackFromGridSelectionButton.fire();
+                char c = keyEvent.getText().charAt(0);
+                if (keyEvent.getCode() == KeyCode.R) {
+                    goBackFromGridSelectionButton.fire();
+                }
+                else if (c == '1') {
+                    fourByFourButton.fire();
+                }
+                else if (c == '2') {
+                    fiveByFiveButton.fire();
+                }
+                else if (c == '3') {
+                    sixBySixButton.fire();
                 }
             }
         });
@@ -341,5 +361,6 @@ public class gameWindow extends Application {
         // Set the scene to the main scene when first running the game
         stage.setScene(mainScene);
         stage.show();
+
     }
 }
