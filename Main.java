@@ -10,6 +10,8 @@ public class Main {
      **/
     public static void main(String[] args) {
         BoggleGame b = new BoggleGame();
+        b.choiceProcessor.put("Game Mode", "normal");
+        b.choiceProcessor.put("Grid Size", "four");
 //        b.giveInstructions();
         b.playGame();
     }
