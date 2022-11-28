@@ -6,8 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 
-import java.util.LinkedList;
 import java.util.Queue;
+import java.util.PriorityQueue;
+import java.util.Comparator;
 
 /**
  * CommandCenter serves the purpose of an Invoker in the Command Design Pattern. The CommandCenter class is
@@ -26,8 +27,12 @@ public class CommandCenter implements EventHandler<ActionEvent> {
      */
     private Queue<Command> commandQueue;
 
+    private Comparator<Command> commandComparator;
+
     /**
-     * Constructor for the CommandCenter class.
+     * Constructor for the CommandCenter class. Initializes a comparator which determines the order of
+     * execution of commands, so that commandQueue can follow this order. The order is as follows:
+     * RedirectScreenCommand -> UpdateUserChoiceCommand -> StartGameCommand
      * @param g The application from which CommandCenter should receive events to process.
      */
     public CommandCenter(gameWindow g) {
@@ -35,7 +40,30 @@ public class CommandCenter implements EventHandler<ActionEvent> {
         Initialize CommandCenter's attributes
          */
         this.gameWindow = g;
-        commandQueue = new LinkedList<Command>();
+        this.commandComparator = new Comparator<Command>() {
+            @Override
+            public int compare(Command c1, Command c2) {
+                if (c1.getClass().equals(c2.getClass())) {
+                    return 0;
+                }
+                else if (c1 instanceof RedirectScreenCommand) {
+                    return -1;
+                }
+                else if (c1 instanceof UpdateUserChoiceCommand) {
+                    if (c2 instanceof RedirectScreenCommand) {
+                        return 1;
+                    }
+                    else if (c2 instanceof StartGameCommand) {
+                        return -1;
+                    }
+                }
+                else if (c1 instanceof StartGameCommand) {
+                    return 1;
+                }
+                return 0;
+            }
+        };
+        commandQueue = new PriorityQueue<Command>(commandComparator);
     }
 
     /**
@@ -50,8 +78,9 @@ public class CommandCenter implements EventHandler<ActionEvent> {
      * Execute all commands in the commandQueue.
      */
     private void execute() {
-        for (Command c : this.commandQueue) {
-            commandQueue.remove(c);
+        while (!(commandQueue.isEmpty())) {
+            Command c = commandQueue.poll();
+            System.out.println(c.getClass());
             c.execute();
         }
     }
@@ -77,10 +106,9 @@ public class CommandCenter implements EventHandler<ActionEvent> {
             if (idVariables.length == 2) { // if ID only has two attributes, it only has info
                 // for a RedirectScreenCommand
                 this.setCommand(new RedirectScreenCommand(stage, transition, title));
-                this.execute(); // Execute RedirectScreenCommand
             }
 
-            if (idVariables.length == 4) { // If ID has four attributes, it has info for a RedirectScreenCommand
+            else if (idVariables.length == 4) { // If ID has four attributes, it has info for a RedirectScreenCommand
                 // and an UpdateUserChoiceCommand
 
                 // Process info for an UpdateUserChoiceCommand
@@ -89,14 +117,10 @@ public class CommandCenter implements EventHandler<ActionEvent> {
                 String choice = idVariables[3];
 
                 this.setCommand(new RedirectScreenCommand(stage, transition, title));
-                this.execute(); // Execute RedirectScreenCommand
-
                 this.setCommand(new UpdateUserChoiceCommand(stage, game, choiceType, choice));
-                this.execute(); // Execute UpdateUserChoiceCommand
-
             }
 
-            if (idVariables.length == 5) { // If ID has five attributes, it has info for a RedirectScreenCommand,
+            else if (idVariables.length == 5) { // If ID has five attributes, it has info for a RedirectScreenCommand,
                 // an UpdateUserChoiceCommand and a StartGameCommand
 
                 // Process info for an UpdateUserChoiceCommand
@@ -104,17 +128,11 @@ public class CommandCenter implements EventHandler<ActionEvent> {
                 String choiceType = idVariables[2];
                 String choice = idVariables[3];
 
-
-                this.setCommand(new RedirectScreenCommand(stage, transition, title));
-                this.execute(); // Execute RedirectScreenCommand
-
                 this.setCommand(new UpdateUserChoiceCommand(stage, game, choiceType, choice));
-                this.execute(); // Execute UpdateUserChoiceCommand
-
                 this.setCommand(new StartGameCommand(game));
-                this.execute(); // Execute StartGameCommand
-
+                this.setCommand(new RedirectScreenCommand(stage, transition, title));
             }
+            this.execute(); // Execute all commands once information has been processed
         }
         }
     }
