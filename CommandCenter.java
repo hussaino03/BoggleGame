@@ -25,7 +25,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     /**
      * A queue of commands processed by the CommandCenter to be executed upon request.
      */
-    private Queue<Command> commandQueue;
+    public Queue<Command> commandQueue;
 
     private Comparator<Command> commandComparator;
 
@@ -117,7 +117,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
                 String choice = idVariables[3];
 
                 this.setCommand(new RedirectScreenCommand(stage, transition, title));
-                this.setCommand(new UpdateUserChoiceCommand(stage, game, choiceType, choice));
+                this.setCommand(new UpdateUserChoiceCommand(game, choiceType, choice));
             }
 
             else if (idVariables.length == 5) { // If ID has five attributes, it has info for a RedirectScreenCommand,
@@ -128,7 +128,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
                 String choiceType = idVariables[2];
                 String choice = idVariables[3];
 
-                this.setCommand(new UpdateUserChoiceCommand(stage, game, choiceType, choice));
+                this.setCommand(new UpdateUserChoiceCommand(game, choiceType, choice));
                 this.setCommand(new StartGameCommand(game));
                 this.setCommand(new RedirectScreenCommand(stage, transition, title));
             }
