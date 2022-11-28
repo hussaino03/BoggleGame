@@ -33,4 +33,12 @@ public class GameWindowTests {
         assertEquals(Character.getNumericValue(w.stat.PScore().charAt(w.stat.PScore().length() - 1)), 0);
 
     }
+    @Test
+    void initialScoreValues() {
+        gameWindow gameWindow = new gameWindow();
+        assertEquals(0, gameWindow.getRoundScore());
+        assertEquals(0, gameWindow.getCompScore());
+        assertEquals(0, gameWindow.getTotalScore());
+        assertEquals(0, gameWindow.getRoundNumber());
+    }
 }
