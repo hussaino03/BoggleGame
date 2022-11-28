@@ -26,4 +26,13 @@ public class GameWindowTests {
         testButton.fire();
         assertDoesNotThrow(() -> {});
     }
+
+    @Test
+    void initialScoreValues() {
+        gameWindow gameWindow = new gameWindow();
+        assertEquals(0, gameWindow.getRoundScore());
+        assertEquals(0, gameWindow.getCompScore());
+        assertEquals(0, gameWindow.getTotalScore());
+        assertEquals(0, gameWindow.getRoundNumber());
+    }
 }
