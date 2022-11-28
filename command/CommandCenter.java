@@ -1,3 +1,5 @@
+package command;
+
 import boggle.BoggleGame;
 import command.*;
 import javafx.stage.Stage;
@@ -9,35 +11,36 @@ import javafx.scene.Node;
 import java.util.Queue;
 import java.util.PriorityQueue;
 import java.util.Comparator;
+import src.*;
 
 /**
- * CommandCenter serves the purpose of an Invoker in the Command Design Pattern. The CommandCenter class is
+ * command.CommandCenter serves the purpose of an Invoker in the Command Design Pattern. The command.CommandCenter class is
  * responsible for processing events triggered by the user in the application. These events are encapsulated
- * into commands and executed within the CommandCenter.
+ * into commands and executed within the command.CommandCenter.
  */
 
 public class CommandCenter implements EventHandler<ActionEvent> {
     /**
-     * The application from which the CommandCenter processes events.
+     * The application from which the command.CommandCenter processes events.
      */
     private gameWindow gameWindow;
 
     /**
-     * A queue of commands processed by the CommandCenter to be executed upon request.
+     * A queue of commands processed by the command.CommandCenter to be executed upon request.
      */
     public Queue<Command> commandQueue;
 
     private Comparator<Command> commandComparator;
 
     /**
-     * Constructor for the CommandCenter class. Initializes a comparator which determines the order of
+     * Constructor for the command.CommandCenter class. Initializes a comparator which determines the order of
      * execution of commands, so that commandQueue can follow this order. The order is as follows:
      * RedirectScreenCommand -> UpdateUserChoiceCommand -> StartGameCommand
-     * @param g The application from which CommandCenter should receive events to process.
+     * @param g The application from which command.CommandCenter should receive events to process.
      */
     public CommandCenter(gameWindow g) {
         /*
-        Initialize CommandCenter's attributes
+        Initialize command.CommandCenter's attributes
          */
         this.gameWindow = g;
         this.commandComparator = new Comparator<Command>() {
@@ -86,7 +89,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     }
 
     /**
-     * the handle() method processes events triggered by the user in the gameWindow application in order to
+     * the handle() method processes events triggered by the user in the src.gameWindow application in order to
      * encapsulate these events into specific commands
      * @param actionEvent the event that was set off (e.g. button was pressed)
      */

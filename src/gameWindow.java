@@ -1,28 +1,29 @@
+package src;
+
 import boggle.BoggleGame;
 import boggle.BoggleStats;
+import command.CommandCenter;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import java.util.HashMap;
 
 /**
- * gameWindow controls the flow of the program
+ * src.gameWindow controls the flow of the program
  */
 
 public class gameWindow extends Application {
 
-    HashMap<String, Scene> scenes = new HashMap<String, Scene>();
-    HashMap<Scene, String> sceneTitles = new HashMap<Scene, String>();
-    Stage primaryStage;
+    public HashMap<String, Scene> scenes = new HashMap<String, Scene>();
+    public HashMap<Scene, String> sceneTitles = new HashMap<Scene, String>();
+    public Stage primaryStage;
     private TableView table = new TableView();
     public BoggleGame game;
     private int roundNumber;
@@ -33,7 +34,7 @@ public class gameWindow extends Application {
     public int getRoundScore() {return roundScore;}
     public int getTotalScore() {return totalScore;}
     public int getCompScore() {return compScore;}
-    BoggleStats stat = new BoggleStats();
+    public BoggleStats stat = new BoggleStats();
 
     public static void main(String[] args) {
         launch(args);
@@ -273,13 +274,13 @@ public class gameWindow extends Application {
 
         // add buttons to grid selection layout
         Button fourByFourButton = new Button("4x4 [1]");
-        fourByFourButton.setId("Four By Four Button, Main Scene, Grid Size, four, start");
+        fourByFourButton.setId("Four By Four Button, Normal Gamemode Scene, Grid Size, four, start");
 
         Button fiveByFiveButton = new Button("5x5 [2]");
-        fiveByFiveButton.setId("Five By Five Button, Main Scene, Grid Size, five, start");
+        fiveByFiveButton.setId("Five By Five Button, Normal Gamemode Scene, Grid Size, five, start");
 
         Button sixBySixButton = new Button("6x6 [3]");
-        sixBySixButton.setId("Four By Four Button, Main Scene, Grid Size, six, start");
+        sixBySixButton.setId("Four By Four Button, Normal Gamemode Scene, Grid Size, six, start");
 
         Button goBackFromGridSelectionButton = new Button("Return to Main Menu [R]");
         goBackFromGridSelectionButton.setId("Return to Main Menu, Main Scene");

@@ -1,3 +1,5 @@
+package tests;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;

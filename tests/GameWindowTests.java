@@ -1,13 +1,17 @@
+package tests;
+
 import boggle.BoggleGame;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import javafx.stage.Stage;
 import javafx.concurrent.Task;
 import command.*;
+import src.*;
 
 
 import java.util.Queue;
@@ -38,11 +42,11 @@ public class GameWindowTests {
     void CommandCenterExecute() { // Checks whether command center executes
         // commands in the correct order
         /*
-        Initialize a CommandCenter and command attributes to pass in
+        Initialize a command.CommandCenter and command attributes to pass in
          */
         CommandCenter center = new CommandCenter(new gameWindow());
         Queue<Command> q = center.commandQueue;
-        GridPane layout =  new GridPane();
+        GridPane layout = new GridPane();
         Stage stage = new gameWindow().primaryStage;
         Scene scene = new Scene(layout, 100, 100);
         String string = "";
@@ -69,20 +73,21 @@ public class GameWindowTests {
         assertEquals(q.poll().getClass(), UpdateUserChoiceCommand.class);
         assertEquals(q.poll().getClass(), StartGameCommand.class);
         assertEquals(q.poll().getClass(), StartGameCommand.class);
+    }
 
     @Test
     void TestStatAttributes() {
         gameWindow w = new gameWindow();
-        assertEquals(Character.getNumericValue(w.stat.CScore().charAt(w.stat.CScore().length() - 1)), 0);
-        assertEquals(Character.getNumericValue(w.stat.PScore().charAt(w.stat.PScore().length() - 1)), 0);
+        Assertions.assertEquals(Character.getNumericValue(w.stat.CScore().charAt(w.stat.CScore().length() - 1)), 0);
+        Assertions.assertEquals(Character.getNumericValue(w.stat.PScore().charAt(w.stat.PScore().length() - 1)), 0);
 
     }
     @Test
     void initialScoreValues() {
         gameWindow gameWindow = new gameWindow();
-        assertEquals(0, gameWindow.getRoundScore());
-        assertEquals(0, gameWindow.getCompScore());
-        assertEquals(0, gameWindow.getTotalScore());
-        assertEquals(0, gameWindow.getRoundNumber());
+        Assertions.assertEquals(0, gameWindow.getRoundScore());
+        Assertions.assertEquals(0, gameWindow.getCompScore());
+        Assertions.assertEquals(0, gameWindow.getTotalScore());
+        Assertions.assertEquals(0, gameWindow.getRoundNumber());
     }
 }
