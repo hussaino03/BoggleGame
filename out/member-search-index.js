@@ -1,1 +1,0 @@
-memberSearchIndex = [{"p":"<Unnamed>","c":"gameWindow","l":"gameWindow()","u":"%3Cinit%3E()"},{"p":"<Unnamed>","c":"gameWindow","l":"main(String[])","u":"main(java.lang.String[])"},{"p":"<Unnamed>","c":"gameWindow","l":"start(Stage)","u":"start(javafx.stage.Stage)"}];updateSearchResults();
