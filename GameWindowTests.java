@@ -34,7 +34,6 @@ public class GameWindowTests {
         assertDoesNotThrow(() -> {});
     }
 
-
     @Test
     void CommandCenterExecute() { // Checks whether command center executes
         // commands in the correct order
@@ -70,5 +69,20 @@ public class GameWindowTests {
         assertEquals(q.poll().getClass(), UpdateUserChoiceCommand.class);
         assertEquals(q.poll().getClass(), StartGameCommand.class);
         assertEquals(q.poll().getClass(), StartGameCommand.class);
+
+    @Test
+    void TestStatAttributes() {
+        gameWindow w = new gameWindow();
+        assertEquals(Character.getNumericValue(w.stat.CScore().charAt(w.stat.CScore().length() - 1)), 0);
+        assertEquals(Character.getNumericValue(w.stat.PScore().charAt(w.stat.PScore().length() - 1)), 0);
+
+    }
+    @Test
+    void initialScoreValues() {
+        gameWindow gameWindow = new gameWindow();
+        assertEquals(0, gameWindow.getRoundScore());
+        assertEquals(0, gameWindow.getCompScore());
+        assertEquals(0, gameWindow.getTotalScore());
+        assertEquals(0, gameWindow.getRoundNumber());
     }
 }
