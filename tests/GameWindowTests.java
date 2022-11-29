@@ -24,7 +24,7 @@ public class GameWindowTests {
     void blankButtonIdTest() {
         Button testButton = new Button();
         testButton.setId("");
-        testButton.setOnAction(new CommandCenter(new gameWindow()));
+        testButton.setOnAction(CommandCenter.getInstance(new gameWindow()));
         testButton.fire();
         assertDoesNotThrow(() -> {});
     }
@@ -33,7 +33,7 @@ public class GameWindowTests {
     void shortButtonIdTest() {
         Button testButton = new Button();
         testButton.setId(", ");
-        testButton.setOnAction(new CommandCenter(new gameWindow()));
+        testButton.setOnAction(CommandCenter.getInstance(new gameWindow()));
         testButton.fire();
         assertDoesNotThrow(() -> {});
     }
@@ -44,7 +44,7 @@ public class GameWindowTests {
         /*
         Initialize a command.CommandCenter and command attributes to pass in
          */
-        CommandCenter center = new CommandCenter(new gameWindow());
+        CommandCenter center = CommandCenter.getInstance(new gameWindow());
         Queue<Command> q = center.commandQueue;
         GridPane layout = new GridPane();
         Stage stage = new gameWindow().primaryStage;

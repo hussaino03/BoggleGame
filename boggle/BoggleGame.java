@@ -61,7 +61,7 @@ public class BoggleGame {
         this.choiceProcessor.put("Grid Size", "");
         this.gameStats = new BoggleStats();
         this.window = w;
-        this.commandCenter = new CommandCenter(window);
+        this.commandCenter = CommandCenter.getInstance(window);
     }
 
     /*
@@ -187,12 +187,7 @@ public class BoggleGame {
         String Id = letters + ", " + size + ", " + title;
         System.out.println(Id);
 
-        Thread thread = new Thread(()->{
-            Platform.runLater(()->{
-                commandCenter.handle(Id);
-            });
-        });
-         thread.start();
+        commandCenter.handle(Id);
 
 
         System.out.println("Done");

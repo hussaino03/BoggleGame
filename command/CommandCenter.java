@@ -32,12 +32,18 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     private Comparator<Command> commandComparator;
 
     /**
+     * Private instance of CommandCenter following the Singleton pattern
+     */
+
+    private static CommandCenter instance = null;
+
+    /**
      * Constructor for the command.CommandCenter class. Initializes a comparator which determines the order of
      * execution of commands, so that commandQueue can follow this order. The order is as follows:
      * RedirectScreenCommand -> UpdateUserChoiceCommand -> StartGameCommand -> DisplayGridElementsCommand
      * @param g The application from which command.CommandCenter should receive events to process.
      */
-    public CommandCenter(gameWindow g) {
+    private CommandCenter(gameWindow g) {
         /*
         Initialize command.CommandCenter's attributes
          */
@@ -93,9 +99,8 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     /**
      * Execute all commands in the commandQueue.
      */
-    public void execute() {
+    private void execute() {
         while (!(commandQueue.isEmpty())) {
-//            System.out.println(Thread.currentThread().getName());
             Command c = commandQueue.poll();
             System.out.println(c.getClass());
             c.execute();
@@ -120,8 +125,6 @@ public class CommandCenter implements EventHandler<ActionEvent> {
      * @param Id The id of the event to be processed
      */
     public void handle(String Id) {
-//        System.out.println(Thread.currentThread().getName());
-//        System.out.println(Id);
         if (Id.contains(", ") && Id.length() >= 3) { // ID is not blank and is of right format
             String[] idVariables = Id.split(", "); // Split the ID into its variables
             System.out.println(idVariables.length);
@@ -171,6 +174,13 @@ public class CommandCenter implements EventHandler<ActionEvent> {
             }
             this.execute(); // Execute all commands once information has been processed
         }
+    }
+
+    public static synchronized CommandCenter getInstance(gameWindow window) {
+        if (instance == null) {
+            instance = new CommandCenter(window);
+        }
+        return instance;
     }
     }
 

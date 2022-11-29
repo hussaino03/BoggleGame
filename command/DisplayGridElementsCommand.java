@@ -1,6 +1,7 @@
 package command;
 
 import boggle.BoggleGrid;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -38,8 +39,12 @@ public class DisplayGridElementsCommand implements Command {
         }
 
         Scene gridScene = new Scene(layout, 700, 700); // create a scene from this layout
-        stage.setScene(gridScene);
-        stage.setTitle(title);
-
+        Thread t = new Thread(()->{
+            Platform.runLater(()->{
+                stage.setScene(gridScene);
+                stage.setTitle(title);
+            });
+        });
+        t.start();
     }
 }

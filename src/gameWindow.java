@@ -294,7 +294,7 @@ public class gameWindow extends Application {
         gridSelectionLayout.add(sixBySixButton, 5, 4);
 
         // Send all button clicks to commandCenter for these commands to be handled
-        CommandCenter commandCenter = new CommandCenter(this);
+        CommandCenter commandCenter = CommandCenter.getInstance(this);
         howToPlayButton.setOnAction(commandCenter);
         statsButton.setOnAction(commandCenter);
         normalModeButton.setOnAction(commandCenter);
