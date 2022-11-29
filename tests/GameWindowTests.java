@@ -96,4 +96,13 @@ public class GameWindowTests {
         Assertions.assertEquals(0, gameWindow.getTotalScore());
         Assertions.assertEquals(0, gameWindow.getRoundNumber());
     }
+    /*
+    Check whether instantiating command center several times always returns the same instance
+     */
+    @Test
+    void comCenterSingleton() {
+        CommandCenter com1 = CommandCenter.getInstance(new gameWindow());
+        CommandCenter com2 = CommandCenter.getInstance(new gameWindow());
+        assertSame(com1, com2);
+    }
 }
