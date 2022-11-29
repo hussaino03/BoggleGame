@@ -2,47 +2,50 @@ package command;
 
 import boggle.BoggleGrid;
 import javafx.application.Platform;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
- * Given a stage and a string of letters, create a scene displaying the letters in
- * a grid and set the stage to this scene
+ * Given a stage and a string of letters, update the current scene to display
+ * the letters in a grid
  */
 public class DisplayGridElementsCommand implements Command {
 
     public String letters;
     public int gridWidth;
-    public String title;
     public Stage stage;
 
-    public DisplayGridElementsCommand(String l, int w, String t, Stage s) {
+    public DisplayGridElementsCommand(String l, Stage s) {
         this.letters = l;
-        this.gridWidth = w; // Can easily add gridHeight for non-square grids but
-        // this is unnecessary for now
-        this.title = t;
+        this.gridWidth = (int) Math.sqrt(l.length());
         this.stage = s;
     }
     @Override
     public void execute() {
         System.out.println(Thread.currentThread().getName());
         System.out.println("Elements displayed");
-        GridPane layout = new GridPane(); // create a grid layout to display the grid
+        BorderPane mainLayout = (BorderPane) stage.getScene().getRoot(); // get the layout of
+        // the current scene to be updated
+        GridPane boardLayout = new GridPane(); // create a layout for the board
+        boardLayout.setHgap(20);
+        boardLayout.setVgap(20);
 
-        for (int i = 0; i < gridWidth; i++) {
-            for (int j=0; j < gridWidth; j++) {
-                Button b = new Button(Character.toString(letters.charAt(i*gridWidth + j)));
-                layout.add(b, j, i);
-            }
-        }
-
-        Scene gridScene = new Scene(layout, 700, 700); // create a scene from this layout
         Thread t = new Thread(()->{
             Platform.runLater(()->{
-                stage.setScene(gridScene);
-                stage.setTitle(title);
+                for (int i = 0; i < gridWidth; i++) {
+                    for (int j=0; j < gridWidth; j++) {
+                        Button b = new Button(Character.toString(letters.charAt(i*gridWidth + j)));
+                        b.setPrefSize(50, 50);
+                        boardLayout.add(b, j, i);
+                    }
+                }
+                boardLayout.setAlignment(Pos.CENTER); // Center the boggle board
+               mainLayout.setCenter(boardLayout);
             });
         });
         t.start();

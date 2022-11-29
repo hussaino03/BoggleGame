@@ -50,20 +50,19 @@ public class GameWindowTests {
         Stage stage = new gameWindow().primaryStage;
         Scene scene = new Scene(layout, 100, 100);
         String string = "";
-        int num = 5;
         BoggleGame game = new BoggleGame(new gameWindow());
 
         /*
         Populate the commandQueue with commands in various orders
          */
-        q.add(new DisplayGridElementsCommand(string, num, string, stage));
+        q.add(new DisplayGridElementsCommand(string, stage));
         q.add(new StartGameCommand(game));
         q.add(new RedirectScreenCommand(stage, scene, string));
-        q.add(new DisplayGridElementsCommand(string, num, string, stage));
+        q.add(new DisplayGridElementsCommand(string, stage));
         q.add(new UpdateUserChoiceCommand(game, string, string));
         q.add(new RedirectScreenCommand(stage, scene, string));
         q.add(new StartGameCommand(game));
-        q.add(new DisplayGridElementsCommand(string, num, string, stage));
+        q.add(new DisplayGridElementsCommand(string, stage));
         q.add(new RedirectScreenCommand(stage, scene, string));
         q.add(new UpdateUserChoiceCommand(game, string, string));
 

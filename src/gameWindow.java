@@ -7,10 +7,14 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -58,7 +62,7 @@ public class gameWindow extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
-        stage.setTitle("Main Menu"); // Stage setup
+        primaryStage.setTitle("Main Menu"); // Stage setup
 
         this.game = new BoggleGame(this); // Ready the game for the player
 
@@ -128,10 +132,8 @@ public class gameWindow extends Application {
         // -----------------------------------------------------------------------------------------------
         // Normal Gamemode Scene and Layout
 
-        GridPane normalGamemodeLayout =  new GridPane();
+        BorderPane normalGamemodeLayout =  new BorderPane();
         normalGamemodeLayout.setPadding(new Insets(10,10,10,10));
-        normalGamemodeLayout.setVgap(20);
-        normalGamemodeLayout.setHgap(20);
         Scene normalGamemodeScene = new Scene(normalGamemodeLayout, 700, 700);
         scenes.put("Normal Gamemode Scene", normalGamemodeScene);
         sceneTitles.put(normalGamemodeScene, "Normal Gamemode");
@@ -139,8 +141,12 @@ public class gameWindow extends Application {
                 "Total Score: " + totalScore + " | Computer Score: " + compScore);
         Button goBackFromNormalGamemode = new Button("Return to Main Menu [R]");
         goBackFromNormalGamemode.setId("Return to Main Menu, Main Scene");
-        normalGamemodeLayout.add(normalGamemodeStats, 0, 0);
-        normalGamemodeLayout.add(goBackFromNormalGamemode, 0, 1);
+        HBox statsBar = new HBox();
+        VBox buttonBar = new VBox();
+        statsBar.getChildren().add(normalGamemodeStats);
+        buttonBar.getChildren().add(goBackFromNormalGamemode);
+        statsBar.setAlignment(Pos.CENTER);
+        normalGamemodeLayout.setTop(statsBar);
         // -------------------------------------------------------------------------------------------------
 
         // Setup for stats scene and layout
@@ -294,7 +300,7 @@ public class gameWindow extends Application {
         gridSelectionLayout.add(sixBySixButton, 5, 4);
 
         // Send all button clicks to commandCenter for these commands to be handled
-        CommandCenter commandCenter = CommandCenter.getInstance(this);
+        this.commandCenter = CommandCenter.getInstance(this);
         howToPlayButton.setOnAction(commandCenter);
         statsButton.setOnAction(commandCenter);
         normalModeButton.setOnAction(commandCenter);
@@ -364,8 +370,8 @@ public class gameWindow extends Application {
         });
 
         // Set the scene to the main scene when first running the game
-        stage.setScene(mainScene);
-        stage.show();
+        primaryStage.setScene(mainScene);
+        primaryStage.show();
 
 //
     }

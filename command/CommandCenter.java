@@ -139,13 +139,18 @@ public class CommandCenter implements EventHandler<ActionEvent> {
                 this.setCommand(new RedirectScreenCommand(stage, transition, title));
             }
 
+            /*
+            This must be modified for the IDs to reflect the fact that a title is no
+            longer needed.
+             */
+
             else if (idVariables.length == 3) { // if ID has three attributes, it has info
                 // for a DisplayGridElementsCommand
                 String letters = idVariables[0];
                 int gridSize = Integer.parseInt(idVariables[1]);
                 String displayTitle = idVariables[2];
 
-                this.setCommand(new DisplayGridElementsCommand(letters, gridSize, displayTitle, stage));
+                this.setCommand(new DisplayGridElementsCommand(letters, stage));
             }
 
             else if (idVariables.length == 4) { // If ID has four attributes, it has info for a RedirectScreenCommand
@@ -173,6 +178,11 @@ public class CommandCenter implements EventHandler<ActionEvent> {
                 this.setCommand(new RedirectScreenCommand(stage, transition, title));
             }
             this.execute(); // Execute all commands once information has been processed
+        }
+        else if (Id.length() >= 16) { // If Id is a single string of characters of length 16 or more,
+            // it represents a DisplayGridElementsCommand
+            this.setCommand(new DisplayGridElementsCommand(Id, this.gameWindow.primaryStage));
+            this.execute();
         }
     }
 

@@ -88,7 +88,7 @@ public class BoggleGame {
      * Gets information from the user to initialize a new Boggle game.
      * It will loop until the user indicates they are done playing.
      */
-    public void playGame() throws InterruptedException {
+    public void playGame() {
         int boardSize = 0;
         while(true){
             String gameMode = choiceProcessor.get("Game Mode");
@@ -163,7 +163,7 @@ public class BoggleGame {
      * words on the board, and the set of words found by the user. These objects are
      * passed by reference from here to many other functions.
      */
-    public void playRound(int size, String letters) throws InterruptedException {
+    public void playRound(int size, String letters) {
         //step 1. initialize the grid
         BoggleGrid grid = new BoggleGrid(size);
         grid.initalizeBoard(letters);
@@ -175,22 +175,7 @@ public class BoggleGame {
 
         //step 3.5. display the boggle board for the user to have words to find
 
-        // determine the title of the scene with the board
-        String title = "";
-        if (this.choiceProcessor.get("Game Mode").equals("normal")) {
-            title = "Normal Game Screen";
-        }
-        else if (this.choiceProcessor.get("Game Mode").equals("timed")) {
-            title = "Timed Game Screen";
-        }
-
-        String Id = letters + ", " + size + ", " + title;
-        System.out.println(Id);
-
-        commandCenter.handle(Id);
-
-
-        System.out.println("Done");
+        commandCenter.handle(letters);
 
         //step 4. allow the user to try to find some words on the grid
         humanMove(grid, allWords);

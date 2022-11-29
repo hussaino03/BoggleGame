@@ -11,15 +11,12 @@ public class StartGameCommand implements Command {
     }
 
     public void execute() {
-            Task playGame = new Task<Void>() {
-                @Override
-                public Void call() throws InterruptedException {
-                    if (game.ready()) {
-                        game.playGame();
-                    }
-                    return null;
+            Thread t = new Thread(()->{
+                if (game.ready()) {
+                    game.playGame();
                 }
-            };
-            new Thread(playGame).start();
+            });
+            t.start();
+
     }
 }
