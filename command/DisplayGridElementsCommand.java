@@ -26,6 +26,7 @@ public class DisplayGridElementsCommand implements Command {
     }
     @Override
     public void execute() {
+        System.out.println(Thread.currentThread().getName());
         System.out.println("Elements displayed");
         GridPane layout = new GridPane(); // create a grid layout to display the grid
 

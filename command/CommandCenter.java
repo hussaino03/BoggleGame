@@ -1,7 +1,6 @@
 package command;
 
 import boggle.BoggleGame;
-import command.*;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.event.ActionEvent;
@@ -12,7 +11,6 @@ import java.util.Queue;
 import java.util.PriorityQueue;
 import java.util.Comparator;
 import src.*;
-import command.Command;
 
 /**
  * command.CommandCenter serves the purpose of an Invoker in the Command Design Pattern. The command.CommandCenter class is
@@ -95,8 +93,9 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     /**
      * Execute all commands in the commandQueue.
      */
-    private void execute() {
+    public void execute() {
         while (!(commandQueue.isEmpty())) {
+//            System.out.println(Thread.currentThread().getName());
             Command c = commandQueue.poll();
             System.out.println(c.getClass());
             c.execute();
@@ -112,7 +111,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     public void handle(ActionEvent actionEvent) {
         Node event = (Node) actionEvent.getSource();
         String Id = event.getId(); // ID encapsulates command information
-        this.handleId(Id);
+        this.handle(Id);
         }
 
     /**
@@ -120,8 +119,9 @@ public class CommandCenter implements EventHandler<ActionEvent> {
      * and process it directly, without needing to first convert an ActionEvent to a string
      * @param Id The id of the event to be processed
      */
-    public void handleId(String Id) {
-        System.out.println(Id);
+    public void handle(String Id) {
+//        System.out.println(Thread.currentThread().getName());
+//        System.out.println(Id);
         if (Id.contains(", ") && Id.length() >= 3) { // ID is not blank and is of right format
             String[] idVariables = Id.split(", "); // Split the ID into its variables
             System.out.println(idVariables.length);

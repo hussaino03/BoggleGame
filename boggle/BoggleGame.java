@@ -1,6 +1,7 @@
 package boggle;
 
 import command.*;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Button;
 import src.gameWindow;
@@ -60,7 +61,7 @@ public class BoggleGame {
         this.choiceProcessor.put("Grid Size", "");
         this.gameStats = new BoggleStats();
         this.window = w;
-        this.commandCenter = window.commandCenter;
+        this.commandCenter = new CommandCenter(window);
     }
 
     /*
@@ -87,7 +88,7 @@ public class BoggleGame {
      * Gets information from the user to initialize a new Boggle game.
      * It will loop until the user indicates they are done playing.
      */
-    public void playGame(){
+    public void playGame() throws InterruptedException {
         int boardSize = 0;
         while(true){
             String gameMode = choiceProcessor.get("Game Mode");
@@ -162,7 +163,7 @@ public class BoggleGame {
      * words on the board, and the set of words found by the user. These objects are
      * passed by reference from here to many other functions.
      */
-    public void playRound(int size, String letters){
+    public void playRound(int size, String letters) throws InterruptedException {
         //step 1. initialize the grid
         BoggleGrid grid = new BoggleGrid(size);
         grid.initalizeBoard(letters);
@@ -184,15 +185,15 @@ public class BoggleGame {
         }
 
         String Id = letters + ", " + size + ", " + title;
-//        System.out.println(Id);
-        Task handleCommand = new Task<Void>() {
-            @Override
-            public Void call() {
-                commandCenter.setCommand(new DisplayGridElementsCommand(letters, size, "test", window.primaryStage));
-                return null;
-            }
-        };
-        new Thread(handleCommand).start();
+        System.out.println(Id);
+
+        Thread thread = new Thread(()->{
+            Platform.runLater(()->{
+                commandCenter.handle(Id);
+            });
+        });
+         thread.start();
+
 
         System.out.println("Done");
 

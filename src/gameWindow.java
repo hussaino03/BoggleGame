@@ -3,6 +3,8 @@ package src;
 import boggle.*;
 import command.*;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -364,5 +366,7 @@ public class gameWindow extends Application {
         // Set the scene to the main scene when first running the game
         stage.setScene(mainScene);
         stage.show();
+
+//
     }
 }
