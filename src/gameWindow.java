@@ -1,8 +1,7 @@
 package src;
 
-import boggle.BoggleGame;
-import boggle.BoggleStats;
-import command.CommandCenter;
+import boggle.*;
+import command.*;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -24,8 +23,10 @@ public class gameWindow extends Application {
     public HashMap<String, Scene> scenes = new HashMap<String, Scene>();
     public HashMap<Scene, String> sceneTitles = new HashMap<Scene, String>();
     public Stage primaryStage;
-    private TableView table = new TableView();
+    private TableView table;
     public BoggleGame game;
+
+    public CommandCenter commandCenter;
     private int roundNumber;
     private int roundScore;
     private int totalScore;
@@ -57,7 +58,7 @@ public class gameWindow extends Application {
         this.primaryStage = stage;
         stage.setTitle("Main Menu"); // Stage setup
 
-        this.game = new BoggleGame(); // Ready the game for the player
+        this.game = new BoggleGame(this); // Ready the game for the player
 
         // Four different buttons the user can select
         Button howToPlayButton = new Button("How to Play [A]");
@@ -143,6 +144,7 @@ public class gameWindow extends Application {
         // Setup for stats scene and layout
 
         //set table to non-editable
+        this.table = new TableView();
         table.setEditable(false);
 
         //normal stats column
@@ -362,6 +364,5 @@ public class gameWindow extends Application {
         // Set the scene to the main scene when first running the game
         stage.setScene(mainScene);
         stage.show();
-
     }
 }

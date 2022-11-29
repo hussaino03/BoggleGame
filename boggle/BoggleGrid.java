@@ -77,4 +77,6 @@ public class BoggleGrid {
         return this.board[row][col];
     }
 
+    public char[][] getBoard() {return this.board;}
+
 }

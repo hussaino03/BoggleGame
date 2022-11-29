@@ -1,5 +1,11 @@
 package boggle;
 
+import command.*;
+import javafx.concurrent.Task;
+import javafx.scene.control.Button;
+import src.gameWindow;
+
+import java.awt.event.ActionEvent;
 import java.util.*;
 
 /**
@@ -12,9 +18,17 @@ public class BoggleGame {
      */ 
     public HashMap<String, String> choiceProcessor;
     /**
+     * window through which this game will be played
+     */
+    public gameWindow window;
+    /**
+     * CommandCenter to which commands will be sent
+     */
+    public CommandCenter commandCenter;
+    /**
      * stores game statistics
-     */ 
-    private BoggleStats gameStats;
+     */
+    public BoggleStats gameStats;
 
     /**
      * dice used to randomize letter assignments for a 4x4 grid
@@ -40,11 +54,13 @@ public class BoggleGame {
     /* 
      * BoggleGame constructor
      */
-    public BoggleGame() {
+    public BoggleGame(gameWindow w) {
         this.choiceProcessor = new HashMap<String, String>();
         this.choiceProcessor.put("Game Mode", "");
         this.choiceProcessor.put("Grid Size", "");
         this.gameStats = new BoggleStats();
+        this.window = w;
+        this.commandCenter = window.commandCenter;
     }
 
     /*
@@ -155,7 +171,31 @@ public class BoggleGame {
         //step 3. find all legal words on the board, given the dictionary and grid arrangement.
         Map<String, ArrayList<Position>> allWords = new HashMap<String, ArrayList<Position>>();
         findAllWords(allWords, boggleDict, grid);
-        System.out.println("round");
+
+        //step 3.5. display the boggle board for the user to have words to find
+
+        // determine the title of the scene with the board
+        String title = "";
+        if (this.choiceProcessor.get("Game Mode").equals("normal")) {
+            title = "Normal Game Screen";
+        }
+        else if (this.choiceProcessor.get("Game Mode").equals("timed")) {
+            title = "Timed Game Screen";
+        }
+
+        String Id = letters + ", " + size + ", " + title;
+//        System.out.println(Id);
+        Task handleCommand = new Task<Void>() {
+            @Override
+            public Void call() {
+                commandCenter.setCommand(new DisplayGridElementsCommand(letters, size, "test", window.primaryStage));
+                return null;
+            }
+        };
+        new Thread(handleCommand).start();
+
+        System.out.println("Done");
+
         //step 4. allow the user to try to find some words on the grid
         humanMove(grid, allWords);
 //        //step 5. allow the computer to identify remaining words
@@ -320,8 +360,7 @@ public class BoggleGame {
         Dictionary dict = new Dictionary("wordlist.txt");
         while(true) {
 
-            System.out.println(board);
-
+//            System.out.println(board); Instead of printing this to the console, should be displayed
             System.out.println("Enter your word!");
             String word = sc.nextLine().toLowerCase();
 

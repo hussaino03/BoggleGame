@@ -14,7 +14,6 @@ public class RedirectScreenCommand implements Command {
         this.transitionScene = newScene;
         this.transitionTitle = title;
     }
-    @Override
     public void execute() {
 //        System.out.println("Redirected Screen");
         stage.setScene(transitionScene);
