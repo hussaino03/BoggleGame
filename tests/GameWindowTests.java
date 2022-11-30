@@ -24,7 +24,7 @@ public class GameWindowTests {
     void blankButtonIdTest() {
         Button testButton = new Button();
         testButton.setId("");
-        testButton.setOnAction(new CommandCenter(new gameWindow()));
+        testButton.setOnAction(CommandCenter.getInstance(new gameWindow()));
         testButton.fire();
         assertDoesNotThrow(() -> {});
     }
@@ -33,7 +33,7 @@ public class GameWindowTests {
     void shortButtonIdTest() {
         Button testButton = new Button();
         testButton.setId(", ");
-        testButton.setOnAction(new CommandCenter(new gameWindow()));
+        testButton.setOnAction(CommandCenter.getInstance(new gameWindow()));
         testButton.fire();
         assertDoesNotThrow(() -> {});
     }
@@ -44,22 +44,25 @@ public class GameWindowTests {
         /*
         Initialize a command.CommandCenter and command attributes to pass in
          */
-        CommandCenter center = new CommandCenter(new gameWindow());
+        CommandCenter center = CommandCenter.getInstance(new gameWindow());
         Queue<Command> q = center.commandQueue;
         GridPane layout = new GridPane();
         Stage stage = new gameWindow().primaryStage;
         Scene scene = new Scene(layout, 100, 100);
         String string = "";
-        BoggleGame game = new BoggleGame();
+        BoggleGame game = new BoggleGame(new gameWindow());
 
         /*
         Populate the commandQueue with commands in various orders
          */
+        q.add(new DisplayGridElementsCommand(string, stage));
         q.add(new StartGameCommand(game));
         q.add(new RedirectScreenCommand(stage, scene, string));
+        q.add(new DisplayGridElementsCommand(string, stage));
         q.add(new UpdateUserChoiceCommand(game, string, string));
         q.add(new RedirectScreenCommand(stage, scene, string));
         q.add(new StartGameCommand(game));
+        q.add(new DisplayGridElementsCommand(string, stage));
         q.add(new RedirectScreenCommand(stage, scene, string));
         q.add(new UpdateUserChoiceCommand(game, string, string));
 
@@ -73,6 +76,9 @@ public class GameWindowTests {
         assertEquals(q.poll().getClass(), UpdateUserChoiceCommand.class);
         assertEquals(q.poll().getClass(), StartGameCommand.class);
         assertEquals(q.poll().getClass(), StartGameCommand.class);
+        assertEquals(q.poll().getClass(), DisplayGridElementsCommand.class);
+        assertEquals(q.poll().getClass(), DisplayGridElementsCommand.class);
+        assertEquals(q.poll().getClass(), DisplayGridElementsCommand.class);
     }
 
     @Test
@@ -89,5 +95,14 @@ public class GameWindowTests {
         Assertions.assertEquals(0, gameWindow.getCompScore());
         Assertions.assertEquals(0, gameWindow.getTotalScore());
         Assertions.assertEquals(0, gameWindow.getRoundNumber());
+    }
+    /*
+    Check whether instantiating command center several times always returns the same instance
+     */
+    @Test
+    void comCenterSingleton() {
+        CommandCenter com1 = CommandCenter.getInstance(new gameWindow());
+        CommandCenter com2 = CommandCenter.getInstance(new gameWindow());
+        assertSame(com1, com2);
     }
 }

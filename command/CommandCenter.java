@@ -1,7 +1,6 @@
 package command;
 
 import boggle.BoggleGame;
-import command.*;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.event.ActionEvent;
@@ -33,12 +32,18 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     private Comparator<Command> commandComparator;
 
     /**
+     * Private instance of CommandCenter following the Singleton pattern
+     */
+
+    private static CommandCenter instance = null;
+
+    /**
      * Constructor for the command.CommandCenter class. Initializes a comparator which determines the order of
      * execution of commands, so that commandQueue can follow this order. The order is as follows:
-     * RedirectScreenCommand -> UpdateUserChoiceCommand -> StartGameCommand
+     * RedirectScreenCommand -> UpdateUserChoiceCommand -> StartGameCommand -> DisplayGridElementsCommand
      * @param g The application from which command.CommandCenter should receive events to process.
      */
-    public CommandCenter(gameWindow g) {
+    private CommandCenter(gameWindow g) {
         /*
         Initialize command.CommandCenter's attributes
          */
@@ -59,8 +64,22 @@ public class CommandCenter implements EventHandler<ActionEvent> {
                     else if (c2 instanceof StartGameCommand) {
                         return -1;
                     }
+                    else if (c2 instanceof DisplayGridElementsCommand) {
+                        return -1;
+                    }
                 }
                 else if (c1 instanceof StartGameCommand) {
+                    if (c2 instanceof RedirectScreenCommand) {
+                        return 1;
+                    }
+                    else if (c2 instanceof UpdateUserChoiceCommand) {
+                        return 1;
+                    }
+                    else if (c2 instanceof DisplayGridElementsCommand) {
+                        return -1;
+                    }
+                }
+                else if (c1 instanceof DisplayGridElementsCommand) {
                     return 1;
                 }
                 return 0;
@@ -71,9 +90,9 @@ public class CommandCenter implements EventHandler<ActionEvent> {
 
     /**
      * Add a command to commandQueue for it to be executed upon request.
-     * @param command
+     * @param command the command added to the queue
      */
-    private void setCommand(Command command) {
+    public void setCommand(Command command) {
         commandQueue.add(command);
     }
 
@@ -97,25 +116,48 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     public void handle(ActionEvent actionEvent) {
         Node event = (Node) actionEvent.getSource();
         String Id = event.getId(); // ID encapsulates command information
+        this.handle(Id);
+        }
 
+    /**
+     * handle() is an overloaded method, so it can also accept a string as a parameter
+     * and process it directly, without needing to first convert an ActionEvent to a string
+     * @param Id The id of the event to be processed
+     */
+    public void handle(String Id) {
         if (Id.contains(", ") && Id.length() >= 3) { // ID is not blank and is of right format
             String[] idVariables = Id.split(", "); // Split the ID into its variables
+            System.out.println(idVariables.length);
             // All IDs have info for a RedirectScreenCommand at least, so we can process this info
             String newScene = idVariables[1];
             Stage stage = gameWindow.primaryStage;
             Scene transition = gameWindow.scenes.get(newScene);
             String title = gameWindow.sceneTitles.get(transition);
 
-            if (idVariables.length == 2) { // if ID only has two attributes, it only has info
-                // for a RedirectScreenCommand
+            if (idVariables.length == 2) { // if ID has two attributes, it has info for
+                // a RedirectScreenCommand
                 this.setCommand(new RedirectScreenCommand(stage, transition, title));
+            }
+
+            /*
+            This must be modified for the IDs to reflect the fact that a title is no
+            longer needed.
+             */
+
+            else if (idVariables.length == 3) { // if ID has three attributes, it has info
+                // for a DisplayGridElementsCommand
+                String letters = idVariables[0];
+                int gridSize = Integer.parseInt(idVariables[1]);
+                String displayTitle = idVariables[2];
+
+                this.setCommand(new DisplayGridElementsCommand(letters, stage));
             }
 
             else if (idVariables.length == 4) { // If ID has four attributes, it has info for a RedirectScreenCommand
                 // and an UpdateUserChoiceCommand
 
                 // Process info for an UpdateUserChoiceCommand
-                BoggleGame game = gameWindow.game;
+                boggle.BoggleGame game = gameWindow.game;
                 String choiceType = idVariables[2];
                 String choice = idVariables[3];
 
@@ -137,6 +179,18 @@ public class CommandCenter implements EventHandler<ActionEvent> {
             }
             this.execute(); // Execute all commands once information has been processed
         }
+        else if (Id.length() >= 16) { // If Id is a single string of characters of length 16 or more,
+            // it represents a DisplayGridElementsCommand
+            this.setCommand(new DisplayGridElementsCommand(Id, this.gameWindow.primaryStage));
+            this.execute();
         }
+    }
+
+    public static synchronized CommandCenter getInstance(gameWindow window) {
+        if (instance == null) {
+            instance = new CommandCenter(window);
+        }
+        return instance;
+    }
     }
 

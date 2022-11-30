@@ -1,5 +1,12 @@
 package boggle;
 
+import command.*;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.scene.control.Button;
+import src.gameWindow;
+
+import java.awt.event.ActionEvent;
 import java.util.*;
 
 /**
@@ -12,9 +19,17 @@ public class BoggleGame {
      */ 
     public HashMap<String, String> choiceProcessor;
     /**
+     * window through which this game will be played
+     */
+    public gameWindow window;
+    /**
+     * CommandCenter to which commands will be sent
+     */
+    public CommandCenter commandCenter;
+    /**
      * stores game statistics
-     */ 
-    private BoggleStats gameStats;
+     */
+    public BoggleStats gameStats;
 
     /**
      * dice used to randomize letter assignments for a 4x4 grid
@@ -40,11 +55,13 @@ public class BoggleGame {
     /* 
      * BoggleGame constructor
      */
-    public BoggleGame() {
+    public BoggleGame(gameWindow w) {
         this.choiceProcessor = new HashMap<String, String>();
         this.choiceProcessor.put("Game Mode", "");
         this.choiceProcessor.put("Grid Size", "");
         this.gameStats = new BoggleStats();
+        this.window = w;
+        this.commandCenter = CommandCenter.getInstance(window);
     }
 
     /*
@@ -71,7 +88,7 @@ public class BoggleGame {
      * Gets information from the user to initialize a new Boggle game.
      * It will loop until the user indicates they are done playing.
      */
-    public void playGame(){
+    public void playGame() {
         int boardSize = 0;
         while(true){
             String gameMode = choiceProcessor.get("Game Mode");
@@ -146,7 +163,7 @@ public class BoggleGame {
      * words on the board, and the set of words found by the user. These objects are
      * passed by reference from here to many other functions.
      */
-    public void playRound(int size, String letters){
+    public void playRound(int size, String letters) {
         //step 1. initialize the grid
         BoggleGrid grid = new BoggleGrid(size);
         grid.initalizeBoard(letters);
@@ -155,7 +172,11 @@ public class BoggleGame {
         //step 3. find all legal words on the board, given the dictionary and grid arrangement.
         Map<String, ArrayList<Position>> allWords = new HashMap<String, ArrayList<Position>>();
         findAllWords(allWords, boggleDict, grid);
-        System.out.println("round");
+
+        //step 3.5. display the boggle board for the user to have words to find
+
+        commandCenter.handle(letters);
+
         //step 4. allow the user to try to find some words on the grid
         humanMove(grid, allWords);
 //        //step 5. allow the computer to identify remaining words
@@ -320,8 +341,7 @@ public class BoggleGame {
         Dictionary dict = new Dictionary("wordlist.txt");
         while(true) {
 
-            System.out.println(board);
-
+//            System.out.println(board); Instead of printing this to the console, should be displayed
             System.out.println("Enter your word!");
             String word = sc.nextLine().toLowerCase();
 
