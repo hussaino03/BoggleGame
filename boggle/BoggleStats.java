@@ -139,6 +139,49 @@ public class BoggleStats {
         System.out.println("Computer Score For The Round: "+cScore);
     }
 
+    /**
+     * Getter for playerWords
+     * @return playerWords
+     */
+    public String playerwords(){
+        return "Human Words: "+playerWords;
+    }
+    /**
+     * Getter for computerWords
+     * @return computerWords
+     */
+    public String computerwords(){
+        return "Computer Words: "+computerWords;
+    }
+    /**
+     * Getter for playerWords size
+     * @return playerWords size
+     */
+    public String playerwordsSize(){
+        return "Number of Human Average Words: " + playerWords.size();
+    }
+    /**
+     * Getter for computerWords size
+     * @return computerWords size
+     */
+    public String computerwordsSize(){
+        return "Number of Computer Average Words: "+computerWords.size();
+    }
+    /**
+     * Getter for pScore
+     * @return pScore
+     */
+    public String PScore(){
+        return "Human Score For The Round: "+pScore;
+    }
+    /**
+     * Getter for cScore
+     * @return cScore
+     */
+    public String CScore(){
+        return "Computer Score For The Round: "+cScore;
+    }
+
     /* 
      * Summarize the entire boggle game.  Print out:
      * The total number of rounds played.
@@ -152,6 +195,41 @@ public class BoggleStats {
 
         System.out.println("The Average Number of Words Found by Human: "+pAverageWords);
         System.out.println("The Average Number of Words Found by Computer: "+cAverageWords);
+    }
+    /**
+     * Getter for total rounds
+     * @return round
+     */
+    public String Totalround(){
+        return "The Total Number of Rounds Played is: "+ round;
+    }
+    /**
+     * Getter for human total score
+     * @return pscoreTotal
+     */
+    public String pScoreTotal(){
+        return "The Total Score for Human is: "+pScoreTotal;
+    }
+    /**
+     * Getter for computer total score
+     * @return cScoreTotal
+     */
+    public String cScoreTotal(){
+        return "The Total Score for Computer is: "+cScoreTotal;
+    }
+    /**
+     * Getter for player average words
+     * @return pAverageWords
+     */
+    public String pAverageWords(){
+        return "The Average Number of Words Found by Human: "+pAverageWords;
+    }
+    /**
+     * Getter for computer average words
+     * @return cAverageWords
+     */
+    public String cAverageWords(){
+        return "The Average Number of Words Found by Computer: "+cAverageWords;
     }
 
     /* 
