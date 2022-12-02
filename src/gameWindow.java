@@ -337,19 +337,23 @@ public class gameWindow extends Application {
 
         gridSelectionScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent keyEvent) {
-                char c = keyEvent.getText().charAt(0);
-                if (keyEvent.getCode() == KeyCode.R) {
-                    goBackFromGridSelectionButton.fire();
+                String cString = keyEvent.getText();
+                if (cString.length() > 0) {
+                    char c = cString.charAt(0);
+                    if (keyEvent.getCode() == KeyCode.R) {
+                        goBackFromGridSelectionButton.fire();
+                    }
+                    else if (c == '1') {
+                        fourByFourButton.fire();
+                    }
+                    else if (c == '2') {
+                        fiveByFiveButton.fire();
+                    }
+                    else if (c == '3') {
+                        sixBySixButton.fire();
+                    }
                 }
-                else if (c == '1') {
-                    fourByFourButton.fire();
-                }
-                else if (c == '2') {
-                    fiveByFiveButton.fire();
-                }
-                else if (c == '3') {
-                    sixBySixButton.fire();
-                }
+
             }
         });
 
