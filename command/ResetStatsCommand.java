@@ -1,3 +1,5 @@
+package command;
+
 import command.Command;
 
 public class ResetStatsCommand implements Command {
