@@ -137,8 +137,7 @@ public class gameWindow extends Application {
         Scene normalGamemodeScene = new Scene(normalGamemodeLayout, 700, 700);
         scenes.put("Normal Gamemode Scene", normalGamemodeScene);
         sceneTitles.put(normalGamemodeScene, "Normal Gamemode");
-        Label normalGamemodeStats = new Label("Round Number: " + roundNumber +" | Round Score: " + roundScore+ " | " +
-                "Total Score: " + totalScore + " | Computer Score: " + compScore);
+        Label normalGamemodeStats = new Label(game.gameStats.playerwords() +" | "+ game.gameStats.computerwords()+ " | "+game.gameStats.PScore() +" | "+ game.gameStats.CScore());
         Button goBackFromNormalGamemode = new Button("Return to Main Menu [R]");
         goBackFromNormalGamemode.setId("Return to Main Menu, Main Scene");
         Button endRound = new Button("End the Round");
