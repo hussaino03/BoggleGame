@@ -141,12 +141,20 @@ public class gameWindow extends Application {
                 "Total Score: " + totalScore + " | Computer Score: " + compScore);
         Button goBackFromNormalGamemode = new Button("Return to Main Menu [R]");
         goBackFromNormalGamemode.setId("Return to Main Menu, Main Scene");
+        Button endRound = new Button("End the Round");
+        TextField inpWord = new TextField("Input here");
         HBox statsBar = new HBox();
         VBox buttonBar = new VBox();
         statsBar.getChildren().add(normalGamemodeStats);
-        buttonBar.getChildren().add(goBackFromNormalGamemode);
+        buttonBar.getChildren().add(endRound);
         statsBar.setAlignment(Pos.CENTER);
         normalGamemodeLayout.setTop(statsBar);
+        normalGamemodeLayout.setRight(buttonBar);
+        normalGamemodeLayout.setBottom(inpWord);
+        //--------------------------------------------------
+
+
+        endRound.setId("Go to game summary screen, Normal Game Mode Game Summary Scene");
         // -------------------------------------------------------------------------------------------------
 
         // Setup for stats scene and layout
@@ -314,6 +322,8 @@ public class gameWindow extends Application {
         fiveByFiveButton.setOnAction(commandCenter);
         sixBySixButton.setOnAction(commandCenter);
         goBackFromGameRoundSummaryButton.setOnAction(commandCenter);
+        endRound.setOnAction(commandCenter);
+
 
         // Allow buttons to be fired through keyboard to make the program more accessible
         mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
