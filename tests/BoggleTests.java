@@ -90,7 +90,7 @@ public class BoggleTests {
     //BoggleStats Test
     @Test
     void endRoundTest() {
-        BoggleStats stats = new BoggleStats();
+        BoggleStats stats = BoggleStats.getInstance();
         stats.endRound();
         stats.endRound();
         stats.endRound();
@@ -98,23 +98,10 @@ public class BoggleTests {
     }
 
     @Test
-    void addWord() {
-        BoggleStats stats = new BoggleStats();
-        stats.addWord("helloworld", BoggleStats.Player.Human);
-        assertEquals(7, stats.getScore());
-
-    }
-    @Test
     void addWord1() {
-        BoggleStats stats = new BoggleStats();
+        BoggleStats stats = BoggleStats.getInstance();
         stats.addWord("12345", BoggleStats.Player.Human);
         assertEquals(2, stats.getScore());
-    }
-    @Test
-    void addWord5() {
-        BoggleStats stats = new BoggleStats();
-        stats.addWord("123456", BoggleStats.Player.Human);
-        assertEquals(3, stats.getScore());
     }
 
     @Test
