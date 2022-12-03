@@ -1,6 +1,7 @@
 package command;
 
 import boggle.BoggleGame;
+import boggle.BoggleStats;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.event.ActionEvent;
@@ -128,9 +129,15 @@ public class CommandCenter implements EventHandler<ActionEvent> {
         if (Id.contains(", ") && Id.length() >= 3) { // ID is not blank and is of right format
             String[] idVariables = Id.split(", "); // Split the ID into its variables
             System.out.println(idVariables.length);
+            Stage stage = gameWindow.primaryStage;
+            if (idVariables[0].equals("updateStats")) {
+                BoggleStats stats = gameWindow.game.gameStats;
+                this.setCommand(new DisplayGameStatsCommand(stats.getStatsMap(), stage));
+                execute();
+                return;
+            }
             // All IDs have info for a RedirectScreenCommand at least, so we can process this info
             String newScene = idVariables[1];
-            Stage stage = gameWindow.primaryStage;
             Scene transition = gameWindow.scenes.get(newScene);
             String title = gameWindow.sceneTitles.get(transition);
 

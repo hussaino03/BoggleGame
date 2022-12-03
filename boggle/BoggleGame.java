@@ -349,6 +349,7 @@ public class BoggleGame {
                     !gameStats.getPlayerWords().contains(word) &&
                     allWords.containsKey(word.toUpperCase())){
                 gameStats.addWord(word.toLowerCase(), BoggleStats.Player.Human);
+                commandCenter.handle("updateStats, ");
 
             }else {
                 if (!word.equals("")) {

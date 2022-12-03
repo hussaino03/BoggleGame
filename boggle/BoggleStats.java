@@ -1,5 +1,6 @@
 package boggle;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +10,6 @@ import java.util.Set;
  */
 public class BoggleStats {
     private static BoggleStats instance = null;
-
     /**
      * set of words the player finds in a given round 
      */  
@@ -149,6 +149,26 @@ public class BoggleStats {
 
         System.out.println("Human Score For The Round: "+pScore);
         System.out.println("Computer Score For The Round: "+cScore);
+    }
+
+    /*
+     * Summarize one round of boggle.  Print out:
+     * The words each player found this round.
+     * Each number of words each player found this round.
+     * Each player's score this round.
+     */
+    public HashMap<String, Object> getStatsMap() {
+        HashMap<String, Object> scoreMap = new HashMap<>();
+        scoreMap.put("Player Words", playerWords);
+        scoreMap.put("Computer Words", computerWords);
+        scoreMap.put("Player Score", pScore);
+        scoreMap.put("Computer Score", cScore);
+        scoreMap.put("Player Average Words", pAverageWords);
+        scoreMap.put("Computer Average Words", cAverageWords);
+        scoreMap.put("Player Score Total", pScoreTotal);
+        scoreMap.put("Computer Score Total", cScoreTotal);
+        scoreMap.put("Round", round);
+        return scoreMap;
     }
 
     /**
