@@ -1,6 +1,7 @@
 package tests;
 
 import boggle.BoggleGame;
+import boggle.BoggleStats;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
@@ -83,9 +84,10 @@ public class GameWindowTests {
 
     @Test
     void TestStatAttributes() {
+        BoggleStats ins = BoggleStats.getInstance();
         gameWindow w = new gameWindow();
-        Assertions.assertEquals(Character.getNumericValue(w.stat.CScore().charAt(w.stat.CScore().length() - 1)), 0);
-        Assertions.assertEquals(Character.getNumericValue(w.stat.PScore().charAt(w.stat.PScore().length() - 1)), 0);
+        Assertions.assertEquals(Character.getNumericValue(ins.CScore().charAt(ins.CScore().length() - 1)), 0);
+        Assertions.assertEquals(Character.getNumericValue(ins.PScore().charAt(ins.PScore().length() - 1)), 0);
 
     }
     @Test

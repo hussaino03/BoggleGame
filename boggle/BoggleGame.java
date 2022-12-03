@@ -59,7 +59,7 @@ public class BoggleGame {
         this.choiceProcessor = new HashMap<String, String>();
         this.choiceProcessor.put("Game Mode", "");
         this.choiceProcessor.put("Grid Size", "");
-        this.gameStats = new BoggleStats();
+        this.gameStats = BoggleStats.getInstance();
         this.window = w;
         this.commandCenter = CommandCenter.getInstance(window);
     }

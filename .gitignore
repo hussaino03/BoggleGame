@@ -28,4 +28,6 @@ out/
 # iml file
 *.iml
 
+.idea/
+
 
