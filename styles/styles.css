@@ -8,6 +8,15 @@
 -fx-font-weight: bold;
 
 }
+.text-field {
+    -fx-background-color: #cbf3f0 ;
+    -fx-text-box-border-color: white;
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-background-radius: 10 ;
+}
+.text-field:focused {
+    -fx-background-color: #cbf3f0;
+}
 
 .button {
     -fx-padding: 8 15 15 15;
