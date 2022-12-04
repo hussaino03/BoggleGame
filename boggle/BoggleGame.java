@@ -350,6 +350,7 @@ public class BoggleGame {
             if (word.length() >= 4 && dict.containsWord(word) &&
                     !gameStats.getPlayerWords().contains(word) &&
                     allWords.containsKey(word.toUpperCase())){
+                System.out.println(word);
                 gameStats.addWord(word.toLowerCase(), BoggleStats.Player.Human);
                 commandCenter.handle("DisplayGameStats; ");
 

@@ -73,23 +73,24 @@ public class gameWindow extends Application {
 
         // Four different buttons the user can select
         Button howToPlayButton = new Button("How to Play [A]");
+//        howToPlayButton.setMinSize(100, 100);
         howToPlayButton.setId("RedirectScreen; How To Play Scene");
 
         Button statsButton = new Button("Stats [S]");
+//        statsButton.setMinSize(100, 100);
         statsButton.setId("RedirectScreen; Stats Scene");
 
-        Button normalModeButton = new Button("Normal Mode [Q]");
+        Button normalModeButton = new Button("Play [Q]");
+//        normalModeButton.setMinSize(100, 100);
         normalModeButton.setId("RedirectScreen, UpdateUserChoice; Grid Selection Scene; Game Mode, normal");
 
-        Button timedModeButton = new Button("Timed Mode [W]");
-        timedModeButton.setId("RedirectScreen, UpdateUserChoice; Grid Selection Scene; Game Mode, timed");
 
         // Setup for the main scene and layout [Contains the four buttons]
         GridPane mainLayout =  new GridPane();
         mainLayout.setPadding(new Insets(10,10,10,10));
         mainLayout.setVgap(20);
         mainLayout.setHgap(20);
-        Scene mainScene = new Scene(mainLayout, 700, 700);
+        Scene mainScene = new Scene(mainLayout, 1000, 700);
         scenes.put("Main Scene", mainScene);
         sceneTitles.put(mainScene, "Main Menu");
         mainScene.getStylesheets().add(css);
@@ -97,17 +98,17 @@ public class gameWindow extends Application {
         // add buttons to main layout
         // buttonIds are used to encapsulate commands via the following ID format:
         // "ID, Scene to transition to, choice"
-        mainLayout.add(normalModeButton, 10, 10);
-        mainLayout.add(timedModeButton, 11, 10);
-        mainLayout.add(howToPlayButton, 10, 11);
-        mainLayout.add(statsButton, 11, 11);
+        mainLayout.add(howToPlayButton, 0, 0);
+        mainLayout.add(normalModeButton, 1, 0);
+        mainLayout.add(statsButton, 2, 0);
+        mainLayout.setAlignment(Pos.CENTER);
 
         // Setup for How to Play scene and layout
         GridPane howToPlayLayout =  new GridPane();
         howToPlayLayout.setPadding(new Insets(10,10,10,10));
         howToPlayLayout.setVgap(20);
         howToPlayLayout.setHgap(20);
-        Scene howToPlayScene = new Scene(howToPlayLayout, 700, 700);
+        Scene howToPlayScene = new Scene(howToPlayLayout, 1000, 700);
         scenes.put("How To Play Scene", howToPlayScene);
         sceneTitles.put(howToPlayScene, "How to Play");
         howToPlayScene.getStylesheets().add(css);
@@ -117,16 +118,11 @@ public class gameWindow extends Application {
                 " many words as you can in a randomized grid of letters. \n Words can be" +
                 " formed by joining letters which are vertically, horizontally or diagonally" +
                 " adjacent. \n You will earn points based on the length of the word found. \n " +
-                "You can choose between two game modes: Normal and Timed. \n In the Normal Game Mode, " +
-                "you will play against the computer. \n You will be given a grid of letters and should" +
+                "You will play against the computer. \n You will be given a grid of letters and should" +
                 " form as many words as you can. \n When you can no longer think of any words, the " +
                 "computer will find all remaining words. \n At the end of each round, you will be given" +
                 " information regarding your current standing against the computer. \n Your goal is to" +
-                " end the game with a higher score than the computer. \n In the Timed Game Mode, you" +
-                " will play against yourself. \n You will be given a grid of letters and should form" +
-                " as many words as you can before time runs out. \n Each word you find will extend your " +
-                "time proportional to the length of the word found. \n Your goal is to beat your " +
-                "previous high score. \n You can return to this page at any time to review the " +
+                " end the game with a higher score than the computer. \n You can return to this page at any time to review the " +
                 "game instructions. \n You can also go to the Stats Page to review your success across" +
                 " all games.");
 
@@ -141,7 +137,7 @@ public class gameWindow extends Application {
 
         BorderPane normalGamemodeLayout =  new BorderPane();
         normalGamemodeLayout.setPadding(new Insets(10,10,10,10));
-        Scene normalGamemodeScene = new Scene(normalGamemodeLayout, 700, 700);
+        Scene normalGamemodeScene = new Scene(normalGamemodeLayout, 1000, 700);
         normalGamemodeScene.getStylesheets().add(css);
 
 
@@ -152,7 +148,8 @@ public class gameWindow extends Application {
         Button goBackFromNormalGamemode = new Button("Return to Main Menu [R]");
         goBackFromNormalGamemode.setId("RedirectScreen; Main Scene");
         Button endRound = new Button("End the Round");
-        TextField inpWord = new TextField("Input here");
+        TextField inpWord = new TextField();
+        inpWord.setPromptText("Input Here");
         HBox statsBar = new HBox();
         VBox buttonBar = new VBox();
         buttonBar.setAlignment(Pos.BOTTOM_RIGHT);
@@ -176,28 +173,29 @@ public class gameWindow extends Application {
         table.setEditable(false);
 
         //normal stats column
-        TableColumn<String, String> normalStatColumn = new TableColumn<>("Normal Stat");
-        normalStatColumn.setMaxWidth(60);
+        TableColumn<String, String> normalStatColumn = new TableColumn<>("Statistic");
+        normalStatColumn.setMinWidth(200);
 
         //normal stats values column
-        TableColumn<String, Double> normalValueColumn = new TableColumn<>("Values");
-        normalValueColumn.setMaxWidth(60);
-
-        //timed stats column
-        TableColumn<String, String> timedStatColumn = new TableColumn<>("Values");
-        timedStatColumn.setMaxWidth(60);
-
-        //timed stats values column
-        TableColumn<String, Double> timedValueColumn = new TableColumn<>("Values");
-        timedValueColumn.setMaxWidth(60);
+        TableColumn<String, Double> normalValueColumn = new TableColumn<>("Value");
+        normalValueColumn.setMinWidth(200);
 
         //add columns to table
-        table.getColumns().addAll(normalStatColumn, normalValueColumn, timedStatColumn, timedValueColumn);
+        table.getColumns().addAll(normalStatColumn, normalValueColumn);
 
-        Scene statsScene = new Scene(table, 700, 700);
+        //create stats layout
+        BorderPane statsLayout = new BorderPane();
+        statsLayout.setCenter(table);
+        Button goBackFromStatsButton = new Button("Return to Main Menu [R]");
+        goBackFromStatsButton.setId("RedirectScreen; Main Scene");
+        statsLayout.setBottom(goBackFromStatsButton);
+
+
+        Scene statsScene = new Scene(statsLayout, 1000, 700);
         scenes.put("Stats Scene", statsScene);
         sceneTitles.put(statsScene, "Stats");
         statsScene.getStylesheets().add(css);
+        //
 
         // Start Normal Game Mode Round Summary Screen
         // -----------------------------------------------------------------------------------------------------------//
@@ -216,7 +214,7 @@ public class gameWindow extends Application {
         normalSummaryLayout.add(goBackFromGameRoundSummaryButton, 0, 2);
 
         // create a new scene
-        Scene normalSummary = new Scene(normalSummaryLayout, 700, 700);
+        Scene normalSummary = new Scene(normalSummaryLayout, 1000, 700);
         scenes.put("Normal Game Mode Round Summary Scene", normalSummary);
         sceneTitles.put(normalSummary, "Normal Game Mode Round Summary");
         normalSummary.getStylesheets().add(css);
@@ -266,7 +264,7 @@ public class gameWindow extends Application {
 
 
         // create a new scene
-        Scene normalEndScene = new Scene(normalEndLayout, 700, 700);
+        Scene normalEndScene = new Scene(normalEndLayout, 1000, 700);
         scenes.put("Normal Game Mode Game Summary Scene", normalEndScene);
         sceneTitles.put(normalEndScene, "Normal Game Mode Game Summary");
         normalEndScene.getStylesheets().add(css);
@@ -299,10 +297,6 @@ public class gameWindow extends Application {
         // -----------------------------------------------------------------------------------------------------------//
 
 
-        // Add button to stats layout
-        Button goBackFromStatsButton = new Button("Return to Main Menu [R]");
-        goBackFromStatsButton.setId("RedirectScreen; Main Scene");
-//        statsLayout.add(goBackFromStatsButton, 5, 5);
 
         // Setup for grid selection scene and layout
 
@@ -310,7 +304,7 @@ public class gameWindow extends Application {
         gridSelectionLayout.setPadding(new Insets(10,10,10,10));
         gridSelectionLayout.setVgap(20);
         gridSelectionLayout.setHgap(20);
-        Scene gridSelectionScene = new Scene(gridSelectionLayout, 700, 700);
+        Scene gridSelectionScene = new Scene(gridSelectionLayout, 1000, 700);
         scenes.put("Grid Selection Scene", gridSelectionScene);
         sceneTitles.put(gridSelectionScene, "Grid Selection");
         gridSelectionScene.getStylesheets().add(css);
@@ -351,7 +345,6 @@ public class gameWindow extends Application {
         howToPlayButton.setOnAction(commandCenter);
         statsButton.setOnAction(commandCenter);
         normalModeButton.setOnAction(commandCenter);
-        timedModeButton.setOnAction(commandCenter);
         goBackFromNormalGamemode.setOnAction(commandCenter);
         goBackFromHTPButton.setOnAction(commandCenter);
         goBackFromGameRoundButton.setOnAction(commandCenter);
@@ -372,9 +365,6 @@ public class gameWindow extends Application {
                 KeyCode c = keyEvent.getCode();
                 if (c == KeyCode.Q) {
                     normalModeButton.fire();
-                }
-                else if (c == KeyCode.W) {
-                    timedModeButton.fire();
                 }
                 else if (c == KeyCode.A) {
                     howToPlayButton.fire();
@@ -409,26 +399,23 @@ public class gameWindow extends Application {
         });
 
         gridSelectionScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent keyEvent) {
-                String cString = keyEvent.getText();
-                if (cString.length() > 0) {
-                    char c = cString.charAt(0);
-                    if (keyEvent.getCode() == KeyCode.R) {
-                        goBackFromGridSelectionButton.fire();
-                    }
-                    else if (c == '1') {
-                        fourByFourButton.fire();
-                    }
-                    else if (c == '2') {
-                        fiveByFiveButton.fire();
-                    }
-                    else if (c == '3') {
-                        sixBySixButton.fire();
-                    }
-                }
-
-            }
-        });
+           public void handle(KeyEvent keyEvent) {
+               String cString = keyEvent.getText();
+               if (cString.length() == 0) { // If string is empty, do not handle
+                   return;
+               }
+               char c = keyEvent.getText().charAt(0);
+               if (keyEvent.getCode() == KeyCode.R) {
+                   goBackFromGridSelectionButton.fire();
+               } else if (c == '1') {
+                   fourByFourButton.fire();
+               } else if (c == '2') {
+                   fiveByFiveButton.fire();
+               } else if (c == '3') {
+                   sixBySixButton.fire();
+               }
+           }
+       });
 
         howToPlayScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent keyEvent) {
@@ -442,6 +429,16 @@ public class gameWindow extends Application {
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.R) {
                     goBackFromStatsButton.fire();
+                }
+            }
+        });
+
+        normalGamemodeScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ENTER) {
+                    String word = inpWord.getText();
+                    String Id = "UpdateUserChoice; Word, " + word;
+                    commandCenter.handle(Id);
                 }
             }
         });
