@@ -182,7 +182,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
             this.setCommand(
                     new StartGameCommand(this.gameWindow.game));
         }
-        else if (command.equals("DisplayStats")) {
+        else if (command.equals("DisplayGameStats")) {
             this.setCommand(
                     new DisplayGameStatsCommand(BoggleStats.getInstance().getStatsMap(),
                             this.gameWindow.primaryStage));
