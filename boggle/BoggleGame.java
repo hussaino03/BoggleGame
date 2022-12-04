@@ -174,8 +174,8 @@ public class BoggleGame {
         findAllWords(allWords, boggleDict, grid);
 
         //step 3.5. display the boggle board for the user to have words to find
-
-        commandCenter.handle(letters);
+        String Id = "DisplayGridElements; " + letters;
+        commandCenter.handle(Id);
 
         //step 4. allow the user to try to find some words on the grid
         humanMove(grid, allWords);
@@ -349,7 +349,7 @@ public class BoggleGame {
                     !gameStats.getPlayerWords().contains(word) &&
                     allWords.containsKey(word.toUpperCase())){
                 gameStats.addWord(word.toLowerCase(), BoggleStats.Player.Human);
-                commandCenter.handle("updateStats, ");
+                commandCenter.handle("DisplayGameStats; ");
 
             }else {
                 if (!word.equals("")) {

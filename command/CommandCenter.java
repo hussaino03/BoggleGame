@@ -159,71 +159,6 @@ public class CommandCenter implements EventHandler<ActionEvent> {
             this.processId(command, IdVariables, 0);
         }
 
-        if (Id.contains(", ") && Id.length() >= 3) { // ID is not blank and is of right format
-            String[] idVariables = Id.split(", "); // Split the ID into its variables
-            System.out.println(idVariables.length);
-            Stage stage = gameWindow.primaryStage;
-            if (idVariables[0].equals("updateStats")) {
-                BoggleStats stats = gameWindow.game.gameStats;
-                this.setCommand(new DisplayGameStatsCommand(stats.getStatsMap(), stage));
-                execute();
-                return;
-            }
-            // All IDs have info for a RedirectScreenCommand at least, so we can process this info
-            String newScene = idVariables[1];
-            Scene transition = gameWindow.scenes.get(newScene);
-            String title = gameWindow.sceneTitles.get(transition);
-
-            if (idVariables.length == 2) { // if ID has two attributes, it has info for
-                // a RedirectScreenCommand
-                this.setCommand(new RedirectScreenCommand(stage, transition, title));
-            }
-
-            /*
-            This must be modified for the IDs to reflect the fact that a title is no
-            longer needed.
-             */
-
-            else if (idVariables.length == 3) { // if ID has three attributes, it has info
-                // for a DisplayGridElementsCommand
-                String letters = idVariables[0];
-                int gridSize = Integer.parseInt(idVariables[1]);
-                String displayTitle = idVariables[2];
-
-                this.setCommand(new DisplayGridElementsCommand(letters, stage));
-            }
-
-            else if (idVariables.length == 4) { // If ID has four attributes, it has info for a RedirectScreenCommand
-                // and an UpdateUserChoiceCommand
-
-                // Process info for an UpdateUserChoiceCommand
-                boggle.BoggleGame game = gameWindow.game;
-                String choiceType = idVariables[2];
-                String choice = idVariables[3];
-
-                this.setCommand(new RedirectScreenCommand(stage, transition, title));
-                this.setCommand(new UpdateUserChoiceCommand(game, choiceType, choice));
-            }
-
-            else if (idVariables.length == 5) { // If ID has five attributes, it has info for a RedirectScreenCommand,
-                // an UpdateUserChoiceCommand and a StartGameCommand
-
-                // Process info for an UpdateUserChoiceCommand
-                BoggleGame game = gameWindow.game;
-                String choiceType = idVariables[2];
-                String choice = idVariables[3];
-
-                this.setCommand(new UpdateUserChoiceCommand(game, choiceType, choice));
-                this.setCommand(new StartGameCommand(game));
-                this.setCommand(new RedirectScreenCommand(stage, transition, title));
-            }
-            this.execute(); // Execute all commands once information has been processed
-        }
-        else if (Id.length() >= 16) { // If Id is a single string of characters of length 16 or more,
-            // it represents a DisplayGridElementsCommand
-            this.setCommand(new DisplayGridElementsCommand(Id, this.gameWindow.primaryStage));
-            this.execute();
-        }
     }
     /*
     IDs should be of the following format:
@@ -252,7 +187,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
                     new DisplayGameStatsCommand(BoggleStats.getInstance().getStatsMap(),
                             this.gameWindow.primaryStage));
         }
-        else if (command.equals("RestStats")) {
+        else if (command.equals("ResetStats")) {
             this.setCommand(new ResetStatsCommand());
         }
         /*
@@ -260,6 +195,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
          */
         else if (command.equals("DisplayGridElements")) {
             String letters = IdVariables[i+1];
+            System.out.println(letters);
             this.setCommand(new DisplayGridElementsCommand(letters, this.gameWindow.primaryStage));
         }
         else if (command.equals("RedirectScreen")) {
@@ -275,6 +211,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
             String choice = params[1];
             this.setCommand(new UpdateUserChoiceCommand(this.gameWindow.game, choiceType, choice));
         }
+        this.execute();
     }
 
     public static synchronized CommandCenter getInstance(gameWindow window) {
