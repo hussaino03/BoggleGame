@@ -60,6 +60,7 @@ public class BoggleGame {
         this.choiceProcessor = new HashMap<String, String>();
         this.choiceProcessor.put("Game Mode", "");
         this.choiceProcessor.put("Grid Size", "");
+        this.choiceProcessor.put("Word", "_");
         this.gameStats = BoggleStats.getInstance();
         this.window = w;
         this.commandCenter = CommandCenter.getInstance(window);
@@ -338,13 +339,13 @@ public class BoggleGame {
      */
     private void humanMove(BoggleGrid board, Map<String,ArrayList<Position>> allWords){
         System.out.println("It's your turn to find some words!");
-        Scanner sc = new Scanner(System.in);
+//        Scanner sc = new Scanner(System.in);
         Dictionary dict = new Dictionary("wordlist.txt");
         while(true) {
 
 //            System.out.println(board); Instead of printing this to the console, should be displayed
-            System.out.println("Enter your word!");
-            String word = sc.nextLine().toLowerCase();
+//            System.out.println("Enter your word!");
+            String word = this.choiceProcessor.get("Word");
 
             if (word.length() >= 4 && dict.containsWord(word) &&
                     !gameStats.getPlayerWords().contains(word) &&
@@ -354,7 +355,7 @@ public class BoggleGame {
 
             }else {
                 if (!word.equals("")) {
-                    System.out.println("Invalid Word! Sorry!");
+//                    System.out.println("Invalid Word! Sorry!");
                 }
             }
             if (word.equals("")){
