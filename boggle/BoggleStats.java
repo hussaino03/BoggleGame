@@ -317,11 +317,17 @@ public class BoggleStats {
      */
     public int getRound() { return this.round; }
 
-    /*
+    /**
     * @return int The current player score
     */
-    public int getScore() {
+    public int getPScore() {
         return this.pScore;
+    }
+    /**
+     * @return int The current computer score
+     */
+    public int getCScore() {
+        return this.cScore;
     }
 
 }

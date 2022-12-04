@@ -101,7 +101,7 @@ public class BoggleTests {
     void addWord1() {
         BoggleStats stats = BoggleStats.getInstance();
         stats.addWord("12345", BoggleStats.Player.Human);
-        assertEquals(2, stats.getScore());
+        assertEquals(2, stats.getPScore());
     }
 
     @Test

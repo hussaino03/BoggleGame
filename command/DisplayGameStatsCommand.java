@@ -1,5 +1,6 @@
 package command;
 
+import boggle.BoggleStats;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -27,10 +28,11 @@ public class DisplayGameStatsCommand implements Command {
         System.out.println("Elements displayed");
         BorderPane mainLayout = (BorderPane) stage.getScene().getRoot(); // get the layout of
         // the current scene to be updated
+        BoggleStats stats = BoggleStats.getInstance(); // get the instance of BoggleStats
         HBox statsLayout = new HBox(); // create a layout for the game stats
         Thread t = new Thread(()->{
             Platform.runLater(()->{
-                statsLayout.getChildren().add(new Label(statsMap.toString()));
+                statsLayout.getChildren().add(new Label("Player Score: "+ stats.getPScore() + " | "+ "Round Number: " + (stats.getRound() + 1)));
                 statsLayout.setAlignment(Pos.CENTER); // Center the game stats
                 mainLayout.setTop(statsLayout);
             });
