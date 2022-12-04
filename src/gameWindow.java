@@ -6,19 +6,23 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+
+import java.awt.*;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * src.gameWindow controls the flow of the program
@@ -30,18 +34,17 @@ public class gameWindow extends Application {
     public HashMap<Scene, String> sceneTitles = new HashMap<Scene, String>();
     public Stage primaryStage;
     private TableView table;
-    public BoggleGame game;
-
     public CommandCenter commandCenter;
     private int roundNumber;
     private int roundScore;
     private int totalScore;
     private int compScore;
+    public BoggleGame game;
+
     public int getRoundNumber() {return roundNumber;}
     public int getRoundScore() {return roundScore;}
     public int getTotalScore() {return totalScore;}
     public int getCompScore() {return compScore;}
-    public BoggleStats stat = new BoggleStats();
 
     public static void main(String[] args) {
         launch(args);
@@ -64,6 +67,8 @@ public class gameWindow extends Application {
         this.primaryStage = stage;
         primaryStage.setTitle("Main Menu"); // Stage setup
 
+        String css = Objects.requireNonNull(this.getClass().getResource("../styles/styles.css")).toExternalForm(); // Link to CSS file
+
         this.game = new BoggleGame(this); // Ready the game for the player
 
         // Four different buttons the user can select
@@ -84,9 +89,11 @@ public class gameWindow extends Application {
         mainLayout.setPadding(new Insets(10,10,10,10));
         mainLayout.setVgap(20);
         mainLayout.setHgap(20);
+        mainLayout.setId("mainScreen");
         Scene mainScene = new Scene(mainLayout, 700, 700);
         scenes.put("Main Scene", mainScene);
         sceneTitles.put(mainScene, "Main Menu");
+        mainScene.getStylesheets().add(css);
 
         // add buttons to main layout
         // buttonIds are used to encapsulate commands via the following ID format:
@@ -101,9 +108,11 @@ public class gameWindow extends Application {
         howToPlayLayout.setPadding(new Insets(10,10,10,10));
         howToPlayLayout.setVgap(20);
         howToPlayLayout.setHgap(20);
+        howToPlayLayout.setId("howToPlayScreen");
         Scene howToPlayScene = new Scene(howToPlayLayout, 700, 700);
         scenes.put("How To Play Scene", howToPlayScene);
         sceneTitles.put(howToPlayScene, "How to Play");
+        howToPlayScene.getStylesheets().add(css);
 
         // Add text and button to how to play layout
         Label gameInstructions = new Label(" Boggle is a game where you try to find as" +
@@ -133,20 +142,34 @@ public class gameWindow extends Application {
         // Normal Gamemode Scene and Layout
 
         BorderPane normalGamemodeLayout =  new BorderPane();
+        normalGamemodeLayout.setId("normalGamemodeScreen");
         normalGamemodeLayout.setPadding(new Insets(10,10,10,10));
         Scene normalGamemodeScene = new Scene(normalGamemodeLayout, 700, 700);
+        normalGamemodeScene.getStylesheets().add(css);
+
+
         scenes.put("Normal Gamemode Scene", normalGamemodeScene);
         sceneTitles.put(normalGamemodeScene, "Normal Gamemode");
-        Label normalGamemodeStats = new Label("Round Number: " + roundNumber +" | Round Score: " + roundScore+ " | " +
-                "Total Score: " + totalScore + " | Computer Score: " + compScore);
+        normalGamemodeScene.getStylesheets().add(css);
+        Label normalGamemodeStats = new Label(game.gameStats.playerwords() +" | "+ game.gameStats.computerwords()+ " | "+game.gameStats.PScore() +" | "+ game.gameStats.CScore());
         Button goBackFromNormalGamemode = new Button("Return to Main Menu [R]");
         goBackFromNormalGamemode.setId("Return to Main Menu, Main Scene");
+        Button endRound = new Button("End the Round");
+        TextField inpWord = new TextField("Input here");
         HBox statsBar = new HBox();
         VBox buttonBar = new VBox();
+        buttonBar.setAlignment(Pos.BOTTOM_RIGHT);
         statsBar.getChildren().add(normalGamemodeStats);
-        buttonBar.getChildren().add(goBackFromNormalGamemode);
+        buttonBar.getChildren().add(endRound);
         statsBar.setAlignment(Pos.CENTER);
+        normalGamemodeLayout.setRight(buttonBar);
         normalGamemodeLayout.setTop(statsBar);
+        normalGamemodeLayout.setRight(buttonBar);
+        normalGamemodeLayout.setBottom(inpWord);
+        //--------------------------------------------------
+
+
+        endRound.setId("Go to game summary screen, Normal Game Mode Round Summary Scene");
         // -------------------------------------------------------------------------------------------------
 
         // Setup for stats scene and layout
@@ -177,43 +200,57 @@ public class gameWindow extends Application {
         Scene statsScene = new Scene(table, 700, 700);
         scenes.put("Stats Scene", statsScene);
         sceneTitles.put(statsScene, "Stats");
+        statsScene.getStylesheets().add(css);
 
         // Start Normal Game Mode Round Summary Screen
         // -----------------------------------------------------------------------------------------------------------//
         Button goBackFromGameRoundSummaryButton = new Button("Return to Main Menu [R]");
         goBackFromGameRoundSummaryButton.setId("Return to Main Menu, Main Scene");
 
+        Button goToGameSummary = new Button("Go To Game Summary [G]");
+        goToGameSummary.setId("Go To Game Summary, Normal Game Mode Game Summary Scene");
+
         // add grid panels
         GridPane normalSummaryLayout =  new GridPane();
+        normalSummaryLayout.setId("roundSummaryScreen");
         normalSummaryLayout.setPadding(new Insets(10,10,10,10));
         normalSummaryLayout.setVgap(20);
         normalSummaryLayout.setHgap(20);
+        normalSummaryLayout.add(goToGameSummary, 0, 1);
         normalSummaryLayout.add(goBackFromGameRoundSummaryButton, 0, 2);
 
         // create a new scene
         Scene normalSummary = new Scene(normalSummaryLayout, 700, 700);
         scenes.put("Normal Game Mode Round Summary Scene", normalSummary);
         sceneTitles.put(normalSummary, "Normal Game Mode Round Summary");
+        normalSummary.getStylesheets().add(css);
 
         Label IntroText = new Label("The stats for the normal game mode round summary screen are displayed as follows:");
         IntroText.setTextAlignment(TextAlignment.CENTER);
 
-        normalSummaryLayout.add(IntroText, 0, 0);
+        normalSummaryLayout.add(IntroText, 0, 4);
 
-        Label pscore = new Label(stat.PScore());
-        Label cscore = new Label(stat.CScore());
-        Label csize = new Label(stat.computerwordsSize());
-        Label psize = new Label(stat.playerwordsSize());
-        Label cwords = new Label(stat.computerwords());
-        Label pwords = new Label(stat.playerwords());
+        Label pscore = new Label(BoggleStats.getInstance().PScore());
+        Label cscore = new Label(BoggleStats.getInstance().CScore());
+        Label csize = new Label(BoggleStats.getInstance().computerwordsSize());
+        Label psize = new Label(BoggleStats.getInstance().playerwordsSize());
+        Label cwords = new Label(BoggleStats.getInstance().computerwords());
+        Label pwords = new Label(BoggleStats.getInstance().playerwords());
 
+        normalSummaryLayout.add(pscore, 0, 5);
+        normalSummaryLayout.add(cscore, 0, 6);
+        normalSummaryLayout.add(csize, 0, 7);
+        normalSummaryLayout.add(psize, 0, 8);
+        normalSummaryLayout.add(cwords, 0, 9);
+        normalSummaryLayout.add(pwords, 0, 10);
 
-        normalSummaryLayout.add(pscore, 2, 4);
-        normalSummaryLayout.add(cscore, 2, 5);
-        normalSummaryLayout.add(csize, 2, 6);
-        normalSummaryLayout.add(psize, 2, 7);
-        normalSummaryLayout.add(cwords, 2, 8);
-        normalSummaryLayout.add(pwords, 2, 9);
+        GridPane.setHalignment(pscore, HPos.CENTER);
+        GridPane.setHalignment(cscore, HPos.CENTER);
+        GridPane.setHalignment(csize, HPos.CENTER);
+        GridPane.setHalignment(psize, HPos.CENTER);
+        GridPane.setHalignment(cwords, HPos.CENTER);
+        GridPane.setHalignment(pwords, HPos.CENTER);
+
 
         // -----------------------------------------------------------------------------------------------------------//
 
@@ -225,34 +262,43 @@ public class gameWindow extends Application {
 
         // add grid panels
         GridPane normalEndLayout =  new GridPane();
+        normalEndLayout.setId("gameSummaryScreen");
         normalEndLayout.setPadding(new Insets(10,10,10,10));
         normalEndLayout.setVgap(20);
         normalEndLayout.setHgap(20);
 
-        normalEndLayout.add(goBackFromGameRoundButton, 0, 2);
+        normalEndLayout.add(goBackFromGameRoundButton, 0, 1);
+
 
         // create a new scene
         Scene normalEndScene = new Scene(normalEndLayout, 700, 700);
         scenes.put("Normal Game Mode Game Summary Scene", normalEndScene);
         sceneTitles.put(normalEndScene, "Normal Game Mode Game Summary");
+        normalEndScene.getStylesheets().add(css);
 
         Label IntrText = new Label("The stats for the normal game mode Game summary screen are displayed as follows:");
         IntrText.setTextAlignment(TextAlignment.CENTER);
 
-        normalEndLayout.add(IntrText, 0, 0);
+        normalEndLayout.add(IntrText, 0, 3);
 
-        Label tRound = new Label(stat.Totalround());
-        Label pscoreT = new Label(stat.pScoreTotal());
-        Label cscoreT = new Label(stat.cScoreTotal());
-        Label pAverage = new Label(stat.pAverageWords());
-        Label cAverage = new Label(stat.cAverageWords());
+        Label tRound = new Label(BoggleStats.getInstance().Totalround());
+        Label pscoreT = new Label(BoggleStats.getInstance().pScoreTotal());
+        Label cscoreT = new Label(BoggleStats.getInstance().cScoreTotal());
+        Label pAverage = new Label(BoggleStats.getInstance().pAverageWords());
+        Label cAverage = new Label(BoggleStats.getInstance().cAverageWords());
 
 
-        normalEndLayout.add(tRound, 2, 4);
-        normalEndLayout.add(pscoreT, 2, 5);
-        normalEndLayout.add(cscoreT, 2, 6);
-        normalEndLayout.add(pAverage, 2, 8);
-        normalEndLayout.add(cAverage, 2, 9);
+        normalEndLayout.add(tRound, 0, 5);
+        normalEndLayout.add(pscoreT, 0, 6);
+        normalEndLayout.add(cscoreT, 0, 7);
+        normalEndLayout.add(pAverage, 0, 8);
+        normalEndLayout.add(cAverage, 0, 9);
+
+        GridPane.setHalignment(tRound, HPos.CENTER);
+        GridPane.setHalignment(pscoreT, HPos.CENTER);
+        GridPane.setHalignment(cscoreT, HPos.CENTER);
+        GridPane.setHalignment(pAverage, HPos.CENTER);
+        GridPane.setHalignment(cAverage, HPos.CENTER);
 
 
         // -----------------------------------------------------------------------------------------------------------//
@@ -266,17 +312,19 @@ public class gameWindow extends Application {
         // Setup for grid selection scene and layout
 
         GridPane gridSelectionLayout =  new GridPane();
+        gridSelectionLayout.setId("gridSelectionScreen");
         gridSelectionLayout.setPadding(new Insets(10,10,10,10));
         gridSelectionLayout.setVgap(20);
         gridSelectionLayout.setHgap(20);
         Scene gridSelectionScene = new Scene(gridSelectionLayout, 700, 700);
         scenes.put("Grid Selection Scene", gridSelectionScene);
         sceneTitles.put(gridSelectionScene, "Grid Selection");
+        gridSelectionScene.getStylesheets().add(css);
 
         // Label to explain how to choose grid size
         Label gridInstructions = new Label("Enter 1 to play on a (4x4) grid; 2 to play on a (5x5) grid;" +
                 " 3 to play on a (6x6) grid:");
-        gridSelectionLayout.add(gridInstructions,0,1);
+        gridSelectionLayout.add(gridInstructions,0,2);
 
         //textbox to input size
 //        TextField inpGrid = new TextField("Input here");
@@ -294,10 +342,15 @@ public class gameWindow extends Application {
 
         Button goBackFromGridSelectionButton = new Button("Return to Main Menu [R]");
         goBackFromGridSelectionButton.setId("Return to Main Menu, Main Scene");
-        gridSelectionLayout.add(goBackFromGridSelectionButton, 5, 5);
-        gridSelectionLayout.add(fourByFourButton, 5, 2);
-        gridSelectionLayout.add(fiveByFiveButton, 5, 3);
-        gridSelectionLayout.add(sixBySixButton, 5, 4);
+        gridSelectionLayout.add(fourByFourButton, 0, 5);
+        GridPane.setHalignment(fourByFourButton, HPos.CENTER);
+        gridSelectionLayout.add(fiveByFiveButton, 0, 6);
+        GridPane.setHalignment(fiveByFiveButton, HPos.CENTER);
+        gridSelectionLayout.add(sixBySixButton, 0, 7);
+        GridPane.setHalignment(sixBySixButton, HPos.CENTER);
+        gridSelectionLayout.add(goBackFromGridSelectionButton, 0, 1);
+        GridPane.setHalignment(goBackFromGridSelectionButton, HPos.LEFT);
+
 
         // Send all button clicks to commandCenter for these commands to be handled
         this.commandCenter = CommandCenter.getInstance(this);
@@ -311,9 +364,12 @@ public class gameWindow extends Application {
         goBackFromStatsButton.setOnAction(commandCenter);
         goBackFromGridSelectionButton.setOnAction(commandCenter);
         fourByFourButton.setOnAction(commandCenter);
+        goToGameSummary.setOnAction(commandCenter);
         fiveByFiveButton.setOnAction(commandCenter);
         sixBySixButton.setOnAction(commandCenter);
         goBackFromGameRoundSummaryButton.setOnAction(commandCenter);
+        endRound.setOnAction(commandCenter);
+
 
         // Allow buttons to be fired through keyboard to make the program more accessible
         mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -331,6 +387,29 @@ public class gameWindow extends Application {
                 }
                 else if (c == KeyCode.S) {
                     statsButton.fire();
+                }
+            }
+        });
+
+        normalSummary.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                KeyCode c = keyEvent.getCode();
+                if (c == KeyCode.G) {
+                    goToGameSummary.fire();
+                }
+                if (keyEvent.getCode() == KeyCode.R) {
+                    goBackFromGameRoundSummaryButton.fire();
+                }
+            }
+        });
+
+        normalEndScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                KeyCode c = keyEvent.getCode();
+                if (keyEvent.getCode() == KeyCode.R) {
+                    goBackFromGameRoundSummaryButton.fire();
                 }
             }
         });

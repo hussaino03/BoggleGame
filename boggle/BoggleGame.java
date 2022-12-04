@@ -59,7 +59,7 @@ public class BoggleGame {
         this.choiceProcessor = new HashMap<String, String>();
         this.choiceProcessor.put("Game Mode", "");
         this.choiceProcessor.put("Grid Size", "");
-        this.gameStats = new BoggleStats();
+        this.gameStats = BoggleStats.getInstance();
         this.window = w;
         this.commandCenter = CommandCenter.getInstance(window);
     }
@@ -349,6 +349,7 @@ public class BoggleGame {
                     !gameStats.getPlayerWords().contains(word) &&
                     allWords.containsKey(word.toUpperCase())){
                 gameStats.addWord(word.toLowerCase(), BoggleStats.Player.Human);
+                commandCenter.handle("updateStats, ");
 
             }else {
                 if (!word.equals("")) {

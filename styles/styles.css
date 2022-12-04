@@ -1,0 +1,71 @@
+.root {
+  -fx-font-family: sans-serif;
+}
+.label {
+-fx-font-size: 15px;
+-fx-alignment: center;
+-fx-text-fill: #03045e;
+-fx-font-weight: bold;
+
+}
+.text-field {
+    -fx-background-color: #cbf3f0 ;
+    -fx-text-box-border-color: white;
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-background-radius: 10 ;
+}
+.text-field:focused {
+    -fx-background-color: #cbf3f0;
+}
+
+.button {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+        linear-gradient(from 0% 93% to 0% 100%, #023047 0%, #219ebc 100%),
+        white,
+        white,
+        radial-gradient(center 50% 50%, radius 100%, #03045e, #03045e);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+    -fx-text-fill: white;
+}
+.button:hover {
+    -fx-background-color:
+        linear-gradient(from 0% 93% to 0% 100%, #023047 0%, #219ebc 100%),
+        white,
+        white,
+        radial-gradient(center 50% 50%, radius 100%, #4cc9f0, #4cc9f0);
+        -fx-text-fill: #03045e;
+}
+.button:pressed {
+    -fx-padding: 10 15 13 15;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
+.button Text {
+    -fx-fill: white;
+    -fx-effect: dropshadow( gaussian , #a30000 , 0,0,0,2 );
+}
+#mainScreen{
+-fx-background-color: #cbf3f0;
+}
+#mainScreen .label{
+-fx-font-size: 35px;
+}
+
+#howToPlayScreen{
+-fx-background-color: #cbf3f0;}
+
+#gridSelectionScreen{
+-fx-background-color: #cbf3f0;}
+
+#normalGamemodeScreen{
+-fx-background-color: #cbf3f0;}
+
+#roundSummaryScreen{
+-fx-background-color: #cbf3f0;}
+
+#gameSummaryScreen{
+-fx-background-color: #cbf3f0;}
