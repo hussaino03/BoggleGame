@@ -9,16 +9,19 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+
+import java.awt.*;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * src.gameWindow controls the flow of the program
@@ -63,11 +66,13 @@ public class gameWindow extends Application {
         this.primaryStage = stage;
         primaryStage.setTitle("Main Menu"); // Stage setup
 
+        String css = Objects.requireNonNull(this.getClass().getResource("../styles/styles.css")).toExternalForm(); // Link to CSS file
+
         this.game = new BoggleGame(this); // Ready the game for the player
 
         // Four different buttons the user can select
         Button howToPlayButton = new Button("How to Play [A]");
-        howToPlayButton.setId("How to Play, Normal Game Mode Round Summary Scene");
+        howToPlayButton.setId("How to Play, How To Play Scene");
 
         Button statsButton = new Button("Stats [S]");
         statsButton.setId("Stats, Stats Scene");
@@ -83,9 +88,11 @@ public class gameWindow extends Application {
         mainLayout.setPadding(new Insets(10,10,10,10));
         mainLayout.setVgap(20);
         mainLayout.setHgap(20);
+        mainLayout.setId("mainScreen");
         Scene mainScene = new Scene(mainLayout, 700, 700);
         scenes.put("Main Scene", mainScene);
         sceneTitles.put(mainScene, "Main Menu");
+        mainScene.getStylesheets().add(css);
 
         // add buttons to main layout
         // buttonIds are used to encapsulate commands via the following ID format:
@@ -100,9 +107,11 @@ public class gameWindow extends Application {
         howToPlayLayout.setPadding(new Insets(10,10,10,10));
         howToPlayLayout.setVgap(20);
         howToPlayLayout.setHgap(20);
+        howToPlayLayout.setId("howToPlayScreen");
         Scene howToPlayScene = new Scene(howToPlayLayout, 700, 700);
         scenes.put("How To Play Scene", howToPlayScene);
         sceneTitles.put(howToPlayScene, "How to Play");
+        howToPlayScene.getStylesheets().add(css);
 
         // Add text and button to how to play layout
         Label gameInstructions = new Label(" Boggle is a game where you try to find as" +
@@ -132,10 +141,13 @@ public class gameWindow extends Application {
         // Normal Gamemode Scene and Layout
 
         BorderPane normalGamemodeLayout =  new BorderPane();
+        normalGamemodeLayout.setId("normalGamemodeScreen");
         normalGamemodeLayout.setPadding(new Insets(10,10,10,10));
         Scene normalGamemodeScene = new Scene(normalGamemodeLayout, 700, 700);
+
         scenes.put("Normal Gamemode Scene", normalGamemodeScene);
         sceneTitles.put(normalGamemodeScene, "Normal Gamemode");
+        normalGamemodeScene.getStylesheets().add(css);
         Label normalGamemodeStats = new Label(game.gameStats.playerwords() +" | "+ game.gameStats.computerwords()+ " | "+game.gameStats.PScore() +" | "+ game.gameStats.CScore());
         Button goBackFromNormalGamemode = new Button("Return to Main Menu [R]");
         goBackFromNormalGamemode.setId("Return to Main Menu, Main Scene");
@@ -184,6 +196,7 @@ public class gameWindow extends Application {
         Scene statsScene = new Scene(table, 700, 700);
         scenes.put("Stats Scene", statsScene);
         sceneTitles.put(statsScene, "Stats");
+        statsScene.getStylesheets().add(css);
 
         // Start Normal Game Mode Round Summary Screen
         // -----------------------------------------------------------------------------------------------------------//
@@ -195,6 +208,7 @@ public class gameWindow extends Application {
 
         // add grid panels
         GridPane normalSummaryLayout =  new GridPane();
+        normalSummaryLayout.setId("roundSummaryScreen");
         normalSummaryLayout.setPadding(new Insets(10,10,10,10));
         normalSummaryLayout.setVgap(20);
         normalSummaryLayout.setHgap(20);
@@ -205,6 +219,7 @@ public class gameWindow extends Application {
         Scene normalSummary = new Scene(normalSummaryLayout, 700, 700);
         scenes.put("Normal Game Mode Round Summary Scene", normalSummary);
         sceneTitles.put(normalSummary, "Normal Game Mode Round Summary");
+        normalSummary.getStylesheets().add(css);
 
         Label IntroText = new Label("The stats for the normal game mode round summary screen are displayed as follows:");
         IntroText.setTextAlignment(TextAlignment.CENTER);
@@ -235,6 +250,7 @@ public class gameWindow extends Application {
 
         // add grid panels
         GridPane normalEndLayout =  new GridPane();
+        normalEndLayout.setId("gameSummaryScreen");
         normalEndLayout.setPadding(new Insets(10,10,10,10));
         normalEndLayout.setVgap(20);
         normalEndLayout.setHgap(20);
@@ -245,6 +261,7 @@ public class gameWindow extends Application {
         Scene normalEndScene = new Scene(normalEndLayout, 700, 700);
         scenes.put("Normal Game Mode Game Summary Scene", normalEndScene);
         sceneTitles.put(normalEndScene, "Normal Game Mode Game Summary");
+        normalEndScene.getStylesheets().add(css);
 
         Label IntrText = new Label("The stats for the normal game mode Game summary screen are displayed as follows:");
         IntrText.setTextAlignment(TextAlignment.CENTER);
@@ -276,12 +293,14 @@ public class gameWindow extends Application {
         // Setup for grid selection scene and layout
 
         GridPane gridSelectionLayout =  new GridPane();
+        gridSelectionLayout.setId("gridSelectionScreen");
         gridSelectionLayout.setPadding(new Insets(10,10,10,10));
         gridSelectionLayout.setVgap(20);
         gridSelectionLayout.setHgap(20);
         Scene gridSelectionScene = new Scene(gridSelectionLayout, 700, 700);
         scenes.put("Grid Selection Scene", gridSelectionScene);
         sceneTitles.put(gridSelectionScene, "Grid Selection");
+        gridSelectionScene.getStylesheets().add(css);
 
         // Label to explain how to choose grid size
         Label gridInstructions = new Label("Enter 1 to play on a (4x4) grid; 2 to play on a (5x5) grid;" +

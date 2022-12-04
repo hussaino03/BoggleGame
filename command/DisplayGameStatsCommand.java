@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import java.util.HashMap;
 
 /**
- * Display the most updates boggle score
+ * Display the most updated boggle score
  */
 public class DisplayGameStatsCommand implements Command {
 
