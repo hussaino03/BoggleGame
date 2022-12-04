@@ -144,7 +144,7 @@ public class gameWindow extends Application {
         scenes.put("Normal Gamemode Scene", normalGamemodeScene);
         sceneTitles.put(normalGamemodeScene, "Normal Gamemode");
         normalGamemodeScene.getStylesheets().add(css);
-        Label normalGamemodeStats = new Label(game.gameStats.playerwords() +" | "+ game.gameStats.computerwords()+ " | "+game.gameStats.PScore() +" | "+ game.gameStats.CScore());
+        Label normalGamemodeStats = new Label("Player Score: "+ game.gameStats.getPScore() + " | "+ "Round Number: " + (game.gameStats.getRound() + 1));
         Button goBackFromNormalGamemode = new Button("Return to Main Menu [R]");
         goBackFromNormalGamemode.setId("RedirectScreen; Main Scene");
         Button endRound = new Button("End the Round");
