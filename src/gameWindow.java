@@ -1,10 +1,10 @@
 package src;
 
+import javafx.collections.FXCollections;
 import boggle.*;
 import command.*;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -452,4 +452,13 @@ public class gameWindow extends Application {
 
 //
     }
-}
+
+    //public ObservableList<BoggleStatsTable> getTable(){
+        //ObservableList<Object> statsTable = FXCollections.observableArrayList();
+        //statsTable.add(new BoggleStatsTable("Average num of words",BoggleStats.))
+        //statsTable.add(new BoggleStatsTable("Highest score",BoggleStats.highestScore))
+
+    }
+
+
+//}
