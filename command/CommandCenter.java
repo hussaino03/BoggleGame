@@ -125,7 +125,40 @@ public class CommandCenter implements EventHandler<ActionEvent> {
      * and process it directly, without needing to first convert an ActionEvent to a string
      * @param Id The id of the event to be processed
      */
+
+    /*
+    IDs should be of the following format:
+    "COMMANDS TO BE EXECUTED; COMMAND 1 INFO; COMMAND 2 INFO; ..."
+    COMMANDS TO BE EXECUTED -> "RedirectScreen, UpdateUserChoice, ..."
+    Info required by each command is as follows:
+        StartGame: no info ("")
+        DisplayStats: no info ("")
+        ResetStats: no info ("")
+        RedirectScreen: newScene ("Scene Name")
+        DisplayGridElements: letters ("letters")
+        UpdateUserChoice: choiceType, choice ("choiceType, choice")
+
+     */
     public void handle(String Id) {
+        if (!(Id.contains("; "))) { // Ids of the wrong format should not be handled
+            return;
+        }
+
+        // Decompose Id
+        String[] IdVariables = Id.split("; ");
+        String executableCommands = IdVariables[0]; // Commands to be processed
+
+        if (executableCommands.contains(", ")) { // Multiple commands need to be processed
+            String[] commands = executableCommands.split(", ");
+            for (int i=0; i < commands.length; i++) {
+                this.processId(commands[i], IdVariables, i);
+            }
+        }
+        else { // A single command needs to be processed
+            String command = executableCommands;
+            this.processId(command, IdVariables, 0);
+        }
+
         if (Id.contains(", ") && Id.length() >= 3) { // ID is not blank and is of right format
             String[] idVariables = Id.split(", "); // Split the ID into its variables
             System.out.println(idVariables.length);
@@ -190,6 +223,57 @@ public class CommandCenter implements EventHandler<ActionEvent> {
             // it represents a DisplayGridElementsCommand
             this.setCommand(new DisplayGridElementsCommand(Id, this.gameWindow.primaryStage));
             this.execute();
+        }
+    }
+    /*
+    IDs should be of the following format:
+    "COMMANDS TO BE EXECUTED; COMMAND 1 INFO; COMMAND 2 INFO; ..."
+    COMMANDS TO BE EXECUTED -> "RedirectScreen, UpdateUserChoice, ..."
+    Info required by each command is as follows:
+        StartGame: no info ("")
+        DisplayStats: no info ("")
+        ResetStats: no info ("")
+        RedirectScreen: newScene ("Scene Name")
+        DisplayGridElements: letters ("letters")
+        UpdateUserChoice: choiceType, choice ("choiceType, choice")
+
+     */
+
+    private void processId(String command, String[] IdVariables, int i) {
+        /*
+        Commands with no info required
+         */
+        if (command.equals("StartGame")) {
+            this.setCommand(
+                    new StartGameCommand(this.gameWindow.game));
+        }
+        else if (command.equals("DisplayStats")) {
+            this.setCommand(
+                    new DisplayGameStatsCommand(BoggleStats.getInstance().getStatsMap(),
+                            this.gameWindow.primaryStage));
+        }
+        else if (command.equals("RestStats")) {
+            this.setCommand(new ResetStatsCommand());
+        }
+        /*
+        Commands with info required
+         */
+        else if (command.equals("DisplayGridElements")) {
+            String letters = IdVariables[i+1];
+            this.setCommand(new DisplayGridElementsCommand(letters, this.gameWindow.primaryStage));
+        }
+        else if (command.equals("RedirectScreen")) {
+            String newScene = IdVariables[i+1];
+            Scene transition = gameWindow.scenes.get(newScene);
+            String title = gameWindow.sceneTitles.get(transition);
+            this.setCommand(new RedirectScreenCommand(
+                    this.gameWindow.primaryStage, transition, title));
+        }
+        else if (command.equals("UpdateUserChoice")) {
+            String[] params = IdVariables[i+1].split(", ");
+            String choiceType = params[0];
+            String choice = params[1];
+            this.setCommand(new UpdateUserChoiceCommand(this.gameWindow.game, choiceType, choice));
         }
     }
 
