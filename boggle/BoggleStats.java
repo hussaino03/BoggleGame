@@ -46,6 +46,28 @@ public class BoggleStats {
      * the current round being played
      */  
     private int round;
+    /**
+     * the player's total score across all games
+     */
+    private int pScoreAllTime;
+    /**
+     * the computer's total score across all games
+     */
+    private int cScoreAllTime;
+    /**
+     * the average number of words, per round, found by the player across all games
+     */
+    private double pAverageWordsAllTime;
+    /**
+     * the average number of words, per round, found by the computer across all games
+     */
+    private double cAverageWordsAllTime;
+    /**
+     * the number of rounds across all games
+     */
+    private int totalRounds;
+
+
 
     /**
      * enumarable types of players (human or computer)
@@ -66,8 +88,11 @@ public class BoggleStats {
      */
     private BoggleStats() {
         round = 0;
+        totalRounds = 0;
         pScoreTotal = 0;
+        pScoreAllTime = 0;
         cScoreTotal = 0;
+        cScoreAllTime = 0;
         pAverageWords = 0;
         cAverageWords = 0;
         playerWords = new HashSet<String>();
@@ -121,14 +146,23 @@ public class BoggleStats {
         pScoreTotal += pScore;
         cScoreTotal += cScore;
 
+        // All Time Stats Updated
+        pScoreAllTime += pScore;
+        cScoreAllTime += cScore;
+        totalRounds += 1;
+
         pScore = 0;
         cScore = 0;
         round += 1;
 
+
         pAverageWords = (pAverageWords * (round - 1)) / round + playerWords.size() / (double) round;
+        pAverageWordsAllTime =
+                (pAverageWordsAllTime * (totalRounds - 1)) / totalRounds + playerWords.size() / (double) totalRounds;
 
         cAverageWords = (cAverageWords * (round - 1)) / round + computerWords.size() / (double) round;
-
+        cAverageWordsAllTime =
+                (cAverageWordsAllTime * (totalRounds - 1)) / totalRounds + computerWords.size() / (double) totalRounds;
         playerWords.clear();
         computerWords.clear();
 
