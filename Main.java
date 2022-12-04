@@ -1,6 +1,8 @@
 import boggle.BoggleGame;
 import src.gameWindow;
 
+import java.io.IOException;
+
 /**
  * The Main class for the first Assignment in CSC207, Fall 2022
  */
@@ -9,7 +11,7 @@ public class Main {
      * Main method.
      * @param args command line arguments.
      **/
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         gameWindow g = new gameWindow();
         BoggleGame b = new BoggleGame(g);
         b.choiceProcessor.put("Game Mode", "normal");

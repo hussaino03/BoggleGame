@@ -1,5 +1,6 @@
 package boggle;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,6 +9,7 @@ import java.util.Set;
  * The BoggleStats class for the first Assignment in CSC207, Fall 2022
  * The BoggleStats will contain statsitics related to game play Boggle 
  */
+
 public class BoggleStats {
     private static BoggleStats instance = null;
     /**
@@ -46,6 +48,28 @@ public class BoggleStats {
      * the current round being played
      */  
     private int round;
+    /**
+     * the player's total score across all games
+     */
+    private int pScoreAllTime;
+    /**
+     * the computer's total score across all games
+     */
+    private int cScoreAllTime;
+    /**
+     * the average number of words, per round, found by the player across all games
+     */
+    private double pAverageWordsAllTime;
+    /**
+     * the average number of words, per round, found by the computer across all games
+     */
+    private double cAverageWordsAllTime;
+    /**
+     * the number of rounds across all games
+     */
+    private int totalRounds;
+
+
 
     /**
      * enumarable types of players (human or computer)
@@ -67,12 +91,17 @@ public class BoggleStats {
     private BoggleStats() {
         round = 0;
         pScoreTotal = 0;
+        pScoreAllTime = 0;
         cScoreTotal = 0;
+        cScoreAllTime = 0;
         pAverageWords = 0;
+        pAverageWordsAllTime = 0;
         cAverageWords = 0;
+        cAverageWordsAllTime = 0;
         playerWords = new HashSet<String>();
         computerWords = new HashSet<String>();
-    }
+
+        }
     /*
     * SingleTon Design Implementation:
     * A public method to return the instance of BoggleStats
@@ -121,14 +150,23 @@ public class BoggleStats {
         pScoreTotal += pScore;
         cScoreTotal += cScore;
 
+        // All Time Stats Updated
+        pScoreAllTime += pScore;
+        cScoreAllTime += cScore;
+        totalRounds += 1;
+
         pScore = 0;
         cScore = 0;
         round += 1;
 
+
         pAverageWords = (pAverageWords * (round - 1)) / round + playerWords.size() / (double) round;
+        pAverageWordsAllTime =
+                (pAverageWordsAllTime * (totalRounds - 1)) / totalRounds + playerWords.size() / (double) totalRounds;
 
         cAverageWords = (cAverageWords * (round - 1)) / round + computerWords.size() / (double) round;
-
+        cAverageWordsAllTime =
+                (cAverageWordsAllTime * (totalRounds - 1)) / totalRounds + computerWords.size() / (double) totalRounds;
         playerWords.clear();
         computerWords.clear();
 
@@ -227,6 +265,8 @@ public class BoggleStats {
 
         System.out.println("The Average Number of Words Found by Human: "+pAverageWords);
         System.out.println("The Average Number of Words Found by Computer: "+cAverageWords);
+
+        System.out.println("The All time number of rounds played:" + this.totalRounds);
     }
 
     /**

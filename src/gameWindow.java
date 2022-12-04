@@ -73,23 +73,22 @@ public class gameWindow extends Application {
 
         // Four different buttons the user can select
         Button howToPlayButton = new Button("How to Play [A]");
-        howToPlayButton.setId("How to Play, How To Play Scene");
+        howToPlayButton.setId("RedirectScreen; How To Play Scene");
 
         Button statsButton = new Button("Stats [S]");
-        statsButton.setId("Stats, Stats Scene");
+        statsButton.setId("RedirectScreen; Stats Scene");
 
         Button normalModeButton = new Button("Normal Mode [Q]");
-        normalModeButton.setId("Normal Mode, Grid Selection Scene, Game Mode, normal");
+        normalModeButton.setId("RedirectScreen, UpdateUserChoice; Grid Selection Scene; Game Mode, normal");
 
         Button timedModeButton = new Button("Timed Mode [W]");
-        timedModeButton.setId("Timed Mode, Grid Selection Scene, Game Mode, normal");
+        timedModeButton.setId("RedirectScreen, UpdateUserChoice; Grid Selection Scene; Game Mode, timed");
 
         // Setup for the main scene and layout [Contains the four buttons]
         GridPane mainLayout =  new GridPane();
         mainLayout.setPadding(new Insets(10,10,10,10));
         mainLayout.setVgap(20);
         mainLayout.setHgap(20);
-        mainLayout.setId("mainScreen");
         Scene mainScene = new Scene(mainLayout, 700, 700);
         scenes.put("Main Scene", mainScene);
         sceneTitles.put(mainScene, "Main Menu");
@@ -108,7 +107,6 @@ public class gameWindow extends Application {
         howToPlayLayout.setPadding(new Insets(10,10,10,10));
         howToPlayLayout.setVgap(20);
         howToPlayLayout.setHgap(20);
-        howToPlayLayout.setId("howToPlayScreen");
         Scene howToPlayScene = new Scene(howToPlayLayout, 700, 700);
         scenes.put("How To Play Scene", howToPlayScene);
         sceneTitles.put(howToPlayScene, "How to Play");
@@ -133,7 +131,7 @@ public class gameWindow extends Application {
                 " all games.");
 
         Button goBackFromHTPButton = new Button("Return to Main Menu [R]");
-        goBackFromHTPButton.setId("Return to Main Menu, Main Scene");
+        goBackFromHTPButton.setId("RedirectScreen; Main Scene");
         howToPlayLayout.add(gameInstructions, 0, 0);
         howToPlayLayout.add(goBackFromHTPButton, 0, 1);
         
@@ -142,7 +140,6 @@ public class gameWindow extends Application {
         // Normal Gamemode Scene and Layout
 
         BorderPane normalGamemodeLayout =  new BorderPane();
-        normalGamemodeLayout.setId("normalGamemodeScreen");
         normalGamemodeLayout.setPadding(new Insets(10,10,10,10));
         Scene normalGamemodeScene = new Scene(normalGamemodeLayout, 700, 700);
         normalGamemodeScene.getStylesheets().add(css);
@@ -153,7 +150,7 @@ public class gameWindow extends Application {
         normalGamemodeScene.getStylesheets().add(css);
         Label normalGamemodeStats = new Label(game.gameStats.playerwords() +" | "+ game.gameStats.computerwords()+ " | "+game.gameStats.PScore() +" | "+ game.gameStats.CScore());
         Button goBackFromNormalGamemode = new Button("Return to Main Menu [R]");
-        goBackFromNormalGamemode.setId("Return to Main Menu, Main Scene");
+        goBackFromNormalGamemode.setId("RedirectScreen; Main Scene");
         Button endRound = new Button("End the Round");
         TextField inpWord = new TextField("Input here");
         HBox statsBar = new HBox();
@@ -169,7 +166,7 @@ public class gameWindow extends Application {
         //--------------------------------------------------
 
 
-        endRound.setId("Go to game summary screen, Normal Game Mode Round Summary Scene");
+        endRound.setId("RedirectScreen; Normal Game Mode Round Summary Scene");
         // -------------------------------------------------------------------------------------------------
 
         // Setup for stats scene and layout
@@ -205,14 +202,13 @@ public class gameWindow extends Application {
         // Start Normal Game Mode Round Summary Screen
         // -----------------------------------------------------------------------------------------------------------//
         Button goBackFromGameRoundSummaryButton = new Button("Return to Main Menu [R]");
-        goBackFromGameRoundSummaryButton.setId("Return to Main Menu, Main Scene");
+        goBackFromGameRoundSummaryButton.setId("RedirectScreen; Main Scene");
 
         Button goToGameSummary = new Button("Go To Game Summary [G]");
-        goToGameSummary.setId("Go To Game Summary, Normal Game Mode Game Summary Scene");
+        goToGameSummary.setId("RedirectScreen; Normal Game Mode Game Summary Scene");
 
         // add grid panels
         GridPane normalSummaryLayout =  new GridPane();
-        normalSummaryLayout.setId("roundSummaryScreen");
         normalSummaryLayout.setPadding(new Insets(10,10,10,10));
         normalSummaryLayout.setVgap(20);
         normalSummaryLayout.setHgap(20);
@@ -258,11 +254,10 @@ public class gameWindow extends Application {
         // -----------------------------------------------------------------------------------------------------------//
 
         Button goBackFromGameRoundButton = new Button("Return to Main Menu [R]");
-        goBackFromGameRoundButton.setId("Return to Main Menu, Main Scene");
+        goBackFromGameRoundButton.setId("RedirectScreen; Main Scene");
 
         // add grid panels
         GridPane normalEndLayout =  new GridPane();
-        normalEndLayout.setId("gameSummaryScreen");
         normalEndLayout.setPadding(new Insets(10,10,10,10));
         normalEndLayout.setVgap(20);
         normalEndLayout.setHgap(20);
@@ -306,13 +301,12 @@ public class gameWindow extends Application {
 
         // Add button to stats layout
         Button goBackFromStatsButton = new Button("Return to Main Menu [R]");
-        goBackFromStatsButton.setId("Return to Main Menu, Main Scene");
+        goBackFromStatsButton.setId("RedirectScreen; Main Scene");
 //        statsLayout.add(goBackFromStatsButton, 5, 5);
 
         // Setup for grid selection scene and layout
 
         GridPane gridSelectionLayout =  new GridPane();
-        gridSelectionLayout.setId("gridSelectionScreen");
         gridSelectionLayout.setPadding(new Insets(10,10,10,10));
         gridSelectionLayout.setVgap(20);
         gridSelectionLayout.setHgap(20);
@@ -332,16 +326,16 @@ public class gameWindow extends Application {
 
         // add buttons to grid selection layout
         Button fourByFourButton = new Button("4x4 [1]");
-        fourByFourButton.setId("Four By Four Button, Normal Gamemode Scene, Grid Size, four, start");
+        fourByFourButton.setId("RedirectScreen, UpdateUserChoice, StartGame; Normal Gamemode Scene; Grid Size, four; ");
 
         Button fiveByFiveButton = new Button("5x5 [2]");
-        fiveByFiveButton.setId("Five By Five Button, Normal Gamemode Scene, Grid Size, five, start");
+        fiveByFiveButton.setId("RedirectScreen, UpdateUserChoice, StartGame; Normal Gamemode Scene; Grid Size, five; ");
 
         Button sixBySixButton = new Button("6x6 [3]");
-        sixBySixButton.setId("Four By Four Button, Normal Gamemode Scene, Grid Size, six, start");
+        sixBySixButton.setId("RedirectScreen, UpdateUserChoice, StartGame; Normal Gamemode Scene; Grid Size, six; ");
 
         Button goBackFromGridSelectionButton = new Button("Return to Main Menu [R]");
-        goBackFromGridSelectionButton.setId("Return to Main Menu, Main Scene");
+        goBackFromGridSelectionButton.setId("RedirectScreen; Main Scene");
         gridSelectionLayout.add(fourByFourButton, 0, 5);
         GridPane.setHalignment(fourByFourButton, HPos.CENTER);
         gridSelectionLayout.add(fiveByFiveButton, 0, 6);
@@ -416,19 +410,23 @@ public class gameWindow extends Application {
 
         gridSelectionScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent keyEvent) {
-                char c = keyEvent.getText().charAt(0);
-                if (keyEvent.getCode() == KeyCode.R) {
-                    goBackFromGridSelectionButton.fire();
+                String cString = keyEvent.getText();
+                if (cString.length() > 0) {
+                    char c = cString.charAt(0);
+                    if (keyEvent.getCode() == KeyCode.R) {
+                        goBackFromGridSelectionButton.fire();
+                    }
+                    else if (c == '1') {
+                        fourByFourButton.fire();
+                    }
+                    else if (c == '2') {
+                        fiveByFiveButton.fire();
+                    }
+                    else if (c == '3') {
+                        sixBySixButton.fire();
+                    }
                 }
-                else if (c == '1') {
-                    fourByFourButton.fire();
-                }
-                else if (c == '2') {
-                    fiveByFiveButton.fire();
-                }
-                else if (c == '3') {
-                    sixBySixButton.fire();
-                }
+
             }
         });
 
