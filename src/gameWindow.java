@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -144,6 +145,8 @@ public class gameWindow extends Application {
         normalGamemodeLayout.setId("normalGamemodeScreen");
         normalGamemodeLayout.setPadding(new Insets(10,10,10,10));
         Scene normalGamemodeScene = new Scene(normalGamemodeLayout, 700, 700);
+        normalGamemodeScene.getStylesheets().add(css);
+
 
         scenes.put("Normal Gamemode Scene", normalGamemodeScene);
         sceneTitles.put(normalGamemodeScene, "Normal Gamemode");
@@ -155,6 +158,7 @@ public class gameWindow extends Application {
         TextField inpWord = new TextField("Input here");
         HBox statsBar = new HBox();
         VBox buttonBar = new VBox();
+        buttonBar.setAlignment(Pos.BOTTOM_RIGHT);
         statsBar.getChildren().add(normalGamemodeStats);
         buttonBar.getChildren().add(endRound);
         statsBar.setAlignment(Pos.CENTER);
@@ -165,7 +169,7 @@ public class gameWindow extends Application {
         //--------------------------------------------------
 
 
-        endRound.setId("Go to game summary screen, Normal Game Mode Game Summary Scene");
+        endRound.setId("Go to game summary screen, Normal Game Mode Round Summary Scene");
         // -------------------------------------------------------------------------------------------------
 
         // Setup for stats scene and layout
@@ -212,7 +216,7 @@ public class gameWindow extends Application {
         normalSummaryLayout.setPadding(new Insets(10,10,10,10));
         normalSummaryLayout.setVgap(20);
         normalSummaryLayout.setHgap(20);
-        normalSummaryLayout.add(goToGameSummary, 0, 3);
+        normalSummaryLayout.add(goToGameSummary, 0, 1);
         normalSummaryLayout.add(goBackFromGameRoundSummaryButton, 0, 2);
 
         // create a new scene
@@ -224,7 +228,7 @@ public class gameWindow extends Application {
         Label IntroText = new Label("The stats for the normal game mode round summary screen are displayed as follows:");
         IntroText.setTextAlignment(TextAlignment.CENTER);
 
-        normalSummaryLayout.add(IntroText, 0, 0);
+        normalSummaryLayout.add(IntroText, 0, 4);
 
         Label pscore = new Label(BoggleStats.getInstance().PScore());
         Label cscore = new Label(BoggleStats.getInstance().CScore());
@@ -233,12 +237,20 @@ public class gameWindow extends Application {
         Label cwords = new Label(BoggleStats.getInstance().computerwords());
         Label pwords = new Label(BoggleStats.getInstance().playerwords());
 
-        normalSummaryLayout.add(pscore, 2, 4);
-        normalSummaryLayout.add(cscore, 2, 5);
-        normalSummaryLayout.add(csize, 2, 6);
-        normalSummaryLayout.add(psize, 2, 7);
-        normalSummaryLayout.add(cwords, 2, 8);
-        normalSummaryLayout.add(pwords, 2, 9);
+        normalSummaryLayout.add(pscore, 0, 5);
+        normalSummaryLayout.add(cscore, 0, 6);
+        normalSummaryLayout.add(csize, 0, 7);
+        normalSummaryLayout.add(psize, 0, 8);
+        normalSummaryLayout.add(cwords, 0, 9);
+        normalSummaryLayout.add(pwords, 0, 10);
+
+        GridPane.setHalignment(pscore, HPos.CENTER);
+        GridPane.setHalignment(cscore, HPos.CENTER);
+        GridPane.setHalignment(csize, HPos.CENTER);
+        GridPane.setHalignment(psize, HPos.CENTER);
+        GridPane.setHalignment(cwords, HPos.CENTER);
+        GridPane.setHalignment(pwords, HPos.CENTER);
+
 
         // -----------------------------------------------------------------------------------------------------------//
 
@@ -255,7 +267,8 @@ public class gameWindow extends Application {
         normalEndLayout.setVgap(20);
         normalEndLayout.setHgap(20);
 
-        normalEndLayout.add(goBackFromGameRoundButton, 0, 2);
+        normalEndLayout.add(goBackFromGameRoundButton, 0, 1);
+
 
         // create a new scene
         Scene normalEndScene = new Scene(normalEndLayout, 700, 700);
@@ -266,7 +279,7 @@ public class gameWindow extends Application {
         Label IntrText = new Label("The stats for the normal game mode Game summary screen are displayed as follows:");
         IntrText.setTextAlignment(TextAlignment.CENTER);
 
-        normalEndLayout.add(IntrText, 0, 0);
+        normalEndLayout.add(IntrText, 0, 3);
 
         Label tRound = new Label(BoggleStats.getInstance().Totalround());
         Label pscoreT = new Label(BoggleStats.getInstance().pScoreTotal());
@@ -275,11 +288,17 @@ public class gameWindow extends Application {
         Label cAverage = new Label(BoggleStats.getInstance().cAverageWords());
 
 
-        normalEndLayout.add(tRound, 2, 4);
-        normalEndLayout.add(pscoreT, 2, 5);
-        normalEndLayout.add(cscoreT, 2, 6);
-        normalEndLayout.add(pAverage, 2, 8);
-        normalEndLayout.add(cAverage, 2, 9);
+        normalEndLayout.add(tRound, 0, 5);
+        normalEndLayout.add(pscoreT, 0, 6);
+        normalEndLayout.add(cscoreT, 0, 7);
+        normalEndLayout.add(pAverage, 0, 8);
+        normalEndLayout.add(cAverage, 0, 9);
+
+        GridPane.setHalignment(tRound, HPos.CENTER);
+        GridPane.setHalignment(pscoreT, HPos.CENTER);
+        GridPane.setHalignment(cscoreT, HPos.CENTER);
+        GridPane.setHalignment(pAverage, HPos.CENTER);
+        GridPane.setHalignment(cAverage, HPos.CENTER);
 
 
         // -----------------------------------------------------------------------------------------------------------//
@@ -305,7 +324,7 @@ public class gameWindow extends Application {
         // Label to explain how to choose grid size
         Label gridInstructions = new Label("Enter 1 to play on a (4x4) grid; 2 to play on a (5x5) grid;" +
                 " 3 to play on a (6x6) grid:");
-        gridSelectionLayout.add(gridInstructions,0,1);
+        gridSelectionLayout.add(gridInstructions,0,2);
 
         //textbox to input size
 //        TextField inpGrid = new TextField("Input here");
@@ -323,10 +342,15 @@ public class gameWindow extends Application {
 
         Button goBackFromGridSelectionButton = new Button("Return to Main Menu [R]");
         goBackFromGridSelectionButton.setId("Return to Main Menu, Main Scene");
-        gridSelectionLayout.add(goBackFromGridSelectionButton, 5, 5);
-        gridSelectionLayout.add(fourByFourButton, 5, 2);
-        gridSelectionLayout.add(fiveByFiveButton, 5, 3);
-        gridSelectionLayout.add(sixBySixButton, 5, 4);
+        gridSelectionLayout.add(fourByFourButton, 0, 5);
+        GridPane.setHalignment(fourByFourButton, HPos.CENTER);
+        gridSelectionLayout.add(fiveByFiveButton, 0, 6);
+        GridPane.setHalignment(fiveByFiveButton, HPos.CENTER);
+        gridSelectionLayout.add(sixBySixButton, 0, 7);
+        GridPane.setHalignment(sixBySixButton, HPos.CENTER);
+        gridSelectionLayout.add(goBackFromGridSelectionButton, 0, 1);
+        GridPane.setHalignment(goBackFromGridSelectionButton, HPos.LEFT);
+
 
         // Send all button clicks to commandCenter for these commands to be handled
         this.commandCenter = CommandCenter.getInstance(this);
