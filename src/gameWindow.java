@@ -73,15 +73,15 @@ public class gameWindow extends Application {
 
         // Four different buttons the user can select
         Button howToPlayButton = new Button("How to Play [A]");
-//        howToPlayButton.setMinSize(100, 100);
+        howToPlayButton.setMinSize(80, 80);
         howToPlayButton.setId("RedirectScreen; How To Play Scene");
 
         Button statsButton = new Button("Stats [S]");
-//        statsButton.setMinSize(100, 100);
+        statsButton.setMinSize(80, 80);
         statsButton.setId("RedirectScreen; Stats Scene");
 
         Button normalModeButton = new Button("Play [Q]");
-//        normalModeButton.setMinSize(100, 100);
+        normalModeButton.setMinSize(80, 80);
         normalModeButton.setId("RedirectScreen, UpdateUserChoice; Grid Selection Scene; Game Mode, normal");
 
 
@@ -90,7 +90,7 @@ public class gameWindow extends Application {
         mainLayout.setPadding(new Insets(10,10,10,10));
         mainLayout.setVgap(20);
         mainLayout.setHgap(20);
-        Scene mainScene = new Scene(mainLayout, 1000, 700);
+        Scene mainScene = new Scene(mainLayout, 600, 600);
         scenes.put("Main Scene", mainScene);
         sceneTitles.put(mainScene, "Main Menu");
         mainScene.getStylesheets().add(css);
@@ -108,24 +108,27 @@ public class gameWindow extends Application {
         howToPlayLayout.setPadding(new Insets(10,10,10,10));
         howToPlayLayout.setVgap(20);
         howToPlayLayout.setHgap(20);
-        Scene howToPlayScene = new Scene(howToPlayLayout, 1000, 700);
+        Scene howToPlayScene = new Scene(howToPlayLayout, 600, 600);
         scenes.put("How To Play Scene", howToPlayScene);
         sceneTitles.put(howToPlayScene, "How to Play");
         howToPlayScene.getStylesheets().add(css);
 
         // Add text and button to how to play layout
-        Label gameInstructions = new Label(" Boggle is a game where you try to find as" +
-                " many words as you can in a randomized grid of letters. \n Words can be" +
+        Label gameInstructions = new Label("Boggle is a game where you try to find as" +
+                " many words as you can in a randomized grid of letters. Words can be" +
                 " formed by joining letters which are vertically, horizontally or diagonally" +
-                " adjacent. \n You will earn points based on the length of the word found. \n " +
-                "You will play against the computer. \n You will be given a grid of letters and should" +
-                " form as many words as you can. \n When you can no longer think of any words, the " +
-                "computer will find all remaining words. \n At the end of each round, you will be given" +
-                " information regarding your current standing against the computer. \n Your goal is to" +
-                " end the game with a higher score than the computer. \n You can return to this page at any time to review the " +
-                "game instructions. \n You can also go to the Stats Page to review your success across" +
+                " adjacent.\n \nYou will earn points based on the length of the word found. " +
+                "You will play against the computer. You will be given a grid of letters and should" +
+                " form as many words as you can. When you can no longer think of any words, the " +
+                "computer will find all remaining words. At the end of each round, you will be given" +
+                " information regarding your current standing against the computer. \n\nYour goal is to" +
+                " end the game with a higher score than the computer. You can return to this page at any " +
+                "time to review the " +
+                "game instructions. You can also go to the Stats Page to review your success across" +
                 " all games.");
 
+        gameInstructions.setWrapText(true);
+        gameInstructions.setMaxWidth(500);
         Button goBackFromHTPButton = new Button("Return to Main Menu [R]");
         goBackFromHTPButton.setId("RedirectScreen; Main Scene");
         howToPlayLayout.add(gameInstructions, 0, 0);
@@ -137,7 +140,7 @@ public class gameWindow extends Application {
 
         BorderPane normalGamemodeLayout =  new BorderPane();
         normalGamemodeLayout.setPadding(new Insets(10,10,10,10));
-        Scene normalGamemodeScene = new Scene(normalGamemodeLayout, 1000, 700);
+        Scene normalGamemodeScene = new Scene(normalGamemodeLayout, 600, 600);
         normalGamemodeScene.getStylesheets().add(css);
 
 
@@ -147,7 +150,7 @@ public class gameWindow extends Application {
         Label normalGamemodeStats = new Label("Player Score: "+ game.gameStats.getPScore() + " | "+ "Round Number: " + (game.gameStats.getRound() + 1));
         Button goBackFromNormalGamemode = new Button("Return to Main Menu [R]");
         goBackFromNormalGamemode.setId("RedirectScreen; Main Scene");
-        Button endRound = new Button("End the Round");
+        Button endRound = new Button("End the Round [N]");
         TextField inpWord = new TextField();
         inpWord.setPromptText("Input Here");
         HBox statsBar = new HBox();
@@ -163,7 +166,7 @@ public class gameWindow extends Application {
         //--------------------------------------------------
 
 
-        endRound.setId("RedirectScreen; Normal Game Mode Round Summary Scene");
+        endRound.setId("RedirectScreen, UpdateUserChoice; Normal Game Mode Round Summary Scene; Round Ended, true");
         // -------------------------------------------------------------------------------------------------
 
         // Setup for stats scene and layout
@@ -191,7 +194,7 @@ public class gameWindow extends Application {
         statsLayout.setBottom(goBackFromStatsButton);
 
 
-        Scene statsScene = new Scene(statsLayout, 1000, 700);
+        Scene statsScene = new Scene(statsLayout, 600, 600);
         scenes.put("Stats Scene", statsScene);
         sceneTitles.put(statsScene, "Stats");
         statsScene.getStylesheets().add(css);
@@ -214,13 +217,14 @@ public class gameWindow extends Application {
         normalSummaryLayout.add(goBackFromGameRoundSummaryButton, 0, 2);
 
         // create a new scene
-        Scene normalSummary = new Scene(normalSummaryLayout, 1000, 700);
+        Scene normalSummary = new Scene(normalSummaryLayout, 600, 600);
         scenes.put("Normal Game Mode Round Summary Scene", normalSummary);
         sceneTitles.put(normalSummary, "Normal Game Mode Round Summary");
         normalSummary.getStylesheets().add(css);
 
-        Label IntroText = new Label("The stats for the normal game mode round summary screen are displayed as follows:");
+        Label IntroText = new Label("The stats for the round are displayed as follows:");
         IntroText.setTextAlignment(TextAlignment.CENTER);
+        IntroText.setMaxWidth(580);
 
         normalSummaryLayout.add(IntroText, 0, 4);
 
@@ -264,7 +268,7 @@ public class gameWindow extends Application {
 
 
         // create a new scene
-        Scene normalEndScene = new Scene(normalEndLayout, 1000, 700);
+        Scene normalEndScene = new Scene(normalEndLayout, 600, 600);
         scenes.put("Normal Game Mode Game Summary Scene", normalEndScene);
         sceneTitles.put(normalEndScene, "Normal Game Mode Game Summary");
         normalEndScene.getStylesheets().add(css);
@@ -304,7 +308,7 @@ public class gameWindow extends Application {
         gridSelectionLayout.setPadding(new Insets(10,10,10,10));
         gridSelectionLayout.setVgap(20);
         gridSelectionLayout.setHgap(20);
-        Scene gridSelectionScene = new Scene(gridSelectionLayout, 1000, 700);
+        Scene gridSelectionScene = new Scene(gridSelectionLayout, 600, 600);
         scenes.put("Grid Selection Scene", gridSelectionScene);
         sceneTitles.put(gridSelectionScene, "Grid Selection");
         gridSelectionScene.getStylesheets().add(css);
@@ -438,7 +442,11 @@ public class gameWindow extends Application {
                 if (keyEvent.getCode() == KeyCode.ENTER) {
                     String word = inpWord.getText();
                     String Id = "UpdateUserChoice; Word, " + word;
+                    inpWord.setText("");
                     commandCenter.handle(Id);
+                }
+                if (keyEvent.getCode() == KeyCode.N) {
+                    endRound.fire();
                 }
             }
         });

@@ -55,6 +55,10 @@
 -fx-font-size: 35px;
 }
 
+#mainScreen .button{
+-fx-padding: 18 30 30 30;
+}
+
 #howToPlayScreen{
 -fx-background-color: #cbf3f0;}
 

@@ -13,12 +13,12 @@ import java.util.HashMap;
 /**
  * Display the most updated boggle score
  */
-public class DisplayGameStatsCommand implements Command {
+public class DisplayInGameStatsCommand implements Command {
 
     HashMap<String, Object> statsMap;
     public Stage stage;
 
-    public DisplayGameStatsCommand(HashMap<String, Object> map, Stage s) {
+    public DisplayInGameStatsCommand(HashMap<String, Object> map, Stage s) {
         this.statsMap =  map;
         this.stage = s;
     }

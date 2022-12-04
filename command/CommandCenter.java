@@ -1,8 +1,6 @@
 package command;
 
-import boggle.BoggleGame;
 import boggle.BoggleStats;
-import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -184,8 +182,12 @@ public class CommandCenter implements EventHandler<ActionEvent> {
         }
         else if (command.equals("DisplayGameStats")) {
             this.setCommand(
-                    new DisplayGameStatsCommand(BoggleStats.getInstance().getStatsMap(),
+                    new DisplayInGameStatsCommand(BoggleStats.getInstance().getStatsMap(),
                             this.gameWindow.primaryStage));
+        }
+        else if (command.equals("DisplayRoundStats")) {
+            this.setCommand(new DisplayRoundStatsCommand(
+                    BoggleStats.getInstance().getStatsMap(), this.gameWindow.primaryStage));
         }
         else if (command.equals("ResetStats")) {
             this.setCommand(new ResetStatsCommand());
