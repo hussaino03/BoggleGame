@@ -29,7 +29,7 @@ jobs:
           files: tests
 
       - name: Run the first file
-        run: javac BoggleTests.java
-      - name: Run the second file
-        run: javac GameWindowTests.java
+        run: ls
+#       - name: Run the second file
+#         run: javac GameWindowTests.java
         
