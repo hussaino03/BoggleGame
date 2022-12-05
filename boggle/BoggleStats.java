@@ -86,18 +86,33 @@ public class BoggleStats implements Serializable {
      * Initializes word lists (which are sets) for computer and human players.
      */
     private BoggleStats() {
-        round = 0;
-        pScoreTotal = 0;
-        pScoreAllTime = 0;
-        cScoreTotal = 0;
-        cScoreAllTime = 0;
-        pAverageWords = 0;
-        pAverageWordsAllTime = 0;
-        cAverageWords = 0;
-        cAverageWordsAllTime = 0;
-        playerWords = new HashSet<String>();
-        computerWords = new HashSet<String>();
-
+        try {
+            FileInputStream file = new FileInputStream("boggle/SavedStats.ser");
+            ObjectInputStream in = new ObjectInputStream(file);
+            BoggleStats savedStats = (BoggleStats) in.readObject();
+            pScoreAllTime = savedStats.pScoreAllTime;
+            cScoreAllTime = savedStats.cScoreAllTime;
+            pAverageWordsAllTime = savedStats.pAverageWordsAllTime;
+            cAverageWordsAllTime = savedStats.cAverageWordsAllTime;
+            totalRounds = savedStats.totalRounds;
+        }
+        catch (IOException e) {
+            pScoreAllTime = 0;
+            cScoreAllTime = 0;
+            pAverageWordsAllTime = 0;
+            cAverageWordsAllTime = 0;
+            totalRounds = 0;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            round = 0;
+            pScoreTotal = 0;
+            cScoreTotal = 0;
+            pAverageWords = 0;
+            cAverageWords = 0;
+            playerWords = new HashSet<String>();
+            computerWords = new HashSet<String>();
+        }
         }
     /*
     * SingleTon Design Implementation:
@@ -151,6 +166,7 @@ public class BoggleStats implements Serializable {
         pScoreAllTime += pScore;
         cScoreAllTime += cScore;
         totalRounds += 1;
+        System.out.println("Total Rounds:" + totalRounds);
 
         pScore = 0;
         cScore = 0;
@@ -257,8 +273,14 @@ public class BoggleStats implements Serializable {
      */
     public void summarizeGame() {
         // Save the stats of this game
-
-
+        try {
+            FileOutputStream file = new FileOutputStream("boggle/SavedStats.ser");
+            ObjectOutputStream out = new ObjectOutputStream(file);
+            out.writeObject(this);
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
+        }
 
         System.out.println("The Total Number of Rounds Played is: "+ round);
         System.out.println("The Total Score for Human is: "+pScoreTotal);
@@ -313,10 +335,15 @@ public class BoggleStats implements Serializable {
         return this.playerWords;
     }
 
-    /*
-     * @return int The number of rounds played
+    /**
+     * @return int The number of rounds played this game
      */
     public int getRound() { return this.round; }
+
+    /**
+     * @return int The number of rounds played across all games
+     */
+    public int getTotalRounds() { return this.totalRounds; }
 
     /**
     * @return int The current player score
@@ -330,6 +357,13 @@ public class BoggleStats implements Serializable {
     public int getCScore() {
         return this.cScore;
     }
+    /**
+     * Set the totalRounds attribute (for testing purposes)
+     */
+    public void setTotalRounds(int totalRounds) {
+        this.totalRounds = totalRounds;
+    }
+
 
 }
 
