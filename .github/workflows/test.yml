@@ -7,6 +7,7 @@ on:
   pull_request:
   push:
     branches:
+      - main
       - Production
 
   # Allows you to run this workflow manually from the Actions tab
@@ -21,13 +22,20 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: checkout-files
+        uses: Bhacaz/checkout-files@v2
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+      
+      - name: Checkout files
+        uses: Bhacaz/checkout-files@v2
+        with:
+          branch: Production
+          files: tests
 
       - name: Run the first file
-        working-directory: tests
         run: javac BoggleTests.java
       - name: Run the second file
-        working-directory: tests
         run: javac GameWindowTests.java
         
