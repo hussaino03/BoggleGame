@@ -10,7 +10,7 @@ import java.util.Set;
  * The BoggleStats will contain statsitics related to game play Boggle 
  */
 
-public class BoggleStats {
+public class BoggleStats implements Serializable {
     private static BoggleStats instance = null;
     /**
      * set of words the player finds in a given round 
@@ -68,9 +68,6 @@ public class BoggleStats {
      * the number of rounds across all games
      */
     private int totalRounds;
-
-
-
     /**
      * enumarable types of players (human or computer)
      */  
@@ -259,6 +256,10 @@ public class BoggleStats {
      * The average number of words found by each player per round.
      */
     public void summarizeGame() {
+        // Save the stats of this game
+
+
+
         System.out.println("The Total Number of Rounds Played is: "+ round);
         System.out.println("The Total Score for Human is: "+pScoreTotal);
         System.out.println("The Total Score for Computer is: "+cScoreTotal);
