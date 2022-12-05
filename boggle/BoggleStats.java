@@ -10,7 +10,7 @@ import java.util.Set;
  * The BoggleStats will contain statsitics related to game play Boggle 
  */
 
-public class BoggleStats {
+public class BoggleStats implements Serializable {
     private static BoggleStats instance = null;
     /**
      * set of words the player finds in a given round 
@@ -68,9 +68,6 @@ public class BoggleStats {
      * the number of rounds across all games
      */
     private int totalRounds;
-
-
-
     /**
      * enumarable types of players (human or computer)
      */  
@@ -89,19 +86,27 @@ public class BoggleStats {
      * Initializes word lists (which are sets) for computer and human players.
      */
     private BoggleStats() {
-        round = 0;
-        pScoreTotal = 0;
-        pScoreAllTime = 0;
-        cScoreTotal = 0;
-        cScoreAllTime = 0;
-        pAverageWords = 0;
-        pAverageWordsAllTime = 0;
-        cAverageWords = 0;
-        cAverageWordsAllTime = 0;
-        playerWords = new HashSet<String>();
-        computerWords = new HashSet<String>();
-
+        try {
+            FileInputStream file = new FileInputStream("boggle/SavedStats");
+            ObjectInputStream in = new ObjectInputStream(file);
+            pScoreAllTime = 0;
+            cScoreAllTime = 0;
+            pAverageWordsAllTime = 0;
+            cAverageWordsAllTime = 0;
         }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            round = 0;
+            pScoreTotal = 0;
+            cScoreTotal = 0;
+            pAverageWords = 0;
+            cAverageWords = 0;
+            playerWords = new HashSet<String>();
+            computerWords = new HashSet<String>();
+        }
+    }
     /*
     * SingleTon Design Implementation:
     * A public method to return the instance of BoggleStats
@@ -258,7 +263,19 @@ public class BoggleStats {
      * The total score for either player.
      * The average number of words found by each player per round.
      */
-    public void summarizeGame() {
+    public void summarizeGame() throws FileNotFoundException {
+        // Save the stats of this game
+        try {
+            FileOutputStream file = new FileOutputStream("boggle/SavedStats");
+            ObjectOutputStream out = new ObjectOutputStream(file);
+            out.writeObject(this);
+        }
+        catch (FileNotFoundException e) {
+            throw e;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         System.out.println("The Total Number of Rounds Played is: "+ round);
         System.out.println("The Total Score for Human is: "+pScoreTotal);
         System.out.println("The Total Score for Computer is: "+cScoreTotal);
