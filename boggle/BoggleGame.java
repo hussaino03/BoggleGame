@@ -61,6 +61,7 @@ public class BoggleGame {
         this.choiceProcessor.put("Game Mode", "");
         this.choiceProcessor.put("Grid Size", "");
         this.choiceProcessor.put("Word", "_");
+        this.choiceProcessor.put("Round Ended", "false");
         this.gameStats = BoggleStats.getInstance();
         this.window = w;
         this.commandCenter = CommandCenter.getInstance(window);
@@ -138,6 +139,9 @@ public class BoggleGame {
 
             //round is over! So, store the statistics, and end the round.
 
+
+            // Display round stats
+            commandCenter.handle("DisplayRoundStats; ");
             //Shall we repeat?
             System.out.println("Play again? Type 'Y' or 'N'");
             Scanner sc = new Scanner(System.in);
@@ -359,7 +363,7 @@ public class BoggleGame {
 //                    System.out.println("Invalid Word! Sorry!");
                 }
             }
-            if (word.equals("")){
+            if (choiceProcessor.get("Round Ended").equals("true")){
                 break;
             }
         }
