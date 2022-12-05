@@ -28,8 +28,12 @@ jobs:
           ref: Production
           files: tests
 
+      - name: Enter the folder
+        run: cd tests
+        
       - name: Run the first file
-        run: ls
-#       - name: Run the second file
-#         run: javac GameWindowTests.java
+        run: javac BoggleTests.java
+        
+      - name: Run the second file
+        run: javac GameWindowTests.java
         
