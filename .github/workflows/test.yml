@@ -27,7 +27,7 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Go into the tests folder
-        run: cd tests
+        run: cd ./tests
       - name: Run the first file
         run: javac BoggleTests.java
       - name: Run the second file
