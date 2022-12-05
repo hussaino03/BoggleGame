@@ -25,11 +25,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a set of commands using the runners shell
-      - name: Go into the tests folder
-        run: cd ./tests
       - name: Run the first file
+        working-directory: ./tests
         run: javac BoggleTests.java
       - name: Run the second file
+        working-directory: ./tests
         run: javac GameWindowTests.java
         
