@@ -450,6 +450,9 @@ public class gameWindow extends Application {
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER) {
                     String word = inpWord.getText();
+                    if (word.length()==0) { // Do not handle empty words
+                        return;
+                    }
                     String Id = "UpdateUserChoice; Word, " + word;
                     inpWord.setText("");
                     commandCenter.handle(Id);
