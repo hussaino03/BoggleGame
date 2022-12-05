@@ -28,15 +28,11 @@ jobs:
           ref: Production
           files: tests
 
-      - name: Enter the folder
+      - name: Run First File
         working-directory: tests
-      - run: |
-          javac BoggleTests.java,
-          javac GameWindowTests.java
+        run: javac BoggleTests.java
         
-#       - name: Run the first file
-#         run: ls
-        
-#       - name: Run the second file
-#         run: javac GameWindowTests.java
+      - name: Run Second File
+        working-directory: tests
+        run: javac GameWindowTests.java
         
