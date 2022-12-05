@@ -11,7 +11,7 @@ public class Main {
      * Main method.
      * @param args command line arguments.
      **/
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         gameWindow g = new gameWindow();
         BoggleGame b = new BoggleGame(g);
         b.choiceProcessor.put("Game Mode", "normal");

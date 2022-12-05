@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import src.gameWindow;
 
 import java.awt.event.ActionEvent;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -92,7 +91,7 @@ public class BoggleGame {
      * Gets information from the user to initialize a new Boggle game.
      * It will loop until the user indicates they are done playing.
      */
-    public void playGame() throws FileNotFoundException {
+    public void playGame() {
         int boardSize = 0;
         while(true){
             String gameMode = choiceProcessor.get("Game Mode");
