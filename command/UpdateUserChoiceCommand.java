@@ -20,8 +20,6 @@ public class UpdateUserChoiceCommand implements Command {
     }
     @Override
     public void execute() {
-//        System.out.println("Processed information");
         game.choiceProcessor.put(choiceType, choice);
-//        System.out.println(game.ready());
     }
 }
