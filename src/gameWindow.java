@@ -202,8 +202,8 @@ public class gameWindow extends Application {
 
         // Start Normal Game Mode Round Summary Screen
         // -----------------------------------------------------------------------------------------------------------//
-        Button goBackFromGameRoundSummaryButton = new Button("Return to Main Menu [R]");
-        goBackFromGameRoundSummaryButton.setId("RedirectScreen; Main Scene");
+        Button playAgain = new Button("Play Again? [P]");
+        playAgain.setId("RedirectScreen; Grid Selection Scene");
 
         Button goToGameSummary = new Button("Go To Game Summary [G]");
         goToGameSummary.setId("RedirectScreen; Normal Game Mode Game Summary Scene");
@@ -214,7 +214,7 @@ public class gameWindow extends Application {
         normalSummaryLayout.setVgap(20);
         normalSummaryLayout.setHgap(20);
         normalSummaryLayout.add(goToGameSummary, 0, 1);
-        normalSummaryLayout.add(goBackFromGameRoundSummaryButton, 0, 2);
+        normalSummaryLayout.add(playAgain, 0, 2);
 
         // create a new scene
         Scene normalSummary = new Scene(normalSummaryLayout, 600, 600);
@@ -358,7 +358,7 @@ public class gameWindow extends Application {
         goToGameSummary.setOnAction(commandCenter);
         fiveByFiveButton.setOnAction(commandCenter);
         sixBySixButton.setOnAction(commandCenter);
-        goBackFromGameRoundSummaryButton.setOnAction(commandCenter);
+        playAgain.setOnAction(commandCenter);
         endRound.setOnAction(commandCenter);
 
 
@@ -386,8 +386,8 @@ public class gameWindow extends Application {
                 if (c == KeyCode.G) {
                     goToGameSummary.fire();
                 }
-                if (keyEvent.getCode() == KeyCode.R) {
-                    goBackFromGameRoundSummaryButton.fire();
+                if (keyEvent.getCode() == KeyCode.P) {
+                    playAgain.fire();
                 }
             }
         });
@@ -397,7 +397,7 @@ public class gameWindow extends Application {
             public void handle(KeyEvent keyEvent) {
                 KeyCode c = keyEvent.getCode();
                 if (keyEvent.getCode() == KeyCode.R) {
-                    goBackFromGameRoundSummaryButton.fire();
+                    playAgain.fire();
                 }
             }
         });
