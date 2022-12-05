@@ -335,10 +335,15 @@ public class BoggleStats implements Serializable {
         return this.playerWords;
     }
 
-    /*
-     * @return int The number of rounds played
+    /**
+     * @return int The number of rounds played this game
      */
     public int getRound() { return this.round; }
+
+    /**
+     * @return int The number of rounds played across all games
+     */
+    public int getTotalRounds() { return this.totalRounds; }
 
     /**
     * @return int The current player score
@@ -352,6 +357,13 @@ public class BoggleStats implements Serializable {
     public int getCScore() {
         return this.cScore;
     }
+    /**
+     * Set the totalRounds attribute (for testing purposes)
+     */
+    public void setTotalRounds(int totalRounds) {
+        this.totalRounds = totalRounds;
+    }
+
 
 }
 

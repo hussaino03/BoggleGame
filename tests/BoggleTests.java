@@ -1,9 +1,6 @@
 package tests;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -142,9 +139,24 @@ public class BoggleTests {
         command = new UpdateUserChoiceCommand(game, gameMode, B);
         command.execute();
         assertEquals(game.choiceProcessor.get("Game Mode"), B);
+    }
 
+    // Assert that stats are being properly saved across games
+    @Test
+    void savedStats() throws IOException, ClassNotFoundException {
+        BoggleStats stats1 = BoggleStats.getInstance();
+        assertEquals(stats1.getTotalRounds(), 0);
 
+        stats1.setTotalRounds(100);
+        FileOutputStream fileOut = new FileOutputStream("boggle/SavedStats.ser");
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(stats1);
 
+        FileInputStream fileIn = new FileInputStream("boggle/SavedStats.ser");
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        BoggleStats stats2 = (BoggleStats) in.readObject();
+
+        assertEquals(stats2.getTotalRounds(), 100);
     }
 
 }
