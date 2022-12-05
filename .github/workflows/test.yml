@@ -30,7 +30,9 @@ jobs:
 
       - name: Enter the folder
         working-directory: tests
-        run: ls
+      - run: |
+          javac BoggleTests.java,
+          javac GameWindowTests.java
         
 #       - name: Run the first file
 #         run: ls
