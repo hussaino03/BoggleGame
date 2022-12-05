@@ -144,6 +144,8 @@ public class BoggleTests {
     // Assert that stats are being properly saved across games
     @Test
     void savedStats() throws IOException, ClassNotFoundException {
+        File savedStats = new File("boggle/SavedStats.ser");
+        savedStats.delete();
         BoggleStats stats1 = BoggleStats.getInstance();
         assertEquals(stats1.getTotalRounds(), 0);
 
@@ -155,7 +157,7 @@ public class BoggleTests {
         FileInputStream fileIn = new FileInputStream("boggle/SavedStats.ser");
         ObjectInputStream in = new ObjectInputStream(fileIn);
         BoggleStats stats2 = (BoggleStats) in.readObject();
-
+        savedStats.delete();
         assertEquals(stats2.getTotalRounds(), 100);
     }
 
