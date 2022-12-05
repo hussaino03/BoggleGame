@@ -201,7 +201,8 @@ public class CommandCenter implements EventHandler<ActionEvent> {
             this.setCommand(new DisplayGridElementsCommand(letters, this.gameWindow.primaryStage));
         }
         else if (command.equals("RedirectScreen")) {
-            String newScene = IdVariables[i+1];
+            String[] params = IdVariables[i+1].split(", ");
+            String newScene = params[0];
             Scene transition = gameWindow.scenes.get(newScene);
             String title = gameWindow.sceneTitles.get(transition);
             this.setCommand(new RedirectScreenCommand(

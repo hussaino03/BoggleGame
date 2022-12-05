@@ -144,14 +144,12 @@ public class BoggleGame {
             commandCenter.handle("DisplayRoundStats; ");
             //Shall we repeat?
             System.out.println("Play again? Type 'Y' or 'N'");
-            Scanner sc = new Scanner(System.in);
-            String choiceRepeat = sc.nextLine().toUpperCase();
+            String choiceRepeat = this.choiceProcessor.get("choice");
 
             if(choiceRepeat == "") break; //end game if user inputs nothing
             while(!choiceRepeat.equals("Y") && !choiceRepeat.equals("N")){
                 System.out.println("Please try again.");
                 System.out.println("Play again? Type 'Y' or 'N'");
-                choiceRepeat = sc.nextLine().toUpperCase();
             }
 
             if(choiceRepeat == "" || choiceRepeat.equals("N")) break; //end game if user inputs nothing

@@ -207,19 +207,19 @@ public class gameWindow extends Application {
 
         // Start Normal Game Mode Round Summary Screen
         // -----------------------------------------------------------------------------------------------------------//
-        Button playAgain = new Button("Play Again? [P]");
-        playAgain.setId("RedirectScreen; Grid Selection Scene");
+        Button playAgain = new Button("Play Next Round [P]");
+        playAgain.setId("RedirectScreen, UpdateUserChoice; Grid Selection Scene; choice, Y");
 
         Button goToGameSummary = new Button("Go To Game Summary [G]");
-        goToGameSummary.setId("RedirectScreen; Normal Game Mode Game Summary Scene");
+        goToGameSummary.setId("RedirectScreen, UpdateUserChoice; Normal Game Mode Game Summary Scene; choice, N");
 
         // add grid panels
         GridPane normalSummaryLayout =  new GridPane();
         normalSummaryLayout.setPadding(new Insets(10,10,10,10));
         normalSummaryLayout.setVgap(20);
         normalSummaryLayout.setHgap(20);
-        normalSummaryLayout.add(goToGameSummary, 0, 1);
-        normalSummaryLayout.add(playAgain, 0, 2);
+        normalSummaryLayout.add(goToGameSummary, 1, 0);
+        normalSummaryLayout.add(playAgain, 0, 0);
 
         // create a new scene
         Scene normalSummary = new Scene(normalSummaryLayout, 600, 600);
@@ -233,7 +233,7 @@ public class gameWindow extends Application {
 
         normalSummaryLayout.add(IntroText, 0, 4);
 
-        Label pscore = new Label(BoggleStats.getInstance().PScore());
+        Label pscore = new Label(game.gameStats.PScore());
         Label cscore = new Label(BoggleStats.getInstance().CScore());
         Label csize = new Label(BoggleStats.getInstance().computerwordsSize());
         Label psize = new Label(BoggleStats.getInstance().playerwordsSize());
@@ -355,7 +355,8 @@ public class gameWindow extends Application {
         statsButton.setOnAction(commandCenter);
         normalModeButton.setOnAction(commandCenter);
         goBackFromNormalGamemode.setOnAction(commandCenter);
-        goBackFromHTPButton.setOnAction(commandCenter);
+        goBackFromHTPButton.setOnAction(commandCenter
+        );
         goBackFromGameRoundButton.setOnAction(commandCenter);
         goBackFromStatsButton.setOnAction(commandCenter);
         goBackFromGridSelectionButton.setOnAction(commandCenter);
