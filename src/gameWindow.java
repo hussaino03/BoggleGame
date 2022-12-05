@@ -192,6 +192,7 @@ public class gameWindow extends Application {
         Button goBackFromStatsButton = new Button("Return to Main Menu [R]");
         goBackFromStatsButton.setId("RedirectScreen; Main Scene");
         Button resetStatsButton = new Button("Reset Stats [X]");
+        resetStatsButton.setId("ResetStats; ");
         HBox statsButtons = new HBox();
 //        statsButtons.setAlignment(Pos.CENTER);
         statsButtons.getChildren().addAll(goBackFromStatsButton, resetStatsButton);
