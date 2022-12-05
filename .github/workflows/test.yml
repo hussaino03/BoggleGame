@@ -25,7 +25,7 @@ jobs:
       - name: Checkout files
         uses: actions/checkout@v2
         with:
-          branch: Production
+          ref: Production
           files: tests
 
       - name: Run the first file
