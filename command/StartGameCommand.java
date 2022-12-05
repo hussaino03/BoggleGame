@@ -15,7 +15,7 @@ public class StartGameCommand implements Command {
     public void execute() {
             Thread t = new Thread(()->{
                 if (game.ready()) {
-                    game.playGame();
+                        game.playGame();
                 }
             });
             t.start();
