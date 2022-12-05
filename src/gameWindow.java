@@ -191,7 +191,11 @@ public class gameWindow extends Application {
         statsLayout.setCenter(table);
         Button goBackFromStatsButton = new Button("Return to Main Menu [R]");
         goBackFromStatsButton.setId("RedirectScreen; Main Scene");
-        statsLayout.setBottom(goBackFromStatsButton);
+        Button resetStatsButton = new Button("Reset Stats [X]");
+        HBox statsButtons = new HBox();
+//        statsButtons.setAlignment(Pos.CENTER);
+        statsButtons.getChildren().addAll(goBackFromStatsButton, resetStatsButton);
+        statsLayout.setBottom(statsButtons);
 
 
         Scene statsScene = new Scene(statsLayout, 600, 600);
@@ -360,6 +364,7 @@ public class gameWindow extends Application {
         sixBySixButton.setOnAction(commandCenter);
         goBackFromGameRoundSummaryButton.setOnAction(commandCenter);
         endRound.setOnAction(commandCenter);
+        resetStatsButton.setOnAction(commandCenter);
 
 
         // Allow buttons to be fired through keyboard to make the program more accessible
@@ -433,6 +438,9 @@ public class gameWindow extends Application {
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.R) {
                     goBackFromStatsButton.fire();
+                }
+                else if (keyEvent.getCode() == KeyCode.X) {
+                    resetStatsButton.fire();
                 }
             }
         });
