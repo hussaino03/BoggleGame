@@ -3,14 +3,13 @@ package command;
 import boggle.BoggleStats;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class DisplayRoundStatsCommand implements Command{
     HashMap<String, Object> statsMap;
@@ -27,13 +26,18 @@ public class DisplayRoundStatsCommand implements Command{
         // the current scene to be updated
         Thread t = new Thread(()->{
             Platform.runLater(()->{
+                normalSummaryLayout.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 0 && GridPane.getRowIndex(node) == 11);
                 Label pscore = new Label(BoggleStats.getInstance().PScore());
                 Label cscore = new Label(BoggleStats.getInstance().CScore());
                 Label csize = new Label(BoggleStats.getInstance().computerwordsSize());
                 Label psize = new Label(BoggleStats.getInstance().playerwordsSize());
                 Label cwords = new Label(BoggleStats.getInstance().computerwords());
                 Label pwords = new Label(BoggleStats.getInstance().playerwords());
+                Label map = new Label(statsMap.toString());
 
+                normalSummaryLayout.getChildren().remove(map);
+
+                normalSummaryLayout.add(map, 0, 11);
                 normalSummaryLayout.add(pscore, 0, 5);
                 normalSummaryLayout.add(cscore, 0, 6);
                 normalSummaryLayout.add(csize, 0, 7);

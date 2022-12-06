@@ -29,7 +29,6 @@ public class DisplayGameStatsCommand implements Command{
         HBox statsLayout = new HBox(); // create a layout for the game stats
         Thread t = new Thread(()->{
             Platform.runLater(()->{
-                statsLayout.getChildren().add(new Label("Player Score: "+ stats.getPScore() + " | "+ "Round Number: " + (stats.getRound() + 1)));
                 statsLayout.setAlignment(Pos.CENTER); // Center the game stats
                 mainLayout.add(statsLayout, 0, 0);
             });
