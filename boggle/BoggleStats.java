@@ -55,20 +55,15 @@ public class BoggleStats implements Serializable {
      */
     public double pScoreAllTime;
     /**
-     * the computer's total score across all games
-     */
-
-    public double pAverageWordsAllTime;
-    /**
      * the average number of words, per round, found by the computer across all games
      */
-    public double totalRounds;
-
+    public double pAverageWordsAllTime;
     /**
      * the number of rounds across all games
      */
+    private double totalRounds;
     /**
-     * enumarable types of players (human or computer)
+     * enumerable types of players (human or computer)
      */  
     public enum Player {
         Human("Human"),
@@ -184,8 +179,6 @@ public class BoggleStats implements Serializable {
                 / totalRounds + playerWords.size() / (double) totalRounds;
 
         cAverageWords = (cAverageWords * (round - 1)) / round + computerWords.size() / (double) round;
-
-
 
     }
 
@@ -311,34 +304,38 @@ public class BoggleStats implements Serializable {
     }
 
     /**
+     * Getter for this.round
      * @return int The number of rounds played this game
      */
     public int getRound() { return this.round; }
 
     /**
+     * Getter for this.totalRounds
      * @return int The number of rounds played across all games
      */
     public int getTotalRounds() { return (int) this.totalRounds; }
 
     /**
+     * Getter for this.pScore
     * @return int The current player score
     */
     public int getPScore() {
         return this.pScore;
     }
     /**
+     * Getter for this.cScore
      * @return int The current computer score
      */
     public int getCScore() {
         return this.cScore;
     }
     /**
-     * Set the totalRounds attribute (for testing purposes)
+     * Setter for this.totalRounds
+     * @param totalRounds the number of totalRounds to be set
      */
     public void setTotalRounds(int totalRounds) {
         this.totalRounds = totalRounds;
     }
-
 
     public double getTotalRound(){return this.totalRounds;}
 

@@ -159,19 +159,6 @@ public class CommandCenter implements EventHandler<ActionEvent> {
         }
 
     }
-    /*
-    IDs should be of the following format:
-    "COMMANDS TO BE EXECUTED; COMMAND 1 INFO; COMMAND 2 INFO; ..."
-    COMMANDS TO BE EXECUTED -> "RedirectScreen, UpdateUserChoice, ..."
-    Info required by each command is as follows:
-        StartGame: no info ("")
-        DisplayStats: no info ("")
-        ResetStats: no info ("")
-        RedirectScreen: newScene ("Scene Name")
-        DisplayGridElements: letters ("letters")
-        UpdateUserChoice: choiceType, choice ("choiceType, choice")
-
-     */
 
     private void processId(String command, String[] IdVariables, int i) {
         /*
@@ -226,6 +213,15 @@ public class CommandCenter implements EventHandler<ActionEvent> {
         this.execute();
     }
 
+    /**
+     * Obtain an instance of CommandCenter. If no instance already exists, create a new one
+     * Otherwise, obtain the same instance which already exists. This guarantees at most
+     * one instance of CommandCenter exists at all times while the program runs. This is
+     * an implementation of the Singleton Design Pattern
+     * @param window the window which CommandCenter should transmit to and receive
+     * commands from
+     * @return CommandCenter the universal instance of CommandCenter
+     */
     public static synchronized CommandCenter getInstance(gameWindow window) {
         if (instance == null) {
             instance = new CommandCenter(window);

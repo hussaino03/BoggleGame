@@ -199,7 +199,7 @@ public class gameWindow extends Application {
         Text a = new Text();
         Text s = new Text();
         BoggleStats stats = BoggleStats.getInstance();
-        r.setText("The total rounds played are: " + stats.totalRounds);
+        r.setText("The total rounds played are: " + stats.getTotalRounds());
         a.setText("The total score you have accumulated is: " + stats.pScoreAllTime);
         s.setText("The average words per round are: " + stats.pAverageWordsAllTime);
         VBox vbox = new VBox(5);
