@@ -14,7 +14,7 @@ public class Position {
     private int col;
 
     /**
-     * A grid Position.
+     * Position Constructor
      * Sets row and column to 0, by default
      */
     public Position() {
@@ -23,21 +23,26 @@ public class Position {
     }
 
     /**
-     * A grid Position.
-     * 
-     * @param row row
-     * @param col column
-     */
-    public Position(int row, int col) {
-        this.row = row;
-        this.col = col;
-    }
-
-   /*
-     * Useful getter and setter method for class attributes
+     * Setter for this.row
+     * @param row the row this position should be set to
      */
     public void setRow(int row) { this.row = row; }
+
+    /**
+     * Setter for this.col
+     * @param col the column this position should be set to
+     */
     public void setCol(int col) { this.col = col; }
+
+    /**
+     * Getter for this.row
+     * @return the row this position is at
+     */
     public int getRow() { return this.row; }
+
+    /**
+     * Getter for this.col
+     * @return the column this position is at
+     */
     public int getCol() { return this.col; }
 }
