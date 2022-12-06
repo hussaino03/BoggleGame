@@ -1,9 +1,6 @@
 package command;
 
 import boggle.BoggleGame;
-import javafx.concurrent.Task;
-
-import java.io.IOException;
 
 public class StartGameCommand implements Command {
     private final BoggleGame game;
@@ -14,7 +11,7 @@ public class StartGameCommand implements Command {
 
     public void execute() {
             Thread t = new Thread(()->{
-                if (game.ready()) {
+                if (game.gridSizeSelected()) {
                         game.playGame();
                 }
             });

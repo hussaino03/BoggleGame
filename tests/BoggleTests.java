@@ -4,15 +4,10 @@ import java.io.*;
 import java.util.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Field;
 
 import boggle.*;
 import boggle.Dictionary;
 import command.*;
-import javafx.stage.Stage;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import src.gameWindow;
 
@@ -106,13 +101,13 @@ public class BoggleTests {
         BoggleGame game = new BoggleGame(new gameWindow());
         game.choiceProcessor.put("Grid Size", "four");
         game.choiceProcessor.put("Game Mode", "timed");
-        assertTrue(game.ready());
+        assertTrue(game.gridSizeSelected());
     }
 
     @Test
     void readyFalse() { // BoggleGame.ready() should be false by default
         BoggleGame game = new BoggleGame(new gameWindow());
-        assertFalse(game.ready());
+        assertFalse(game.gridSizeSelected());
     }
 
     @Test

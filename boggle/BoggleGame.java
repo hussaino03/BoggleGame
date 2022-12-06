@@ -1,13 +1,8 @@
 package boggle;
 
 import command.*;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
-import javafx.scene.control.Button;
 import src.gameWindow;
 
-import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -58,7 +53,6 @@ public class BoggleGame {
      */
     public BoggleGame(gameWindow w) {
         this.choiceProcessor = new HashMap<String, String>();
-        this.choiceProcessor.put("Game Mode", "");
         this.choiceProcessor.put("Grid Size", "");
         this.choiceProcessor.put("Word", "_");
         this.choiceProcessor.put("choice", "_");
@@ -95,7 +89,6 @@ public class BoggleGame {
     public void playGame() {
         int boardSize = 0;
         while(true){
-            String gameMode = choiceProcessor.get("Game Mode");
             String gridSize = choiceProcessor.get("Grid Size");
 
             //get grid size preference
@@ -369,15 +362,9 @@ public class BoggleGame {
     }
 
     /**
-     * This method checks if the game has received all the information necessary to begin.
-     * @return Returns true if the game is ready to begin and false otherwise
+     * This method returns true if the player has selected a grid size and false otherwise
      */
-    public boolean ready() { // the game is ready to start iff the choiceProcessor is fully populated
-        for (String info : this.choiceProcessor.values()) { // go through each choice in choiceProcessor
-            if (info.equals("")) { // if a choice has not been made, the game is not ready to begin
-                return false;
-            }
-        }
-        return true; // if all choices have been made, the game is ready to start
+    public boolean gridSizeSelected() {
+        return !(choiceProcessor.get("Grid Size").equals(""));
     }
 }
