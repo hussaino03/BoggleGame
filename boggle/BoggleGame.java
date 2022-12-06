@@ -195,10 +195,10 @@ public class BoggleGame {
      */
     private void findAllWords(Map<String,ArrayList<Position>> allWords, Dictionary boggleDict, BoggleGrid boggleGrid) {
         String str = "";
-        boolean[][] tracker = new boolean[boggleGrid.numRows()][boggleGrid.numCols()];
+        boolean[][] tracker = new boolean[boggleGrid.getSize()][boggleGrid.getSize()];
 
-        for (int i = 0; i < boggleGrid.numRows(); i++)
-            for (int j = 0; j < boggleGrid.numCols(); j++)
+        for (int i = 0; i < boggleGrid.getSize(); i++)
+            for (int j = 0; j < boggleGrid.getSize(); j++)
                 traverse(allWords, boggleGrid, tracker, i, j, str, boggleDict);
     }
     /**
@@ -216,12 +216,12 @@ public class BoggleGame {
                            boolean[][] tracker, int row, int col,
                         String str, Dictionary boggleDict){
 
-        // create a arraylist to add the positions inside it and pass it into the allWords dict
+        // create an arraylist to add the positions inside it and pass it into the allWords dict
         ArrayList<Position> list = new ArrayList<>();
 
         // create attributes to loop through the total rows and cols and search the whole board for the word
-        int totalRows = boggle.numRows();
-        int totalCols = boggle.numCols();
+        int totalRows, totalCols;
+        totalRows = totalCols = boggle.getSize();
 
         // when the function gets called, we know we have already seen the particular position of the str
         tracker[row][col] = true;
