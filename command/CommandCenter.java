@@ -156,63 +156,46 @@ public class CommandCenter implements EventHandler<ActionEvent> {
             String command = executableCommands;
             this.processId(command, IdVariables, 0);
         }
+        this.execute();
 
     }
 
     private void processId(String command, String[] IdVariables, int i) {
-        /*
-        Commands with no info required
-         */
-        if (command.equals("StartGame")) {
-            this.setCommand(
+        switch (command) {
+            case "StartGame" -> this.setCommand(
                     new StartGameCommand(this.gameWindow.game));
-        }
-        else if (command.equals("DisplayInGameStats")) {
-            this.setCommand(
+            case "DisplayInGameStats" -> this.setCommand(
                     new DisplayInGameStatsCommand(BoggleStats.getInstance().getStatsMap(),
                             this.gameWindow.primaryStage));
-        }
-
-        else if (command.equals("DisplayRoundStats")) {
-            this.setCommand(new DisplayRoundStatsCommand(
+            case "DisplayRoundStats" -> this.setCommand(new DisplayRoundStatsCommand(
                     BoggleStats.getInstance().getStatsMap(), this.gameWindow.primaryStage));
-        }
-        else if (command.equals("DisplayGameStats")) {
-            this.setCommand(new DisplayGameStatsCommand(
+            case "DisplayGameStats" -> this.setCommand(new DisplayGameStatsCommand(
                     BoggleStats.getInstance().getStatsMap(), this.gameWindow.primaryStage));
+            case "ResetStats" -> this.setCommand(new ResetStatsCommand());
+            case "ResetInGameStats" -> this.setCommand(new ResetInGameStatsCommand());
+            case "DisplayGridElements" -> {
+                String letters = IdVariables[i + 1];
+                this.setCommand(new DisplayGridElementsCommand(letters, this.gameWindow.primaryStage));
+            }
+            case "RedirectScreen" -> {
+                String[] params = IdVariables[i + 1].split(", ");
+                String newScene = params[0];
+                Scene transition = gameWindow.scenes.get(newScene);
+                String title = gameWindow.sceneTitles.get(transition);
+                this.setCommand(new RedirectScreenCommand(
+                        this.gameWindow.primaryStage, transition, title));
+            }
+            case "UpdateUserChoice" -> {
+                String[] params = IdVariables[i + 1].split(", ");
+                String choiceType = params[0];
+                String choice = params[1];
+                this.setCommand(new UpdateUserChoiceCommand(this.gameWindow.game, choiceType, choice));
+            }
         }
-        else if (command.equals("ResetStats")) {
-            this.setCommand(new ResetStatsCommand());
-        }
-        else if (command.equals("ResetInGameStats")){
-            this.setCommand(new ResetInGameStatsCommand());
-        }
-        /*
-        Commands with info required
-         */
-        else if (command.equals("DisplayGridElements")) {
-            String letters = IdVariables[i+1];
-            this.setCommand(new DisplayGridElementsCommand(letters, this.gameWindow.primaryStage));
-        }
-        else if (command.equals("RedirectScreen")) {
-            String[] params = IdVariables[i+1].split(", ");
-            String newScene = params[0];
-            Scene transition = gameWindow.scenes.get(newScene);
-            String title = gameWindow.sceneTitles.get(transition);
-            this.setCommand(new RedirectScreenCommand(
-                    this.gameWindow.primaryStage, transition, title));
-        }
-        else if (command.equals("UpdateUserChoice")) {
-            String[] params = IdVariables[i+1].split(", ");
-            String choiceType = params[0];
-            String choice = params[1];
-            this.setCommand(new UpdateUserChoiceCommand(this.gameWindow.game, choiceType, choice));
-        }
-        this.execute();
     }
 
     /**
-     * Obtain an instance of CommandCenter. If no instance already exists, create a new one
+     * Obtain an instance of CommandCenter. If no instance exists, create a new one
      * Otherwise, obtain the same instance which already exists. This guarantees at most
      * one instance of CommandCenter exists at all times while the program runs. This is
      * an implementation of the Singleton Design Pattern
@@ -223,8 +206,8 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     public static synchronized CommandCenter getInstance(GameWindow window) {
         if (instance == null) {
             instance = new CommandCenter(window);
-        }
+            }
         return instance;
-    }
+        }
     }
 
