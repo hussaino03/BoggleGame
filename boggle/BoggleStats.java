@@ -47,7 +47,7 @@ public class BoggleStats implements Serializable {
     /**
      * the current round being played
      */  
-    private int round;
+    public int round;
     /**
      * the player's total score across all games
      */
@@ -66,7 +66,6 @@ public class BoggleStats implements Serializable {
     /**
      * the number of rounds across all games
      */
-    private int totalRounds;
     /**
      * enumarable types of players (human or computer)
      */  
@@ -100,14 +99,12 @@ public class BoggleStats implements Serializable {
             ObjectInputStream in = new ObjectInputStream(file);
             BoggleStats savedStats = (BoggleStats) in.readObject();
             pScoreAllTime = savedStats.pScoreAllTime;
-            cScoreAllTime = savedStats.cScoreAllTime;
             pAverageWordsAllTime = savedStats.pAverageWordsAllTime;
             cAverageWordsAllTime = savedStats.cAverageWordsAllTime;
             totalRounds = savedStats.totalRounds;
         }
         catch (IOException e) {
             pScoreAllTime = 0;
-            cScoreAllTime = 0;
             pAverageWordsAllTime = 0;
             cAverageWordsAllTime = 0;
             totalRounds = 0;
@@ -358,7 +355,7 @@ public class BoggleStats implements Serializable {
     /**
      * @return int The number of rounds played across all games
      */
-    public int getTotalRounds() { return this.totalRounds; }
+    public int getTotalRounds() { return (int) this.totalRounds; }
 
     /**
     * @return int The current player score

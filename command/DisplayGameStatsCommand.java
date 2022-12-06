@@ -35,18 +35,7 @@ public class DisplayGameStatsCommand implements Command{
                             node -> GridPane.getColumnIndex(node) == 0 && GridPane.getRowIndex(node) == row);
                 }
 
-                /*
-                   scoreMap.put("Player Words", playerWords);
-                    scoreMap.put("Computer Words", computerWords);
-                    scoreMap.put("Player Score", pScore);
-                    scoreMap.put("Computer Score", cScore);
-                    scoreMap.put("Player Average Words", pAverageWords);
-                    scoreMap.put("Computer Average Words", cAverageWords);
-                    scoreMap.put("Player Score Total", pScoreTotal);
-                    scoreMap.put("Computer Score Total", cScoreTotal);
-                    scoreMap.put("Round", round);
-                 */
-                int numRounds = (int) BoggleStats.getInstance().getRound();
+                int numRounds = BoggleStats.getInstance().getRound();
 
                 System.out.println("StatsMap: " + BoggleStats.getInstance().getStatsMap());
                 System.out.println("Computer Words: " + BoggleStats.getInstance().getComputerWords());

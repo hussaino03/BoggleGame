@@ -198,6 +198,9 @@ public class CommandCenter implements EventHandler<ActionEvent> {
         else if (command.equals("ResetStats")) {
             this.setCommand(new ResetStatsCommand());
         }
+        else if (command.equals("ResetInGameStats")){
+            this.setCommand(new ResetInGameStats());
+        }
         /*
         Commands with info required
          */
