@@ -6,7 +6,8 @@ import src.gameWindow;
 import java.util.*;
 
 /**
- * The BoggleGame class for the first Assignment in CSC207, Fall 2022
+ * The BoggleGame class serves as the Model for our game in the Model-View-Controller Software
+ * Architecture. The logic of the game is handled here.
  */
 public class BoggleGame {
 
@@ -48,8 +49,9 @@ public class BoggleGame {
                     "DISTTY", "EEGHNW", "EEINSU", "EHRTVW", "EIOSST", "ELRTTY", "HIMNQU", "AAAFRS", "HJKGBN", "ADENNN", "KLFGVC", "AEEGMU", "AEGMNN", "AFIRSY",
                     "BJKQXZ", "CCNSTW", "CEIILT", "CEILPT", "CEIPST", "DDHNOT", "DHHLOR", "DHLNOR", "EIIITT", "EMOTTT", "ENSSSU", "FIPRSY", "GORRVW", "HIPRRY", "NOOTUW", "OOOTTU"};
 
-    /* 
+    /**
      * BoggleGame constructor
+     * @param w the window on which this instance of BoggleGame is being played
      */
     public BoggleGame(gameWindow w) {
         this.choiceProcessor = new HashMap<String, String>();
@@ -115,6 +117,9 @@ public class BoggleGame {
      * This initializes the main objects: the board, the dictionary, the map of all
      * words on the board, and the set of words found by the user. These objects are
      * passed by reference from here to many other functions.
+     * @param size the width (and also height, since the board is square) of the boggle grid
+     * to be initialized
+     * @param letters the letters which should be assigned to each position of the boggle grid
      */
     public void playRound(int size, String letters) {
         //step 1. initialize the grid
@@ -299,7 +304,8 @@ public class BoggleGame {
     }
 
     /**
-     * This method returns true if the player has selected a grid size and false otherwise
+     * This method checks whether the player has selected a grid size
+     * @return returns true if the player has selected a grid size and false otherwise
      */
     public boolean gridSizeSelected() {
         return !(choiceProcessor.get("Grid Size").equals(""));
