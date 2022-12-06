@@ -167,7 +167,7 @@ public class gameWindow extends Application {
         //--------------------------------------------------
 
 
-        endRound.setId("RedirectScreen, UpdateUserChoice; Normal Game Mode Round Summary Scene; Round Ended, true");
+        endRound.setId("RedirectScreen, UpdateUserChoice, DisplayRoundStats; Normal Game Mode Round Summary Scene; Round Ended, true; ");
         // -------------------------------------------------------------------------------------------------
 
         // Setup for stats scene and layout
@@ -208,7 +208,12 @@ public class gameWindow extends Application {
 
         Button goBackFromStatsButton = new Button("Return to Main Menu [R]");
         goBackFromStatsButton.setId("RedirectScreen; Main Scene");
-        statsLayout.setBottom(goBackFromStatsButton);
+        Button resetStatsButton = new Button("Reset Stats [X]");
+        resetStatsButton.setId("ResetStats; ");
+        HBox statsButtons = new HBox();
+//        statsButtons.setAlignment(Pos.CENTER);
+        statsButtons.getChildren().addAll(goBackFromStatsButton, resetStatsButton);
+        statsLayout.setBottom(statsButtons);
 
 
 
@@ -221,19 +226,19 @@ public class gameWindow extends Application {
 
         // Start Normal Game Mode Round Summary Screen
         // -----------------------------------------------------------------------------------------------------------//
-        Button goBackFromGameRoundSummaryButton = new Button("Return to Main Menu [R]");
-        goBackFromGameRoundSummaryButton.setId("RedirectScreen; Main Scene");
+        Button playAgain = new Button("Play Next Round [P]");
+        playAgain.setId("RedirectScreen, UpdateUserChoice; Grid Selection Scene; choice, Y");
 
         Button goToGameSummary = new Button("Go To Game Summary [G]");
-        goToGameSummary.setId("RedirectScreen; Normal Game Mode Game Summary Scene");
+        goToGameSummary.setId("RedirectScreen, UpdateUserChoice, DisplayGameStats; Normal Game Mode Game Summary Scene; choice, N; ");
 
         // add grid panels
         GridPane normalSummaryLayout =  new GridPane();
         normalSummaryLayout.setPadding(new Insets(10,10,10,10));
         normalSummaryLayout.setVgap(20);
         normalSummaryLayout.setHgap(20);
-        normalSummaryLayout.add(goToGameSummary, 0, 1);
-        normalSummaryLayout.add(goBackFromGameRoundSummaryButton, 0, 2);
+        normalSummaryLayout.add(goToGameSummary, 1, 0);
+        normalSummaryLayout.add(playAgain, 0, 0);
 
         // create a new scene
         Scene normalSummary = new Scene(normalSummaryLayout, 600, 600);
@@ -247,7 +252,7 @@ public class gameWindow extends Application {
 
         normalSummaryLayout.add(IntroText, 0, 4);
 
-        Label pscore = new Label(BoggleStats.getInstance().PScore());
+        Label pscore = new Label(game.gameStats.PScore());
         Label cscore = new Label(BoggleStats.getInstance().CScore());
         Label csize = new Label(BoggleStats.getInstance().computerwordsSize());
         Label psize = new Label(BoggleStats.getInstance().playerwordsSize());
@@ -294,6 +299,8 @@ public class gameWindow extends Application {
 
         Label IntrText = new Label("The stats for the normal game mode Game summary screen are displayed as follows:");
         IntrText.setTextAlignment(TextAlignment.CENTER);
+        IntrText.setMaxWidth(580);
+        IntrText.setWrapText(true);
 
         normalEndLayout.add(IntrText, 0, 3);
 
@@ -343,13 +350,13 @@ public class gameWindow extends Application {
 
         // add buttons to grid selection layout
         Button fourByFourButton = new Button("4x4 [1]");
-        fourByFourButton.setId("RedirectScreen, UpdateUserChoice, StartGame; Normal Gamemode Scene; Grid Size, four; ");
+        fourByFourButton.setId("RedirectScreen, UpdateUserChoice, StartGame, DisplayInGameStats; Normal Gamemode Scene; Grid Size, four; ; ");
 
         Button fiveByFiveButton = new Button("5x5 [2]");
-        fiveByFiveButton.setId("RedirectScreen, UpdateUserChoice, StartGame; Normal Gamemode Scene; Grid Size, five; ");
+        fiveByFiveButton.setId("RedirectScreen, UpdateUserChoice, StartGame, DisplayInGameStats; Normal Gamemode Scene; Grid Size, five; ; ");
 
         Button sixBySixButton = new Button("6x6 [3]");
-        sixBySixButton.setId("RedirectScreen, UpdateUserChoice, StartGame; Normal Gamemode Scene; Grid Size, six; ");
+        sixBySixButton.setId("RedirectScreen, UpdateUserChoice, StartGame, DisplayInGameStats; Normal Gamemode Scene; Grid Size, six; ; ");
 
         Button goBackFromGridSelectionButton = new Button("Return to Main Menu [R]");
         goBackFromGridSelectionButton.setId("RedirectScreen; Main Scene");
@@ -369,7 +376,8 @@ public class gameWindow extends Application {
         statsButton.setOnAction(commandCenter);
         normalModeButton.setOnAction(commandCenter);
         goBackFromNormalGamemode.setOnAction(commandCenter);
-        goBackFromHTPButton.setOnAction(commandCenter);
+        goBackFromHTPButton.setOnAction(commandCenter
+        );
         goBackFromGameRoundButton.setOnAction(commandCenter);
         goBackFromStatsButton.setOnAction(commandCenter);
         goBackFromGridSelectionButton.setOnAction(commandCenter);
@@ -377,8 +385,9 @@ public class gameWindow extends Application {
         goToGameSummary.setOnAction(commandCenter);
         fiveByFiveButton.setOnAction(commandCenter);
         sixBySixButton.setOnAction(commandCenter);
-        goBackFromGameRoundSummaryButton.setOnAction(commandCenter);
+        playAgain.setOnAction(commandCenter);
         endRound.setOnAction(commandCenter);
+        resetStatsButton.setOnAction(commandCenter);
 
 
         // Allow buttons to be fired through keyboard to make the program more accessible
@@ -405,8 +414,8 @@ public class gameWindow extends Application {
                 if (c == KeyCode.G) {
                     goToGameSummary.fire();
                 }
-                if (keyEvent.getCode() == KeyCode.R) {
-                    goBackFromGameRoundSummaryButton.fire();
+                if (keyEvent.getCode() == KeyCode.P) {
+                    playAgain.fire();
                 }
             }
         });
@@ -416,7 +425,7 @@ public class gameWindow extends Application {
             public void handle(KeyEvent keyEvent) {
                 KeyCode c = keyEvent.getCode();
                 if (keyEvent.getCode() == KeyCode.R) {
-                    goBackFromGameRoundSummaryButton.fire();
+                    playAgain.fire();
                 }
             }
         });
@@ -453,6 +462,9 @@ public class gameWindow extends Application {
                 if (keyEvent.getCode() == KeyCode.R) {
                     goBackFromStatsButton.fire();
                 }
+                else if (keyEvent.getCode() == KeyCode.X) {
+                    resetStatsButton.fire();
+                }
             }
         });
 
@@ -460,6 +472,9 @@ public class gameWindow extends Application {
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER) {
                     String word = inpWord.getText();
+                    if (word.length()==0) { // Do not handle empty words
+                        return;
+                    }
                     String Id = "UpdateUserChoice; Word, " + word;
                     inpWord.setText("");
                     commandCenter.handle(Id);
