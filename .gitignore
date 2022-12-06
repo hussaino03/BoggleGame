@@ -28,6 +28,12 @@ out/
 # iml file
 *.iml
 
+#idea folder
 .idea/
 
+# stats file
+/boggle/*.ser
+
+# macOS Files
+.DS_Store
 

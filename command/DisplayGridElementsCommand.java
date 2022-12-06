@@ -1,6 +1,7 @@
 package command;
 
 import boggle.BoggleGrid;
+import boggle.BoggleStats;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;

@@ -13,14 +13,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -172,23 +173,39 @@ public class gameWindow extends Application {
         // Setup for stats scene and layout
 
         //set table to non-editable
-        this.table = new TableView();
-        table.setEditable(false);
+        //this.table = new TableView<BoggleStatsTable>();
+        //this.table.setEditable(false);
 
         //normal stats column
-        TableColumn<String, String> normalStatColumn = new TableColumn<>("Statistic");
-        normalStatColumn.setMinWidth(200);
+        //TableColumn<BoggleStatsTable, String> normalStatColumn = new TableColumn<>("Statistic");
+        //normalStatColumn.setMinWidth(200);
+        //normalStatColumn.setCellValueFactory(new PropertyValueFactory<BoggleStatsTable, String>("stat"));
 
         //normal stats values column
-        TableColumn<String, Double> normalValueColumn = new TableColumn<>("Value");
-        normalValueColumn.setMinWidth(200);
+        //TableColumn<BoggleStatsTable, Double> normalValueColumn = new TableColumn<>("Value");
+        //normalValueColumn.setMinWidth(200);
+        //normalValueColumn.setCellValueFactory(new PropertyValueFactory<BoggleStatsTable, Double>("statVal"));
+
+        //set values to table
+        //this.table.setItems(getTable());
 
         //add columns to table
-        table.getColumns().addAll(normalStatColumn, normalValueColumn);
+
+        //this.table.getColumns().addAll(normalStatColumn, normalValueColumn);
 
         //create stats layout
         BorderPane statsLayout = new BorderPane();
-        statsLayout.setCenter(table);
+        Text r = new Text();
+        Text a = new Text();
+        Text s = new Text();
+        BoggleStats stats = BoggleStats.getInstance();
+        r.setText("The total rounds played are: " + stats.totalRounds);
+        a.setText("The total score you have accumulated is: " + stats.pScoreAllTime);
+        s.setText("The average words per round are: " + stats.pAverageWordsAllTime);
+        VBox vbox = new VBox(5);
+        vbox.getChildren().addAll(r,a,s);
+        statsLayout.setCenter(vbox);
+
         Button goBackFromStatsButton = new Button("Return to Main Menu [R]");
         goBackFromStatsButton.setId("RedirectScreen; Main Scene");
         Button resetStatsButton = new Button("Reset Stats [X]");
@@ -197,6 +214,8 @@ public class gameWindow extends Application {
 //        statsButtons.setAlignment(Pos.CENTER);
         statsButtons.getChildren().addAll(goBackFromStatsButton, resetStatsButton);
         statsLayout.setBottom(statsButtons);
+
+
 
 
         Scene statsScene = new Scene(statsLayout, 600, 600);
@@ -261,7 +280,7 @@ public class gameWindow extends Application {
         // -----------------------------------------------------------------------------------------------------------//
 
         Button goBackFromGameRoundButton = new Button("Return to Main Menu [R]");
-        goBackFromGameRoundButton.setId("RedirectScreen; Main Scene");
+        goBackFromGameRoundButton.setId("RedirectScreen, ResetInGameStats; Main Scene; ");
 
         // add grid panels
         GridPane normalEndLayout =  new GridPane();
@@ -473,11 +492,17 @@ public class gameWindow extends Application {
 //
     }
 
-    //public ObservableList<BoggleStatsTable> getTable(){
+    //public ObservableList<Object> getTable(){
         //ObservableList<Object> statsTable = FXCollections.observableArrayList();
-        //statsTable.add(new BoggleStatsTable("Average num of words",BoggleStats.))
-        //statsTable.add(new BoggleStatsTable("Highest score",BoggleStats.highestScore))
+        //double score_all_time = BoggleStats.getInstance().getScoreAllTime();
+        //double avg_Words_all_time = BoggleStats.getInstance().getAvgWordsAllTime();
+        //double tot_round = BoggleStats.getInstance().getTotalRound();
 
+
+        //statsTable.add(new BoggleStatsTable("Total Score", score_all_time));
+        //statsTable.add(new BoggleStatsTable("Average num of words", avg_Words_all_time));
+        //statsTable.add(new BoggleStatsTable("Total num of rounds",tot_round));
+        //return statsTable;
     }
 
 

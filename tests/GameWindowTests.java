@@ -83,14 +83,6 @@ public class GameWindowTests {
     }
 
     @Test
-    void TestStatAttributes() {
-        BoggleStats ins = BoggleStats.getInstance();
-        gameWindow w = new gameWindow();
-        Assertions.assertEquals(Character.getNumericValue(ins.CScore().charAt(ins.CScore().length() - 1)), 0);
-        Assertions.assertEquals(Character.getNumericValue(ins.PScore().charAt(ins.PScore().length() - 1)), 0);
-
-    }
-    @Test
     void initialScoreValues() {
         gameWindow gameWindow = new gameWindow();
         Assertions.assertEquals(0, gameWindow.getRoundScore());
