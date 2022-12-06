@@ -137,15 +137,10 @@ public class BoggleGame {
     }
 
     /**
-     * This method should return a String of letters (length 16 or 25 depending on the size of the grid).
-     * There will be one letter per grid position, and they will be organized left to right,
-     * top to bottom. A strategy to make this string of letters is as follows:
-     * -- Assign a one of the dice to each grid position (i.e. dice_big_grid or dice_small_grid)
-     * -- "Shuffle" the positions of the dice to randomize the grid positions they are assigned to
-     * -- Randomly select one of the letters on the given die at each grid position to determine
-     *    the letter at the given position
-     *
-     * @return String a String of random letters (length 16 or 25 depending on the size of the grid)
+     * This method returns a String of letters. There will be one letter per grid position,
+     * and they will be organized left to right, top to bottom.
+     * @return String a String of random letters (length 16, 25 or 36)
+     * depending on the size of the grid)
      */
     private String randomizeLetters(int size){
         List<String> four = Arrays.asList(four_by_four_grid);
@@ -184,31 +179,11 @@ public class BoggleGame {
         return "";
     }
 
-
     /**
-     * This should be a recursive function that finds all valid words on the boggle board.
+     * This is a recursive function that finds all valid words on the boggle board.
      * Every word should be valid (i.e. in the boggleDict) and of length 4 or more.
-     * Words that are found should be entered into the allWords HashMap.  This HashMap
+     * Words that are found are entered into the allWords HashMap. This HashMap
      * will be consulted as we play the game.
-     * Note that this function will be a recursive function.  You may want to write
-     * a wrapper for your recursion. Note that every legal word on the Boggle grid will correspond to
-     * a list of grid positions on the board, and that the Position class can be used to represent these
-     * positions. The strategy you will likely want to use when you write your recursion is as follows:
-     * -- At every Position on the grid:
-     * ---- add the Position of that point to a list of stored positions
-     * ---- if your list of stored positions is >= 4, add the corresponding word to the allWords Map
-     * ---- recursively search for valid, adjacent grid Positions to add to your list of stored positions.
-     * ---- Note that a valid Position to add to your list will be one that is either horizontal, diagonal, or
-     *      vertically touching the current Position
-     * ---- Note also that a valid Position to add to your list will be one that, in conjunction with those
-     *      Positions that precede it, form a legal PREFIX to a word in the Dictionary (this is important!)
-     * ---- Use the "isPrefix" method in the Dictionary class to help you out here!!
-     * ---- Positions that already exist in your list of stored positions will also be invalid.
-     * ---- You'll be finished when you have checked EVERY possible list of Positions on the board, to see
-     *      if they can be used to form a valid word in the dictionary.
-     * ---- Food for thought: If there are N Positions on the grid, how many possible lists of positions
-     *      might we need to evaluate?
-     *
      * @param allWords A mutable list of all legal words that can be found, given the boggleGrid grid letters
      * @param boggleDict A dictionary of legal words
      * @param boggleGrid A boggle grid, with a letter at each position on the grid
