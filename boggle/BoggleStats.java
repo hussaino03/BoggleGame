@@ -6,11 +6,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The BoggleStats class for the first Assignment in CSC207, Fall 2022
- * The BoggleStats will contain statsitics related to game play Boggle 
+ * The BoggleStats class contains statistics related to game play Boggle
  */
 
 public class BoggleStats implements Serializable {
+    /**
+     * instance attribute of BoggleStats as per the Singleton Design Pattern
+     */
     private static BoggleStats instance = null;
     /**
      * set of words the player finds in a given round 
@@ -62,7 +64,6 @@ public class BoggleStats implements Serializable {
      */
     public double totalRounds;
 
-    private double cAverageWordsAllTime;
     /**
      * the number of rounds across all games
      */
@@ -78,8 +79,7 @@ public class BoggleStats implements Serializable {
         }
     }
 
-    /* BoggleStats constructor
-     * ----------------------
+    /** BoggleStats constructor NEEDS TO BE UPDATED
      * Sets round, totals and averages to 0.
      * Initializes word lists (which are sets) for computer and human players.
      */
@@ -100,13 +100,11 @@ public class BoggleStats implements Serializable {
             BoggleStats savedStats = (BoggleStats) in.readObject();
             pScoreAllTime = savedStats.pScoreAllTime;
             pAverageWordsAllTime = savedStats.pAverageWordsAllTime;
-            cAverageWordsAllTime = savedStats.cAverageWordsAllTime;
             totalRounds = savedStats.totalRounds;
         }
         catch (IOException e) {
             pScoreAllTime = 0;
             pAverageWordsAllTime = 0;
-            cAverageWordsAllTime = 0;
             totalRounds = 0;
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -120,7 +118,8 @@ public class BoggleStats implements Serializable {
             computerWords = new HashSet<String>();
         }
         }
-    /*
+
+    /**
     * SingleTon Design Implementation:
     * A public method to return the instance of BoggleStats
     * @return BoggleStats instance
@@ -132,12 +131,11 @@ public class BoggleStats implements Serializable {
         return instance;
     }
 
-    /* 
+    /**
      * Add a word to a given player's word list for the current round.
-     * You will also want to increment the player's score, as words are added.
-     *
-     * @param word     The word to be added to the list
-     * @param player  The player to whom the word was awarded
+     * The player's score is incremented, as words are added.
+     * @param word The word to be added to the list
+     * @param player The player to whom the word was awarded
      */
     public void addWord(String word, Player player) {
         word = word.toLowerCase();
@@ -158,37 +156,33 @@ public class BoggleStats implements Serializable {
         }
     }
 
-    /* 
+    /**
      * End a given round.
      * This will clear out the human and computer word lists, so we can begin again.
      * The function will also update each player's total scores, average scores, and
-     * reset the current scores for each player to zero.
-     * Finally, increment the current round number by 1.
+     * reset the current scores for each player to zero. Finally, this function
+     * increments the current round number by 1.
      */
     public void endRound() {
 
         pScoreTotal += pScore;
         cScoreTotal += cScore;
 
-        // All Time Stats Updated
         pScoreAllTime += pScore;
 
         totalRounds += 1;
         System.out.println("Total Rounds:" + totalRounds);
 
-//        pScore = 0;
-//        cScore = 0;
         round += 1;
 
 
         pAverageWords = (pAverageWords * (round - 1)) / round + playerWords.size() / (double) round;
-        pAverageWordsAllTime =
-                (pAverageWordsAllTime * (totalRounds - 1)) / totalRounds + playerWords.size() / (double) totalRounds;
+
+        pAverageWordsAllTime = (pAverageWordsAllTime * (totalRounds - 1))
+                / totalRounds + playerWords.size() / (double) totalRounds;
 
         cAverageWords = (cAverageWords * (round - 1)) / round + computerWords.size() / (double) round;
-       
-        cAverageWordsAllTime =
-                (cAverageWordsAllTime * (totalRounds - 1)) / totalRounds + computerWords.size() / (double) totalRounds;
+
 
 
     }
