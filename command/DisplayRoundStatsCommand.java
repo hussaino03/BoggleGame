@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class DisplayRoundStatsCommand implements Command{
@@ -26,24 +27,47 @@ public class DisplayRoundStatsCommand implements Command{
         // the current scene to be updated
         Thread t = new Thread(()->{
             Platform.runLater(()->{
-                normalSummaryLayout.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 0 && GridPane.getRowIndex(node) == 11);
-                Label pscore = new Label(BoggleStats.getInstance().PScore());
-                Label cscore = new Label(BoggleStats.getInstance().CScore());
-                Label csize = new Label(BoggleStats.getInstance().computerwordsSize());
-                Label psize = new Label(BoggleStats.getInstance().playerwordsSize());
-                Label cwords = new Label(BoggleStats.getInstance().computerwords());
-                Label pwords = new Label(BoggleStats.getInstance().playerwords());
-                Label map = new Label(statsMap.toString());
 
-                normalSummaryLayout.getChildren().remove(map);
+                for (int i = 5; i < 12; i++) {
+                    int row = i;
+                    normalSummaryLayout.getChildren().removeIf(
+                            node -> GridPane.getColumnIndex(node) == 0 && GridPane.getRowIndex(node) == row);
+                }
 
-                normalSummaryLayout.add(map, 0, 11);
+                /*
+                   scoreMap.put("Player Words", playerWords);
+                    scoreMap.put("Computer Words", computerWords);
+                    scoreMap.put("Player Score", pScore);
+                    scoreMap.put("Computer Score", cScore);
+                    scoreMap.put("Player Average Words", pAverageWords);
+                    scoreMap.put("Computer Average Words", cAverageWords);
+                    scoreMap.put("Player Score Total", pScoreTotal);
+                    scoreMap.put("Computer Score Total", cScoreTotal);
+                    scoreMap.put("Round", round);
+                 */
+
+                int cNumWords = ((HashSet) BoggleStats.getInstance().getStatsMap().get("Computer Words")).size();
+                HashSet cWords = (HashSet) statsMap.get("Computer Words");
+
+                System.out.println("StatsMap: " + BoggleStats.getInstance().getStatsMap());
+                System.out.println("Computer Words: " + BoggleStats.getInstance().getComputerWords());
+
+                Label pscore = new Label("Player Score: " + BoggleStats.getInstance().pScore);
+                Label cscore = new Label("Computer Score: " + BoggleStats.getInstance().cScore);
+                Label csize = new Label("Number of Words Found By Computer: " + cNumWords);
+                Label psize = new Label("Number of Words Found By Player: " + BoggleStats.getInstance().playerWords.size());
+                Label pwords = new Label("Words Found By Player: " + BoggleStats.getInstance().playerWords);
+                Label cwords = new Label("Words Found By Computer: " + cWords);
+
+                cwords.setWrapText(true);
+                cwords.setMaxWidth(350);
+
                 normalSummaryLayout.add(pscore, 0, 5);
                 normalSummaryLayout.add(cscore, 0, 6);
                 normalSummaryLayout.add(csize, 0, 7);
                 normalSummaryLayout.add(psize, 0, 8);
-                normalSummaryLayout.add(cwords, 0, 9);
-                normalSummaryLayout.add(pwords, 0, 10);
+                normalSummaryLayout.add(pwords, 0, 9);
+                normalSummaryLayout.add(cwords, 0, 10);
 
                 GridPane.setHalignment(pscore, HPos.CENTER);
                 GridPane.setHalignment(cscore, HPos.CENTER);
@@ -54,5 +78,10 @@ public class DisplayRoundStatsCommand implements Command{
             });
         });
         t.start();
+
+        /*
+        Clear the stats after the round AFTER they are displayed so that they are not displayed as default values.
+         */
+
     }
 }

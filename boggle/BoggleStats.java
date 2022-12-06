@@ -15,27 +15,27 @@ public class BoggleStats implements Serializable {
     /**
      * set of words the player finds in a given round 
      */  
-    private Set<String> playerWords = new HashSet<String>();  
+    public Set<String> playerWords = new HashSet<String>();
     /**
      * set of words the computer finds in a given round 
      */  
-    private Set<String> computerWords = new HashSet<String>();  
+    public Set<String> computerWords = new HashSet<String>();
     /**
      * the player's score for the current round
      */  
-    private int pScore; 
+    public int pScore;
     /**
      * the computer's score for the current round
      */  
-    private int cScore;
+    public int cScore;
     /**
      * the player's total score across every round
      */  
-    private int pScoreTotal; 
+    public int pScoreTotal;
     /**
      * the computer's total score across every round
      */  
-    private int cScoreTotal; 
+    public int cScoreTotal;
     /**
      * the average number of words, per round, found by the player
      */  
@@ -138,8 +138,10 @@ public class BoggleStats implements Serializable {
         if (player == Player.Human){
             playerWords.add(word);
             if (word.length() >= 4){
+                System.out.println("Working");
                 String spliced = word.substring(4);
                 pScore += spliced.length() + 1;
+                System.out.println(pScore);
             }
         } else if (player == Player.Computer){
             computerWords.add(word.toLowerCase());
@@ -168,8 +170,8 @@ public class BoggleStats implements Serializable {
         totalRounds += 1;
         System.out.println("Total Rounds:" + totalRounds);
 
-        pScore = 0;
-        cScore = 0;
+//        pScore = 0;
+//        cScore = 0;
         round += 1;
 
 
@@ -180,8 +182,8 @@ public class BoggleStats implements Serializable {
         cAverageWords = (cAverageWords * (round - 1)) / round + computerWords.size() / (double) round;
         cAverageWordsAllTime =
                 (cAverageWordsAllTime * (totalRounds - 1)) / totalRounds + computerWords.size() / (double) totalRounds;
-        playerWords.clear();
-        computerWords.clear();
+//        playerWords.clear();
+//        computerWords.clear();
 
     }
 
@@ -288,8 +290,6 @@ public class BoggleStats implements Serializable {
 
         System.out.println("The Average Number of Words Found by Human: "+pAverageWords);
         System.out.println("The Average Number of Words Found by Computer: "+cAverageWords);
-
-        System.out.println("The All time number of rounds played:" + this.totalRounds);
     }
 
     /**
@@ -328,11 +328,17 @@ public class BoggleStats implements Serializable {
         return "The Average Number of Words Found by Computer: "+cAverageWords;
     }
 
-    /* 
+    /*
      * @return Set<String> The player's word list
      */
     public Set<String> getPlayerWords() {
         return this.playerWords;
+    }
+    /*
+     * @return Set<String> The player's word list
+     */
+    public Set<String> getComputerWords() {
+        return this.computerWords;
     }
 
     /**
