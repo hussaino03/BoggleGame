@@ -110,6 +110,7 @@ public class BoggleGame {
 
             if (!(gridSize.equals(""))) {
                 playRound(boardSize, randomizeLetters(boardSize));
+                System.out.println("pScore before summarizeRound(): " + BoggleStats.getInstance().pScore);
                 this.gameStats.summarizeRound();
                 this.gameStats.endRound();
                 this.choiceProcessor.put("Grid Size", "");
@@ -120,6 +121,10 @@ public class BoggleGame {
                 }
             }
             if (this.choiceProcessor.get("choice").equals("Y")) {
+                BoggleStats.getInstance().playerWords.clear();
+                BoggleStats.getInstance().computerWords.clear();
+                BoggleStats.getInstance().pScore = 0;
+                BoggleStats.getInstance().cScore = 0;
                 this.choiceProcessor.put("choice", "_");
             }
             //round is over! So, store the statistics, and end the round.

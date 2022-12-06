@@ -280,6 +280,8 @@ public class gameWindow extends Application {
 
         Label IntrText = new Label("The stats for the normal game mode Game summary screen are displayed as follows:");
         IntrText.setTextAlignment(TextAlignment.CENTER);
+        IntrText.setMaxWidth(580);
+        IntrText.setWrapText(true);
 
         normalEndLayout.add(IntrText, 0, 3);
 
@@ -329,13 +331,13 @@ public class gameWindow extends Application {
 
         // add buttons to grid selection layout
         Button fourByFourButton = new Button("4x4 [1]");
-        fourByFourButton.setId("RedirectScreen, UpdateUserChoice, StartGame; Normal Gamemode Scene; Grid Size, four; ");
+        fourByFourButton.setId("RedirectScreen, UpdateUserChoice, StartGame, DisplayInGameStats; Normal Gamemode Scene; Grid Size, four; ; ");
 
         Button fiveByFiveButton = new Button("5x5 [2]");
-        fiveByFiveButton.setId("RedirectScreen, UpdateUserChoice, StartGame; Normal Gamemode Scene; Grid Size, five; ");
+        fiveByFiveButton.setId("RedirectScreen, UpdateUserChoice, StartGame, DisplayInGameStats; Normal Gamemode Scene; Grid Size, five; ; ");
 
         Button sixBySixButton = new Button("6x6 [3]");
-        sixBySixButton.setId("RedirectScreen, UpdateUserChoice, StartGame; Normal Gamemode Scene; Grid Size, six; ");
+        sixBySixButton.setId("RedirectScreen, UpdateUserChoice, StartGame, DisplayInGameStats; Normal Gamemode Scene; Grid Size, six; ; ");
 
         Button goBackFromGridSelectionButton = new Button("Return to Main Menu [R]");
         goBackFromGridSelectionButton.setId("RedirectScreen; Main Scene");
