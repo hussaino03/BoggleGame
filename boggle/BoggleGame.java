@@ -83,7 +83,6 @@ public class BoggleGame {
 
             if (!(gridSize.equals(""))) {
                 playRound(boardSize, randomizeLetters(boardSize));
-                this.gameStats.summarizeRound();
                 this.gameStats.endRound();
                 this.choiceProcessor.put("Grid Size", "");
             }

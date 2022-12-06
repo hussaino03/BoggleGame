@@ -187,29 +187,6 @@ public class BoggleStats implements Serializable {
 
     }
 
-    /* 
-     * Summarize one round of boggle.  Print out:
-     * The words each player found this round.
-     * Each number of words each player found this round.
-     * Each player's score this round.
-     */
-    public void summarizeRound() {
-        System.out.println("Human Words: "+playerWords);
-        System.out.println("Computer Words: "+computerWords);
-
-        System.out.println("Number of Human Average Words: "+playerWords.size());
-        System.out.println("Number of Computer Average Words: "+computerWords.size());
-
-        System.out.println("Human Score For The Round: "+pScore);
-        System.out.println("Computer Score For The Round: "+cScore);
-    }
-
-    /*
-     * Summarize one round of boggle.  Print out:
-     * The words each player found this round.
-     * Each number of words each player found this round.
-     * Each player's score this round.
-     */
     public HashMap<String, Object> getStatsMap() {
         HashMap<String, Object> scoreMap = new HashMap<>();
         scoreMap.put("Player Words", playerWords);
