@@ -185,10 +185,10 @@ public class CommandCenter implements EventHandler<ActionEvent> {
                     new DisplayInGameStatsCommand(BoggleStats.getInstance().getStatsMap(),
                             this.gameWindow.primaryStage));
         }
-        else if (command.equals("DisplayRoundStats")) {
-            this.setCommand(new DisplayRoundStatsCommand(
-                    BoggleStats.getInstance().getStatsMap(), this.gameWindow.primaryStage));
-        }
+        //else if (command.equals("DisplayRoundStats")) {
+            //this.setCommand(new DisplayRoundStatsCommand(
+                    //BoggleStats.getInstance().getStatsMap(), this.gameWindow.primaryStage));
+        //}
         else if (command.equals("ResetStats")) {
             this.setCommand(new ResetStatsCommand());
         }

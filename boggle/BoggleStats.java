@@ -51,23 +51,16 @@ public class BoggleStats {
     /**
      * the player's total score across all games
      */
-    private int pScoreAllTime;
+    public double pScoreAllTime;
     /**
      * the computer's total score across all games
      */
-    private int cScoreAllTime;
-    /**
-     * the average number of words, per round, found by the player across all games
-     */
-    private double pAverageWordsAllTime;
+
+    public double pAverageWordsAllTime;
     /**
      * the average number of words, per round, found by the computer across all games
      */
-    private double cAverageWordsAllTime;
-    /**
-     * the number of rounds across all games
-     */
-    private int totalRounds;
+    public double totalRounds;
 
 
 
@@ -93,11 +86,9 @@ public class BoggleStats {
         pScoreTotal = 0;
         pScoreAllTime = 0;
         cScoreTotal = 0;
-        cScoreAllTime = 0;
         pAverageWords = 0;
         pAverageWordsAllTime = 0;
         cAverageWords = 0;
-        cAverageWordsAllTime = 0;
         playerWords = new HashSet<String>();
         computerWords = new HashSet<String>();
 
@@ -152,7 +143,7 @@ public class BoggleStats {
 
         // All Time Stats Updated
         pScoreAllTime += pScore;
-        cScoreAllTime += cScore;
+
         totalRounds += 1;
 
         pScore = 0;
@@ -165,8 +156,7 @@ public class BoggleStats {
                 (pAverageWordsAllTime * (totalRounds - 1)) / totalRounds + playerWords.size() / (double) totalRounds;
 
         cAverageWords = (cAverageWords * (round - 1)) / round + computerWords.size() / (double) round;
-        cAverageWordsAllTime =
-                (cAverageWordsAllTime * (totalRounds - 1)) / totalRounds + computerWords.size() / (double) totalRounds;
+
         playerWords.clear();
         computerWords.clear();
 
@@ -329,6 +319,14 @@ public class BoggleStats {
     public int getCScore() {
         return this.cScore;
     }
+
+    public double getTotalRound(){return this.totalRounds;}
+
+    public double getAvgWordsAllTime(){return this.pAverageWordsAllTime;}
+
+    public double getScoreAllTime(){return this.pScoreAllTime;}
+
+
 
 }
 
