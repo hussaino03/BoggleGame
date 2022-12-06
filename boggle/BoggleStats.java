@@ -51,18 +51,17 @@ public class BoggleStats implements Serializable {
     /**
      * the player's total score across all games
      */
-    private int pScoreAllTime;
+    public double pScoreAllTime;
     /**
      * the computer's total score across all games
      */
-    private int cScoreAllTime;
-    /**
-     * the average number of words, per round, found by the player across all games
-     */
-    private double pAverageWordsAllTime;
+
+    public double pAverageWordsAllTime;
     /**
      * the average number of words, per round, found by the computer across all games
      */
+    public double totalRounds;
+
     private double cAverageWordsAllTime;
     /**
      * the number of rounds across all games
@@ -86,6 +85,16 @@ public class BoggleStats implements Serializable {
      * Initializes word lists (which are sets) for computer and human players.
      */
     private BoggleStats() {
+        round = 0;
+        pScoreTotal = 0;
+        pScoreAllTime = 0;
+        cScoreTotal = 0;
+        pAverageWords = 0;
+        pAverageWordsAllTime = 0;
+        cAverageWords = 0;
+        playerWords = new HashSet<String>();
+        computerWords = new HashSet<String>();
+
         try {
             FileInputStream file = new FileInputStream("boggle/SavedStats.ser");
             ObjectInputStream in = new ObjectInputStream(file);
@@ -166,7 +175,7 @@ public class BoggleStats implements Serializable {
 
         // All Time Stats Updated
         pScoreAllTime += pScore;
-        cScoreAllTime += cScore;
+
         totalRounds += 1;
         System.out.println("Total Rounds:" + totalRounds);
 
@@ -180,10 +189,10 @@ public class BoggleStats implements Serializable {
                 (pAverageWordsAllTime * (totalRounds - 1)) / totalRounds + playerWords.size() / (double) totalRounds;
 
         cAverageWords = (cAverageWords * (round - 1)) / round + computerWords.size() / (double) round;
+       
         cAverageWordsAllTime =
                 (cAverageWordsAllTime * (totalRounds - 1)) / totalRounds + computerWords.size() / (double) totalRounds;
-//        playerWords.clear();
-//        computerWords.clear();
+
 
     }
 
@@ -369,6 +378,14 @@ public class BoggleStats implements Serializable {
     public void setTotalRounds(int totalRounds) {
         this.totalRounds = totalRounds;
     }
+
+
+    public double getTotalRound(){return this.totalRounds;}
+
+    public double getAvgWordsAllTime(){return this.pAverageWordsAllTime;}
+
+    public double getScoreAllTime(){return this.pScoreAllTime;}
+
 
 
 }
