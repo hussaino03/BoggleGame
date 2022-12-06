@@ -258,8 +258,8 @@ public class BoggleGame {
      * If yes, add the word to the player's word list (in boggleStats) and increment
      * the player's score (in boggleStats).
      * End the turn once the user hits return (with no word).
-     *
-     * @param allWords A mutable list of all legal words that can be found, given the boggleGrid grid letters
+     * @param allWords A mutable list of all legal words that can be found,
+     * given the boggleGrid grid letters
      */
     private void humanMove(Map<String,ArrayList<Position>> allWords){
         Dictionary dict = new Dictionary("wordlist.txt");
@@ -285,11 +285,9 @@ public class BoggleGame {
 
 
     /**
-     * Gets words from the computer.  The computer should find words that are
-     * both valid and not in the player's word list.  For each word that the computer
-     * finds, update the computer's word list and increment the
-     * computer's score (stored in boggleStats).
-     *
+     * Gets words from the computer. The computer should find words that are both valid
+     * and not in the player's word list.  For each word that the computer finds, update
+     * the computer's word list and increment the computer's score (stored in boggleStats).
      * @param all_words A mutable list of all legal words that can be found, given the boggleGrid grid letters
      */
     private void computerMove(Map<String,ArrayList<Position>> all_words){
