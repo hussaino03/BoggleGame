@@ -73,17 +73,14 @@ public class BoggleGame {
 
             //get grid size preference
 
-            if(gridSize.equals("four")) {
-                boardSize = 4;
-            } else if (gridSize.equals("five")) {
-                boardSize = 5;
-            } else if (gridSize.equals("six")){
-                boardSize = 6;
+            switch (gridSize) {
+                case "four" -> boardSize = 4;
+                case "five" -> boardSize = 5;
+                case "six" -> boardSize = 6;
             }
 
             if (!(gridSize.equals(""))) {
                 playRound(boardSize, randomizeLetters(boardSize));
-                System.out.println("pScore before summarizeRound(): " + BoggleStats.getInstance().pScore);
                 this.gameStats.summarizeRound();
                 this.gameStats.endRound();
                 this.choiceProcessor.put("Grid Size", "");
@@ -134,7 +131,7 @@ public class BoggleGame {
         commandCenter.handle(Id);
 
         //step 4. allow the user to try to find some words on the grid
-        humanMove(grid, allWords);
+        humanMove(allWords);
 //        //step 5. allow the computer to identify remaining words
         computerMove(allWords);
     }
@@ -193,7 +190,6 @@ public class BoggleGame {
      * Every word should be valid (i.e. in the boggleDict) and of length 4 or more.
      * Words that are found should be entered into the allWords HashMap.  This HashMap
      * will be consulted as we play the game.
-     *
      * Note that this function will be a recursive function.  You may want to write
      * a wrapper for your recursion. Note that every legal word on the Boggle grid will correspond to
      * a list of grid positions on the board, and that the Position class can be used to represent these
@@ -288,10 +284,9 @@ public class BoggleGame {
      * the player's score (in boggleStats).
      * End the turn once the user hits return (with no word).
      *
-     * @param board The boggle board
      * @param allWords A mutable list of all legal words that can be found, given the boggleGrid grid letters
      */
-    private void humanMove(BoggleGrid board, Map<String,ArrayList<Position>> allWords){
+    private void humanMove(Map<String,ArrayList<Position>> allWords){
         Dictionary dict = new Dictionary("wordlist.txt");
         while(true) {
 
@@ -300,7 +295,6 @@ public class BoggleGame {
             if (word.length() >= 4 && dict.containsWord(word) &&
                     !gameStats.getPlayerWords().contains(word) &&
                     allWords.containsKey(word.toUpperCase())){
-                System.out.println(word);
                 gameStats.addWord(word.toLowerCase(), BoggleStats.Player.Human);
                 commandCenter.handle("DisplayInGameStats; ");
 
