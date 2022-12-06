@@ -22,7 +22,6 @@ public class DisplayRoundStatsCommand implements Command{
     }
     @Override
     public void execute() {
-        System.out.println("Elements displayed");
         GridPane normalSummaryLayout = (GridPane) stage.getScene().getRoot(); // get the layout of
         // the current scene to be updated
         Thread t = new Thread(()->{
@@ -49,8 +48,6 @@ public class DisplayRoundStatsCommand implements Command{
                 int cNumWords = ((HashSet) BoggleStats.getInstance().getStatsMap().get("Computer Words")).size();
                 HashSet cWords = (HashSet) statsMap.get("Computer Words");
 
-                System.out.println("StatsMap: " + BoggleStats.getInstance().getStatsMap());
-                System.out.println("Computer Words: " + BoggleStats.getInstance().getComputerWords());
 
                 Label pscore = new Label("Player Score: " + BoggleStats.getInstance().pScore);
                 Label cscore = new Label("Computer Score: " + BoggleStats.getInstance().cScore);

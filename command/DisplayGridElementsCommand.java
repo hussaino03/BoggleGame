@@ -28,8 +28,6 @@ public class DisplayGridElementsCommand implements Command {
     }
     @Override
     public void execute() {
-        System.out.println(Thread.currentThread().getName());
-        System.out.println("Elements displayed");
         BorderPane mainLayout = (BorderPane) stage.getScene().getRoot(); // get the layout of
         // the current scene to be updated
         GridPane boardLayout = new GridPane(); // create a layout for the board

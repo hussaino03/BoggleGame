@@ -24,8 +24,6 @@ public class DisplayInGameStatsCommand implements Command {
     }
     @Override
     public void execute() {
-        System.out.println(Thread.currentThread().getName());
-        System.out.println("Elements displayed");
         BorderPane mainLayout = (BorderPane) stage.getScene().getRoot(); // get the layout of
         // the current scene to be updated
         BoggleStats stats = BoggleStats.getInstance(); // get the instance of BoggleStats

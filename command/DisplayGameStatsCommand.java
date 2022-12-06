@@ -23,7 +23,6 @@ public class DisplayGameStatsCommand implements Command{
     }
     @Override
     public void execute() {
-        System.out.println("Elements displayed");
         GridPane normalSummaryLayout = (GridPane) stage.getScene().getRoot(); // get the layout of
         // the current scene to be updated
         Thread t = new Thread(()->{
@@ -36,9 +35,6 @@ public class DisplayGameStatsCommand implements Command{
                 }
 
                 int numRounds = BoggleStats.getInstance().getRound();
-
-                System.out.println("StatsMap: " + BoggleStats.getInstance().getStatsMap());
-                System.out.println("Computer Words: " + BoggleStats.getInstance().getComputerWords());
 
                 Label numrounds = new Label("Total Number of Rounds Played: " + numRounds);
                 Label totalPScore = new Label("Total Score for Human is: " + BoggleStats.getInstance().pScoreTotal);

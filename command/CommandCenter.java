@@ -101,7 +101,6 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     private void execute() {
         while (!(commandQueue.isEmpty())) {
             Command c = commandQueue.peek();
-            System.out.println(c.getClass());
             c.execute();
             commandQueue.remove(c);
         }
@@ -193,7 +192,6 @@ public class CommandCenter implements EventHandler<ActionEvent> {
          */
         else if (command.equals("DisplayGridElements")) {
             String letters = IdVariables[i+1];
-            System.out.println(letters);
             this.setCommand(new DisplayGridElementsCommand(letters, this.gameWindow.primaryStage));
         }
         else if (command.equals("RedirectScreen")) {
