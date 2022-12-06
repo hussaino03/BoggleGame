@@ -107,8 +107,7 @@ public class BoggleGame {
             }
         }
 
-        //we are done with the game! So, summarize all the play that has transpired and exit.
-        this.gameStats.summarizeGame();
+        this.gameStats.storeStats();
     }
 
     /**

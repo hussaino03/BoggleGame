@@ -94,6 +94,8 @@ public class BoggleStats implements Serializable {
         playerWords = new HashSet<String>();
         computerWords = new HashSet<String>();
 
+        // can make the below a separate method. Tries to read from previously saved stats
+        // If there is no such file, it starts from default values.
         try {
             FileInputStream file = new FileInputStream("boggle/SavedStats.ser");
             ObjectInputStream in = new ObjectInputStream(file);
@@ -117,10 +119,10 @@ public class BoggleStats implements Serializable {
             playerWords = new HashSet<String>();
             computerWords = new HashSet<String>();
         }
-        }
+    }
 
     /**
-    * SingleTon Design Implementation:
+    * Singleton Design Implementation:
     * A public method to return the instance of BoggleStats
     * @return BoggleStats instance
      */
@@ -244,14 +246,11 @@ public class BoggleStats implements Serializable {
         return "Computer Score For The Round: "+cScore;
     }
 
-    /* 
-     * Summarize the entire boggle game.  Print out:
-     * The total number of rounds played.
-     * The total score for either player.
-     * The average number of words found by each player per round.
+    /**
+     * Stores the stats of a given game in the boggle/SavedStats.ser file
      */
-    public void summarizeGame() {
-        // Save the stats of this game
+    public void storeStats() {
+
         try {
             FileOutputStream file = new FileOutputStream("boggle/SavedStats.ser");
             ObjectOutputStream out = new ObjectOutputStream(file);
@@ -260,13 +259,6 @@ public class BoggleStats implements Serializable {
         catch (IOException e){
             System.out.println(e.getMessage());
         }
-
-        System.out.println("The Total Number of Rounds Played is: "+ round);
-        System.out.println("The Total Score for Human is: "+pScoreTotal);
-        System.out.println("The Total Score for Computer is: "+cScoreTotal);
-
-        System.out.println("The Average Number of Words Found by Human: "+pAverageWords);
-        System.out.println("The Average Number of Words Found by Computer: "+cAverageWords);
     }
 
     /**
@@ -353,8 +345,4 @@ public class BoggleStats implements Serializable {
     public double getAvgWordsAllTime(){return this.pAverageWordsAllTime;}
 
     public double getScoreAllTime(){return this.pScoreAllTime;}
-
-
-
 }
-
