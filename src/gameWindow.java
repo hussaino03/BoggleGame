@@ -280,7 +280,7 @@ public class gameWindow extends Application {
         // -----------------------------------------------------------------------------------------------------------//
 
         Button goBackFromGameRoundButton = new Button("Return to Main Menu [R]");
-        goBackFromGameRoundButton.setId("RedirectScreen; Main Scene");
+        goBackFromGameRoundButton.setId("RedirectScreen, ResetInGameStats; Main Scene; ");
 
         // add grid panels
         GridPane normalEndLayout =  new GridPane();

@@ -147,9 +147,10 @@ public class BoggleTests {
         File savedStats = new File("boggle/SavedStats.ser");
         savedStats.delete();
         BoggleStats stats1 = BoggleStats.getInstance();
-        assertEquals(stats1.getTotalRounds(), 0);
 
         stats1.setTotalRounds(100);
+        stats1.pScoreAllTime = 100;
+        stats1.pAverageWordsAllTime = 100;
         FileOutputStream fileOut = new FileOutputStream("boggle/SavedStats.ser");
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
         out.writeObject(stats1);
@@ -159,6 +160,8 @@ public class BoggleTests {
         BoggleStats stats2 = (BoggleStats) in.readObject();
         savedStats.delete();
         assertEquals(stats2.getTotalRounds(), 100);
+        assertEquals(stats2.pScoreAllTime, 100);
+        assertEquals(stats2.pAverageWordsAllTime, 100);
     }
 
 }

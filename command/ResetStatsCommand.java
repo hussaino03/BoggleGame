@@ -1,7 +1,5 @@
 package command;
 
-import command.Command;
-
 import java.io.File;
 
 public class ResetStatsCommand implements Command {
