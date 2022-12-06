@@ -61,6 +61,7 @@ public class BoggleGame {
         this.choiceProcessor.put("Game Mode", "");
         this.choiceProcessor.put("Grid Size", "");
         this.choiceProcessor.put("Word", "_");
+        this.choiceProcessor.put("choice", "_");
         this.choiceProcessor.put("Round Ended", "false");
         this.gameStats = BoggleStats.getInstance();
         this.window = w;
@@ -111,48 +112,24 @@ public class BoggleGame {
                 playRound(boardSize, randomizeLetters(boardSize));
                 this.gameStats.summarizeRound();
                 this.gameStats.endRound();
+                this.choiceProcessor.put("Grid Size", "");
             }
-
-//            //get letter choice preference
-//            System.out.println("Enter 1 to randomly assign letters to the grid; 2 to provide your own.");
-//            String choiceLetters = scanner.nextLine();
-//
-//            if(choiceLetters == "") break; //end game if user inputs nothing
-//            while(!choiceLetters.equals("1") && !choiceLetters.equals("2") && !choiceLetters.equals("3")){
-//                System.out.println("Please try again.");
-//                System.out.println("Enter 1 to randomly assign letters to the grid; 2 to provide your own.");
-//                choiceLetters = scanner.nextLine();
-//            }
-//
-//            if(choiceLetters.equals("1")){
-//                playRound(boardSize,randomizeLetters(boardSize));
-//            } else {
-//                System.out.println("Input a list of " + boardSize*boardSize + " letters:");
-//                choiceLetters = scanner.nextLine();
-//                while(!(choiceLetters.length() == boardSize*boardSize)){
-//                    System.out.println("Sorry, bad input. Please try again.");
-//                    System.out.println("Input a list of " + boardSize*boardSize + " letters:");
-//                    choiceLetters = scanner.nextLine();
-//                }
-//                playRound(boardSize,choiceLetters.toUpperCase());
-//            }
-
+            while (this.choiceProcessor.get("choice").equals("_")) {
+                if (!this.choiceProcessor.get("choice").equals("_")) {
+                    break;
+                }
+            }
+            if (this.choiceProcessor.get("choice").equals("Y")) {
+                this.choiceProcessor.put("choice", "_");
+            }
             //round is over! So, store the statistics, and end the round.
-
-
-            // Display round stats
-            commandCenter.handle("DisplayRoundStats; ");
             //Shall we repeat?
-            System.out.println("Play again? Type 'Y' or 'N'");
-            String choiceRepeat = this.choiceProcessor.get("choice");
-
-            if(choiceRepeat == "") break; //end game if user inputs nothing
-            while(!choiceRepeat.equals("Y") && !choiceRepeat.equals("N")){
-                System.out.println("Please try again.");
-                System.out.println("Play again? Type 'Y' or 'N'");
+//            System.out.println("Play again? Type 'Y' or 'N'");
+            if (this.choiceProcessor.get("choice").equals("N")) {
+                this.choiceProcessor.put("choice", "_");
+                break;
             }
 
-            if(choiceRepeat == "" || choiceRepeat.equals("N")) break; //end game if user inputs nothing
 
         }
 
@@ -354,7 +331,7 @@ public class BoggleGame {
                     allWords.containsKey(word.toUpperCase())){
                 System.out.println(word);
                 gameStats.addWord(word.toLowerCase(), BoggleStats.Player.Human);
-                commandCenter.handle("DisplayGameStats; ");
+                commandCenter.handle("DisplayInGameStats; ");
 
             }else {
                 if (!word.equals("")) {
@@ -362,6 +339,8 @@ public class BoggleGame {
                 }
             }
             if (choiceProcessor.get("Round Ended").equals("true")){
+                commandCenter.handle("DisplayRoundStats; ");
+                this.choiceProcessor.put("Round Ended", "false");
                 break;
             }
         }
