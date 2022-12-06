@@ -40,7 +40,6 @@ public class Dictionary {
         {
             e.printStackTrace();
         }
-        System.out.println("Initialized " + wordcount + " words in the Dictionary.");;
     }
 
     /**
