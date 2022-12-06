@@ -9,7 +9,7 @@ import boggle.*;
 import boggle.Dictionary;
 import command.*;
 import org.junit.jupiter.api.Test;
-import src.gameWindow;
+import src.GameWindow;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +18,7 @@ public class BoggleTests {
     //BoggleGame  Test
     @Test
     void findAllWords_small() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        BoggleGame game = new BoggleGame(new gameWindow());
+        BoggleGame game = new BoggleGame(new GameWindow());
         Method method = game.getClass().getDeclaredMethod("findAllWords", Map.class, Dictionary.class, BoggleGrid.class);
         method.setAccessible(true);
 
@@ -98,7 +98,7 @@ public class BoggleTests {
 
     @Test
     void readyTrue() { // BoggleGame.ready() should be true if all information is received
-        BoggleGame game = new BoggleGame(new gameWindow());
+        BoggleGame game = new BoggleGame(new GameWindow());
         game.choiceProcessor.put("Grid Size", "four");
         game.choiceProcessor.put("Game Mode", "timed");
         assertTrue(game.gridSizeSelected());
@@ -106,13 +106,13 @@ public class BoggleTests {
 
     @Test
     void readyFalse() { // BoggleGame.ready() should be false by default
-        BoggleGame game = new BoggleGame(new gameWindow());
+        BoggleGame game = new BoggleGame(new GameWindow());
         assertFalse(game.gridSizeSelected());
     }
 
     @Test
     void UpdateUserChoiceExecute() { // Ensure UpdateUserChoiceCommand.execute() works as intended
-        BoggleGame game = new BoggleGame(new gameWindow());
+        BoggleGame game = new BoggleGame(new GameWindow());
         String gridSize = "Grid Size";
         String gameMode = "Game Mode";
         String A = "A";

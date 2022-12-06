@@ -1,7 +1,7 @@
 package boggle;
 
 import command.*;
-import src.gameWindow;
+import src.GameWindow;
 
 import java.util.*;
 
@@ -18,7 +18,7 @@ public class BoggleGame {
     /**
      * window through which this game will be played
      */
-    public gameWindow window;
+    public GameWindow window;
     /**
      * CommandCenter to which commands will be sent
      */
@@ -53,7 +53,7 @@ public class BoggleGame {
      * BoggleGame constructor
      * @param w the window on which this instance of BoggleGame is being played
      */
-    public BoggleGame(gameWindow w) {
+    public BoggleGame(GameWindow w) {
         this.choiceProcessor = new HashMap<String, String>();
         this.choiceProcessor.put("Grid Size", "");
         this.choiceProcessor.put("Word", "_");

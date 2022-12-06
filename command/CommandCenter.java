@@ -21,7 +21,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     /**
      * The application from which the command.CommandCenter processes events.
      */
-    private gameWindow gameWindow;
+    private GameWindow gameWindow;
 
     /**
      * A queue of commands processed by the command.CommandCenter to be executed upon request.
@@ -42,7 +42,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
      * RedirectScreenCommand -> UpdateUserChoiceCommand -> StartGameCommand -> DisplayGridElementsCommand
      * @param g The application from which command.CommandCenter should receive events to process.
      */
-    private CommandCenter(gameWindow g) {
+    private CommandCenter(GameWindow g) {
         /*
         Initialize command.CommandCenter's attributes
          */
@@ -108,7 +108,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     }
 
     /**
-     * the handle() method processes events triggered by the user in the src.gameWindow application in order to
+     * the handle() method processes events triggered by the user in the src.GameWindow application in order to
      * encapsulate these events into specific commands
      * @param actionEvent the event that was set off (e.g. button was pressed)
      */
@@ -186,7 +186,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
             this.setCommand(new ResetStatsCommand());
         }
         else if (command.equals("ResetInGameStats")){
-            this.setCommand(new ResetInGameStats());
+            this.setCommand(new ResetInGameStatsCommand());
         }
         /*
         Commands with info required
@@ -222,7 +222,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
      * commands from
      * @return CommandCenter the universal instance of CommandCenter
      */
-    public static synchronized CommandCenter getInstance(gameWindow window) {
+    public static synchronized CommandCenter getInstance(GameWindow window) {
         if (instance == null) {
             instance = new CommandCenter(window);
         }

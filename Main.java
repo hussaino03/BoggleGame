@@ -1,7 +1,5 @@
 import boggle.BoggleGame;
-import src.gameWindow;
-
-import java.io.IOException;
+import src.GameWindow;
 
 /**
  * The Main class for the first Assignment in CSC207, Fall 2022
@@ -12,7 +10,7 @@ public class Main {
      * @param args command line arguments.
      **/
     public static void main(String[] args) {
-        gameWindow g = new gameWindow();
+        GameWindow g = new GameWindow();
         BoggleGame b = new BoggleGame(g);
         b.choiceProcessor.put("Game Mode", "normal");
         b.choiceProcessor.put("Grid Size", "four");

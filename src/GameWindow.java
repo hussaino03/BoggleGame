@@ -1,10 +1,8 @@
 package src;
 
-import javafx.collections.FXCollections;
 import boggle.*;
 import command.*;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -13,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
@@ -26,10 +23,10 @@ import java.util.HashMap;
 import java.util.Objects;
 
 /**
- * src.gameWindow controls the flow of the program
+ * src.GameWindow controls the flow of the program
  */
 
-public class gameWindow extends Application {
+public class GameWindow extends Application {
 
     public HashMap<String, Scene> scenes = new HashMap<String, Scene>();
     public HashMap<Scene, String> sceneTitles = new HashMap<Scene, String>();

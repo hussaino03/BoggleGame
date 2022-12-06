@@ -2,7 +2,7 @@ package command;
 
 import boggle.BoggleStats;
 
-public class ResetInGameStats implements Command{
+public class ResetInGameStatsCommand implements Command{
     @Override
     public void execute() {
         BoggleStats.getInstance().playerWords.clear();
