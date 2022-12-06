@@ -25,7 +25,7 @@ public class BoggleTests {
         Dictionary boggleDict = new Dictionary("wordlist.txt");
         Map<String, ArrayList<Position>> allWords = new HashMap<>();
         BoggleGrid grid = new BoggleGrid(4);
-        grid.initalizeBoard("RHLDNHTGIPHSNMJO");
+        grid.initializeBoard("RHLDNHTGIPHSNMJO");
         Object r = method.invoke(game, allWords, boggleDict, grid);
 
         Set<String> expected = new HashSet<>(Arrays.asList("GHOST", "HOST", "THIN"));
@@ -53,7 +53,7 @@ public class BoggleTests {
             letters = letters + "0123456789";
         }
 
-        grid.initalizeBoard(letters);
+        grid.initializeBoard(letters);
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -70,7 +70,7 @@ public class BoggleTests {
             letters = letters + "abcdefg";
         }
 
-        grid.initalizeBoard(letters);
+        grid.initializeBoard(letters);
 
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 7; j++) {

@@ -27,7 +27,7 @@ public class BoggleGrid {
      * Letters are assigned left to right, top to bottom
      * @param letters a string of letters, one for each grid position.
      */
-    public void initalizeBoard(String letters) {
+    public void initializeBoard(String letters) {
         for (int row = 0; row < this.board.length; row++){
             for (int col = 0; col < this.board[row].length; col++) {
                     this.board[row][col] = letters.charAt(row*this.size+col);
@@ -42,14 +42,14 @@ public class BoggleGrid {
      */
     @Override
     public String toString() {
-        String boardString = "";
+        StringBuilder boardString = new StringBuilder();
         for(int row = 0; row < this.size; row++){
             for(int col = 0; col < this.size; col++){
-                boardString += this.board[row][col] + " ";
+                boardString.append(this.board[row][col]).append(" ");
             }
-            boardString += "\n";
+            boardString.append("\n");
         }
-        return boardString;
+        return boardString.toString();
     }
 
     /** 
@@ -72,7 +72,7 @@ public class BoggleGrid {
 
     /**
      * Getter for this.board
-     * @return the boggle board
+     * @return the Boggle board
      */
     public char[][] getBoard() {return this.board;}
 
