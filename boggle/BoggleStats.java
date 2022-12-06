@@ -139,10 +139,8 @@ public class BoggleStats implements Serializable {
         if (player == Player.Human){
             playerWords.add(word);
             if (word.length() >= 4){
-                System.out.println("Working");
                 String spliced = word.substring(4);
                 pScore += spliced.length() + 1;
-                System.out.println(pScore);
             }
         } else if (player == Player.Computer){
             computerWords.add(word.toLowerCase());
@@ -168,7 +166,6 @@ public class BoggleStats implements Serializable {
         pScoreAllTime += pScore;
 
         totalRounds += 1;
-        System.out.println("Total Rounds:" + totalRounds);
 
         round += 1;
 
