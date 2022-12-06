@@ -100,9 +100,10 @@ public class CommandCenter implements EventHandler<ActionEvent> {
      */
     private void execute() {
         while (!(commandQueue.isEmpty())) {
-            Command c = commandQueue.poll();
+            Command c = commandQueue.peek();
             System.out.println(c.getClass());
             c.execute();
+            commandQueue.remove(c);
         }
     }
 
@@ -180,13 +181,17 @@ public class CommandCenter implements EventHandler<ActionEvent> {
             this.setCommand(
                     new StartGameCommand(this.gameWindow.game));
         }
-        else if (command.equals("DisplayGameStats")) {
+        else if (command.equals("DisplayInGameStats")) {
             this.setCommand(
                     new DisplayInGameStatsCommand(BoggleStats.getInstance().getStatsMap(),
                             this.gameWindow.primaryStage));
         }
         else if (command.equals("DisplayRoundStats")) {
             this.setCommand(new DisplayRoundStatsCommand(
+                    BoggleStats.getInstance().getStatsMap(), this.gameWindow.primaryStage));
+        }
+        else if (command.equals("DisplayGameStats")) {
+            this.setCommand(new DisplayGameStatsCommand(
                     BoggleStats.getInstance().getStatsMap(), this.gameWindow.primaryStage));
         }
         else if (command.equals("ResetStats")) {

@@ -166,7 +166,7 @@ public class gameWindow extends Application {
         //--------------------------------------------------
 
 
-        endRound.setId("RedirectScreen, UpdateUserChoice; Normal Game Mode Round Summary Scene; Round Ended, true");
+        endRound.setId("RedirectScreen, UpdateUserChoice, DisplayRoundStats; Normal Game Mode Round Summary Scene; Round Ended, true; ");
         // -------------------------------------------------------------------------------------------------
 
         // Setup for stats scene and layout
@@ -211,7 +211,7 @@ public class gameWindow extends Application {
         playAgain.setId("RedirectScreen, UpdateUserChoice; Grid Selection Scene; choice, Y");
 
         Button goToGameSummary = new Button("Go To Game Summary [G]");
-        goToGameSummary.setId("RedirectScreen, UpdateUserChoice; Normal Game Mode Game Summary Scene; choice, N");
+        goToGameSummary.setId("RedirectScreen, UpdateUserChoice, DisplayGameStats; Normal Game Mode Game Summary Scene; choice, N; ");
 
         // add grid panels
         GridPane normalSummaryLayout =  new GridPane();
