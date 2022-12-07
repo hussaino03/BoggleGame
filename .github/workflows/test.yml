@@ -30,9 +30,9 @@ jobs:
 
       - name: Run First File
         working-directory: tests
-        run: ls
+        run: javac BoggleTests.java
         
       - name: Run Second File
         working-directory: tests
-        run: ls
+        run: javac GameWindowTests.java
         
