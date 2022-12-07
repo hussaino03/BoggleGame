@@ -1,10 +1,8 @@
 package src;
 
-import javafx.collections.FXCollections;
 import boggle.*;
 import command.*;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -13,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
@@ -26,41 +23,46 @@ import java.util.HashMap;
 import java.util.Objects;
 
 /**
- * src.gameWindow controls the flow of the program
+ * GameWindow serves as the View in the Model-View-Controller Software Architecture. This class
+ * displays all GUI elements to the user and is used by them to interact with the game.
  */
 
-public class gameWindow extends Application {
-
+public class GameWindow extends Application {
+    /**
+     * GameWindow Constructor
+     */
+    public GameWindow(){}
+    /**
+     * The scenes which this GameWindow displays
+     */
     public HashMap<String, Scene> scenes = new HashMap<String, Scene>();
+    /**
+     * The titles of the scenes which this GameWindow displays
+     */
     public HashMap<Scene, String> sceneTitles = new HashMap<Scene, String>();
+    /**
+     * The main stage on which this GameWindow lies. All scenes are displayed on this stage.
+     */
     public Stage primaryStage;
-    private TableView table;
+    /**
+     * the CommandCenter to which commands are sent and from which commands are received
+     */
     public CommandCenter commandCenter;
-    private int roundNumber;
-    private int roundScore;
-    private int totalScore;
-    private int compScore;
+    /**
+     * the game which models this window
+     */
     public BoggleGame game;
-
-    public int getRoundNumber() {return roundNumber;}
-    public int getRoundScore() {return roundScore;}
-    public int getTotalScore() {return totalScore;}
-    public int getCompScore() {return compScore;}
-
+    /**
+     * Main method.
+     * @param args command line arguments.
+     **/
     public static void main(String[] args) {
         launch(args);
     }
 
     /**
      * The start() method makes the window run
-     * Note that button IDs have the following format:
-     * "buttonName, transitionScene, choiceType, choice, gameState"
-     * buttonName refers to what button this is (e.g "Normal Mode")
-     * transitionScene refers to which scene to transition to (e.g. "Grid Selection Scene")
-     * choiceType refers to what kind of choice needs to be updated (e.g. "Game Mode")
-     * choice refers to the choice made by the user of a specific choiceType (e.g. "normal")
-     * gameState refers to how the gameState should be changed (e.g. "start")
-     * @param stage The game window to be displayed
+     * @param stage The stage on which the game window should be displayed
      * @throws Exception Thrown if game does not run
      */
     @Override
@@ -68,7 +70,9 @@ public class gameWindow extends Application {
         this.primaryStage = stage;
         primaryStage.setTitle("Main Menu"); // Stage setup
 
-        String css = Objects.requireNonNull(this.getClass().getResource("../styles/styles.css")).toExternalForm(); // Link to CSS file
+        String css = Objects.requireNonNull(
+                this.getClass().getResource("../styles/styles.css")).toExternalForm();
+        // Link to CSS file
 
         this.game = new BoggleGame(this); // Ready the game for the player
 
@@ -83,7 +87,8 @@ public class gameWindow extends Application {
 
         Button normalModeButton = new Button("Play [Q]");
         normalModeButton.setMinSize(80, 80);
-        normalModeButton.setId("RedirectScreen, UpdateUserChoice; Grid Selection Scene; Game Mode, normal");
+        normalModeButton.setId(
+                "RedirectScreen, UpdateUserChoice; Grid Selection Scene; Game Mode, normal");
 
 
         // Setup for the main scene and layout [Contains the four buttons]
@@ -97,8 +102,6 @@ public class gameWindow extends Application {
         mainScene.getStylesheets().add(css);
 
         // add buttons to main layout
-        // buttonIds are used to encapsulate commands via the following ID format:
-        // "ID, Scene to transition to, choice"
         mainLayout.add(howToPlayButton, 0, 0);
         mainLayout.add(normalModeButton, 1, 0);
         mainLayout.add(statsButton, 2, 0);
@@ -144,16 +147,21 @@ public class gameWindow extends Application {
         Scene normalGamemodeScene = new Scene(normalGamemodeLayout, 600, 600);
         normalGamemodeScene.getStylesheets().add(css);
 
-
         scenes.put("Normal Gamemode Scene", normalGamemodeScene);
         sceneTitles.put(normalGamemodeScene, "Normal Gamemode");
         normalGamemodeScene.getStylesheets().add(css);
-        Label normalGamemodeStats = new Label("Player Score: "+ game.gameStats.getPScore() + " | "+ "Round Number: " + (game.gameStats.getRound() + 1));
+        Label normalGamemodeStats = new Label(
+                "Player Score: "+ game.gameStats.getPScore() + " | "+ "Round Number: " + (
+                        game.gameStats.getRound() + 1));
         Button goBackFromNormalGamemode = new Button("Return to Main Menu [R]");
         goBackFromNormalGamemode.setId("RedirectScreen; Main Scene");
-        Button endRound = new Button("End the Round [N]");
+        Button endRound = new Button("End the Round [ALT]");
+        endRound.setId(
+                "RedirectScreen, UpdateUserChoice, DisplayRoundStats; " +
+                        "Normal Game Mode Round Summary Scene; Round Ended, true; ");
         TextField inpWord = new TextField();
         inpWord.setPromptText("Input Here");
+        inpWord.requestFocus();
         HBox statsBar = new HBox();
         VBox buttonBar = new VBox();
         buttonBar.setAlignment(Pos.BOTTOM_RIGHT);
@@ -167,31 +175,9 @@ public class gameWindow extends Application {
         //--------------------------------------------------
 
 
-        endRound.setId("RedirectScreen, UpdateUserChoice, DisplayRoundStats; Normal Game Mode Round Summary Scene; Round Ended, true; ");
         // -------------------------------------------------------------------------------------------------
 
         // Setup for stats scene and layout
-
-        //set table to non-editable
-        //this.table = new TableView<BoggleStatsTable>();
-        //this.table.setEditable(false);
-
-        //normal stats column
-        //TableColumn<BoggleStatsTable, String> normalStatColumn = new TableColumn<>("Statistic");
-        //normalStatColumn.setMinWidth(200);
-        //normalStatColumn.setCellValueFactory(new PropertyValueFactory<BoggleStatsTable, String>("stat"));
-
-        //normal stats values column
-        //TableColumn<BoggleStatsTable, Double> normalValueColumn = new TableColumn<>("Value");
-        //normalValueColumn.setMinWidth(200);
-        //normalValueColumn.setCellValueFactory(new PropertyValueFactory<BoggleStatsTable, Double>("statVal"));
-
-        //set values to table
-        //this.table.setItems(getTable());
-
-        //add columns to table
-
-        //this.table.getColumns().addAll(normalStatColumn, normalValueColumn);
 
         //create stats layout
         BorderPane statsLayout = new BorderPane();
@@ -199,9 +185,9 @@ public class gameWindow extends Application {
         Text a = new Text();
         Text s = new Text();
         BoggleStats stats = BoggleStats.getInstance();
-        r.setText("The total rounds played are: " + stats.totalRounds);
-        a.setText("The total score you have accumulated is: " + stats.pScoreAllTime);
-        s.setText("The average words per round are: " + stats.pAverageWordsAllTime);
+        r.setText("The total rounds played are: " + stats.getTotalRounds());
+        a.setText("The total score you have accumulated is: " + stats.getPScoreAllTime());
+        s.setText("The average words per round are: " + stats.getPAvgWordsAllTime());
         VBox vbox = new VBox(5);
         vbox.getChildren().addAll(r,a,s);
         statsLayout.setCenter(vbox);
@@ -230,7 +216,8 @@ public class gameWindow extends Application {
         playAgain.setId("RedirectScreen, UpdateUserChoice; Grid Selection Scene; choice, Y");
 
         Button goToGameSummary = new Button("Go To Game Summary [G]");
-        goToGameSummary.setId("RedirectScreen, UpdateUserChoice, DisplayGameStats; Normal Game Mode Game Summary Scene; choice, N; ");
+        goToGameSummary.setId("RedirectScreen, UpdateUserChoice, DisplayGameStats; " +
+                "Normal Game Mode Game Summary Scene; choice, N; ");
 
         // add grid panels
         GridPane normalSummaryLayout =  new GridPane();
@@ -252,8 +239,9 @@ public class gameWindow extends Application {
 
         normalSummaryLayout.add(IntroText, 0, 4);
 
-        Label pscore = new Label(game.gameStats.PScore());
-        Label cscore = new Label(BoggleStats.getInstance().CScore());
+        Label pscore = new Label("Player Score for the Round: " + game.gameStats.getPScore());
+        Label cscore = new Label(
+                "Computer Score for the Round: " + BoggleStats.getInstance().getCScore());
         Label csize = new Label(BoggleStats.getInstance().computerwordsSize());
         Label psize = new Label(BoggleStats.getInstance().playerwordsSize());
         Label cwords = new Label(BoggleStats.getInstance().computerwords());
@@ -291,25 +279,25 @@ public class gameWindow extends Application {
         normalEndLayout.add(goBackFromGameRoundButton, 0, 1);
 
 
-        // create a new scene
+        // create the game summary scene
         Scene normalEndScene = new Scene(normalEndLayout, 600, 600);
         scenes.put("Normal Game Mode Game Summary Scene", normalEndScene);
         sceneTitles.put(normalEndScene, "Normal Game Mode Game Summary");
         normalEndScene.getStylesheets().add(css);
 
-        Label IntrText = new Label("The stats for the normal game mode Game summary screen are displayed as follows:");
+        Label IntrText = new Label(
+                "The stats for the normal game mode Game summary screen are displayed as follows:");
         IntrText.setTextAlignment(TextAlignment.CENTER);
         IntrText.setMaxWidth(580);
         IntrText.setWrapText(true);
 
         normalEndLayout.add(IntrText, 0, 3);
 
-        Label tRound = new Label(BoggleStats.getInstance().Totalround());
-        Label pscoreT = new Label(BoggleStats.getInstance().pScoreTotal());
-        Label cscoreT = new Label(BoggleStats.getInstance().cScoreTotal());
-        Label pAverage = new Label(BoggleStats.getInstance().pAverageWords());
-        Label cAverage = new Label(BoggleStats.getInstance().cAverageWords());
-
+        Label tRound = new Label("The Total Number of Rounds Played is: " + BoggleStats.getInstance().getRound());
+        Label pscoreT = new Label("The Total Score for The Human is: " + BoggleStats.getInstance().getPScoreTotal());
+        Label cscoreT = new Label("The Total Score for The Computer is: " + BoggleStats.getInstance().getCScoreTotal());
+        Label pAverage = new Label("The Average Number of Words Found by Human: " + BoggleStats.getInstance().getPAverageWords());
+        Label cAverage = new Label("The Average Number of Words Found by Computer: "+ BoggleStats.getInstance().getCAverageWords());
 
         normalEndLayout.add(tRound, 0, 5);
         normalEndLayout.add(pscoreT, 0, 6);
@@ -323,10 +311,7 @@ public class gameWindow extends Application {
         GridPane.setHalignment(pAverage, HPos.CENTER);
         GridPane.setHalignment(cAverage, HPos.CENTER);
 
-
         // -----------------------------------------------------------------------------------------------------------//
-
-
 
         // Setup for grid selection scene and layout
 
@@ -343,10 +328,6 @@ public class gameWindow extends Application {
         Label gridInstructions = new Label("Enter 1 to play on a (4x4) grid; 2 to play on a (5x5) grid;" +
                 " 3 to play on a (6x6) grid:");
         gridSelectionLayout.add(gridInstructions,0,2);
-
-        //textbox to input size
-//        TextField inpGrid = new TextField("Input here");
-//        gridSelectionLayout.add(inpGrid,1,1);
 
         // add buttons to grid selection layout
         Button fourByFourButton = new Button("4x4 [1]");
@@ -369,15 +350,13 @@ public class gameWindow extends Application {
         gridSelectionLayout.add(goBackFromGridSelectionButton, 0, 1);
         GridPane.setHalignment(goBackFromGridSelectionButton, HPos.LEFT);
 
-
         // Send all button clicks to commandCenter for these commands to be handled
         this.commandCenter = CommandCenter.getInstance(this);
         howToPlayButton.setOnAction(commandCenter);
         statsButton.setOnAction(commandCenter);
         normalModeButton.setOnAction(commandCenter);
         goBackFromNormalGamemode.setOnAction(commandCenter);
-        goBackFromHTPButton.setOnAction(commandCenter
-        );
+        goBackFromHTPButton.setOnAction(commandCenter);
         goBackFromGameRoundButton.setOnAction(commandCenter);
         goBackFromStatsButton.setOnAction(commandCenter);
         goBackFromGridSelectionButton.setOnAction(commandCenter);
@@ -472,14 +451,15 @@ public class gameWindow extends Application {
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER) {
                     String word = inpWord.getText();
-                    if (word.length()==0) { // Do not handle empty words
+                    if (word.length() == 0) { // Do not handle empty words
                         return;
                     }
                     String Id = "UpdateUserChoice; Word, " + word;
                     inpWord.setText("");
                     commandCenter.handle(Id);
                 }
-                if (keyEvent.getCode() == KeyCode.N) {
+                if (keyEvent.getCode() == KeyCode.ALT) {
+                    inpWord.setFocusTraversable(false);
                     endRound.fire();
                 }
             }
@@ -488,22 +468,6 @@ public class gameWindow extends Application {
         // Set the scene to the main scene when first running the game
         primaryStage.setScene(mainScene);
         primaryStage.show();
-
-//
     }
+}
 
-    //public ObservableList<Object> getTable(){
-        //ObservableList<Object> statsTable = FXCollections.observableArrayList();
-        //double score_all_time = BoggleStats.getInstance().getScoreAllTime();
-        //double avg_Words_all_time = BoggleStats.getInstance().getAvgWordsAllTime();
-        //double tot_round = BoggleStats.getInstance().getTotalRound();
-
-
-        //statsTable.add(new BoggleStatsTable("Total Score", score_all_time));
-        //statsTable.add(new BoggleStatsTable("Average num of words", avg_Words_all_time));
-        //statsTable.add(new BoggleStatsTable("Total num of rounds",tot_round));
-        //return statsTable;
-    }
-
-
-//}

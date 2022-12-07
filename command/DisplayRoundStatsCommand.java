@@ -11,18 +11,34 @@ import javax.swing.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicReference;
-
+/**
+ * This command displays the round stats on the Round Summary Screen
+ */
 public class DisplayRoundStatsCommand implements Command{
+    /**
+     * the statsMap from which to get the displayed values
+     */
     HashMap<String, Object> statsMap;
+    /**
+     * the stage on which to display the statistics
+     */
     public Stage stage;
 
+    /**
+     * DisplayRoundStatsCommand Constructor
+     * @param map the statsMap from which to get the displayed values
+     * @param s the stage on which to display the statistics
+     */
     public DisplayRoundStatsCommand(HashMap<String, Object> map, Stage s) {
         this.statsMap =  map;
         this.stage = s;
     }
+    /**
+     * This method displays the round stats by replacing the labels on the Round Summary Screen
+     * with labels containing updated stats values.
+     */
     @Override
     public void execute() {
-        System.out.println("Elements displayed");
         GridPane normalSummaryLayout = (GridPane) stage.getScene().getRoot(); // get the layout of
         // the current scene to be updated
         Thread t = new Thread(()->{
@@ -49,14 +65,12 @@ public class DisplayRoundStatsCommand implements Command{
                 int cNumWords = ((HashSet) BoggleStats.getInstance().getStatsMap().get("Computer Words")).size();
                 HashSet cWords = (HashSet) statsMap.get("Computer Words");
 
-                System.out.println("StatsMap: " + BoggleStats.getInstance().getStatsMap());
-                System.out.println("Computer Words: " + BoggleStats.getInstance().getComputerWords());
 
-                Label pscore = new Label("Player Score: " + BoggleStats.getInstance().pScore);
-                Label cscore = new Label("Computer Score: " + BoggleStats.getInstance().cScore);
+                Label pscore = new Label("Player Score: " + BoggleStats.getInstance().getPScore());
+                Label cscore = new Label("Computer Score: " + BoggleStats.getInstance().getCScore());
                 Label csize = new Label("Number of Words Found By Computer: " + cNumWords);
-                Label psize = new Label("Number of Words Found By Player: " + BoggleStats.getInstance().playerWords.size());
-                Label pwords = new Label("Words Found By Player: " + BoggleStats.getInstance().playerWords);
+                Label psize = new Label("Number of Words Found By Player: " + BoggleStats.getInstance().getPlayerWords().size());
+                Label pwords = new Label("Words Found By Player: " + BoggleStats.getInstance().getPlayerWords());
                 Label cwords = new Label("Words Found By Computer: " + cWords);
 
                 cwords.setWrapText(true);

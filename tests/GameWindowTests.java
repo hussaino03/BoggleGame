@@ -1,8 +1,6 @@
 package tests;
 
 import boggle.BoggleGame;
-import boggle.BoggleStats;
-import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,7 +8,6 @@ import javafx.scene.layout.GridPane;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import javafx.stage.Stage;
-import javafx.concurrent.Task;
 import command.*;
 import src.*;
 
@@ -19,13 +16,20 @@ import java.util.Queue;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains the unit tests related to the src and command packages
+ */
 public class GameWindowTests {
+    /**
+     * GameWindowTests Constructor
+     */
+    public GameWindowTests(){}
     JFXPanel panel = new JFXPanel(); // a GUI element needs to be made before the tests can run
     @Test
     void blankButtonIdTest() {
         Button testButton = new Button();
         testButton.setId("");
-        testButton.setOnAction(CommandCenter.getInstance(new gameWindow()));
+        testButton.setOnAction(CommandCenter.getInstance(new GameWindow()));
         testButton.fire();
         assertDoesNotThrow(() -> {});
     }
@@ -34,7 +38,7 @@ public class GameWindowTests {
     void shortButtonIdTest() {
         Button testButton = new Button();
         testButton.setId(", ");
-        testButton.setOnAction(CommandCenter.getInstance(new gameWindow()));
+        testButton.setOnAction(CommandCenter.getInstance(new GameWindow()));
         testButton.fire();
         assertDoesNotThrow(() -> {});
     }
@@ -45,13 +49,13 @@ public class GameWindowTests {
         /*
         Initialize a command.CommandCenter and command attributes to pass in
          */
-        CommandCenter center = CommandCenter.getInstance(new gameWindow());
+        CommandCenter center = CommandCenter.getInstance(new GameWindow());
         Queue<Command> q = center.commandQueue;
         GridPane layout = new GridPane();
-        Stage stage = new gameWindow().primaryStage;
+        Stage stage = new GameWindow().primaryStage;
         Scene scene = new Scene(layout, 100, 100);
         String string = "";
-        BoggleGame game = new BoggleGame(new gameWindow());
+        BoggleGame game = new BoggleGame(new GameWindow());
 
         /*
         Populate the commandQueue with commands in various orders
@@ -82,21 +86,13 @@ public class GameWindowTests {
         assertEquals(q.poll().getClass(), DisplayGridElementsCommand.class);
     }
 
-    @Test
-    void initialScoreValues() {
-        gameWindow gameWindow = new gameWindow();
-        Assertions.assertEquals(0, gameWindow.getRoundScore());
-        Assertions.assertEquals(0, gameWindow.getCompScore());
-        Assertions.assertEquals(0, gameWindow.getTotalScore());
-        Assertions.assertEquals(0, gameWindow.getRoundNumber());
-    }
     /*
     Check whether instantiating command center several times always returns the same instance
      */
     @Test
     void comCenterSingleton() {
-        CommandCenter com1 = CommandCenter.getInstance(new gameWindow());
-        CommandCenter com2 = CommandCenter.getInstance(new gameWindow());
+        CommandCenter com1 = CommandCenter.getInstance(new GameWindow());
+        CommandCenter com2 = CommandCenter.getInstance(new GameWindow());
         assertSame(com1, com2);
     }
 }

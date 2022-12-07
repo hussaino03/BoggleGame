@@ -7,8 +7,7 @@ import java.io.IOException;
 import java.util.TreeSet;
 
 /**
- * The Dictionary class for the first Assignment in CSC207, Fall 2022
- * The Dictionary will contain lists of words that are acceptable for Boggle 
+ * The Dictionary contains a list of words that are acceptable for Boggle
  */
 public class Dictionary {
 
@@ -18,8 +17,7 @@ public class Dictionary {
     private TreeSet<String> legalWords;
 
     /**
-     * Class constructor 
-     * 
+     * Dictionary constructor
      * @param filename the file containing a list of legal words.
      */
     public Dictionary(String filename) {
@@ -42,20 +40,18 @@ public class Dictionary {
         {
             e.printStackTrace();
         }
-        System.out.println("Initialized " + wordcount + " words in the Dictionary.");;
     }
 
-    /* 
+    /**
      * Checks to see if a provided word is in the dictionary.
-     *
      * @param word  The word to check
-     * @return  A boolean indicating if the word has been found
+     * @return A boolean indicating if the word has been found
      */
     public boolean containsWord(String word) {
         return legalWords.contains(word.toLowerCase());
     }
 
-    /* 
+    /**
      * Checks to see if a provided string is a prefix of any word in the dictionary.
      *
      * @param str  The string to check

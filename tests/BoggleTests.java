@@ -4,33 +4,36 @@ import java.io.*;
 import java.util.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Field;
 
 import boggle.*;
 import boggle.Dictionary;
 import command.*;
-import javafx.stage.Stage;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import src.gameWindow;
+import src.GameWindow;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains the unit tests related to the boggle package
+ */
 public class BoggleTests {
+
+    /**
+     * BoggleTests Constructor
+     */
+    public BoggleTests(){}
 
     //BoggleGame  Test
     @Test
     void findAllWords_small() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        BoggleGame game = new BoggleGame(new gameWindow());
+        BoggleGame game = new BoggleGame(new GameWindow());
         Method method = game.getClass().getDeclaredMethod("findAllWords", Map.class, Dictionary.class, BoggleGrid.class);
         method.setAccessible(true);
 
         Dictionary boggleDict = new Dictionary("wordlist.txt");
         Map<String, ArrayList<Position>> allWords = new HashMap<>();
         BoggleGrid grid = new BoggleGrid(4);
-        grid.initalizeBoard("RHLDNHTGIPHSNMJO");
+        grid.initializeBoard("RHLDNHTGIPHSNMJO");
         Object r = method.invoke(game, allWords, boggleDict, grid);
 
         Set<String> expected = new HashSet<>(Arrays.asList("GHOST", "HOST", "THIN"));
@@ -58,7 +61,7 @@ public class BoggleTests {
             letters = letters + "0123456789";
         }
 
-        grid.initalizeBoard(letters);
+        grid.initializeBoard(letters);
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -75,7 +78,7 @@ public class BoggleTests {
             letters = letters + "abcdefg";
         }
 
-        grid.initalizeBoard(letters);
+        grid.initializeBoard(letters);
 
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 7; j++) {
@@ -103,21 +106,21 @@ public class BoggleTests {
 
     @Test
     void readyTrue() { // BoggleGame.ready() should be true if all information is received
-        BoggleGame game = new BoggleGame(new gameWindow());
+        BoggleGame game = new BoggleGame(new GameWindow());
         game.choiceProcessor.put("Grid Size", "four");
         game.choiceProcessor.put("Game Mode", "timed");
-        assertTrue(game.ready());
+        assertTrue(game.gridSizeSelected());
     }
 
     @Test
     void readyFalse() { // BoggleGame.ready() should be false by default
-        BoggleGame game = new BoggleGame(new gameWindow());
-        assertFalse(game.ready());
+        BoggleGame game = new BoggleGame(new GameWindow());
+        assertFalse(game.gridSizeSelected());
     }
 
     @Test
     void UpdateUserChoiceExecute() { // Ensure UpdateUserChoiceCommand.execute() works as intended
-        BoggleGame game = new BoggleGame(new gameWindow());
+        BoggleGame game = new BoggleGame(new GameWindow());
         String gridSize = "Grid Size";
         String gameMode = "Game Mode";
         String A = "A";
@@ -149,8 +152,8 @@ public class BoggleTests {
         BoggleStats stats1 = BoggleStats.getInstance();
 
         stats1.setTotalRounds(100);
-        stats1.pScoreAllTime = 100;
-        stats1.pAverageWordsAllTime = 100;
+        stats1.setPScoreAllTime(100);
+        stats1.setPAvgWordsAllTime(100);
         FileOutputStream fileOut = new FileOutputStream("boggle/SavedStats.ser");
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
         out.writeObject(stats1);
@@ -160,8 +163,8 @@ public class BoggleTests {
         BoggleStats stats2 = (BoggleStats) in.readObject();
         savedStats.delete();
         assertEquals(stats2.getTotalRounds(), 100);
-        assertEquals(stats2.pScoreAllTime, 100);
-        assertEquals(stats2.pAverageWordsAllTime, 100);
+        assertEquals(stats2.getPScoreAllTime(), 100);
+        assertEquals(stats2.getPAvgWordsAllTime(), 100);
     }
 
 }

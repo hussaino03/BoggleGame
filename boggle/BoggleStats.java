@@ -6,36 +6,38 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The BoggleStats class for the first Assignment in CSC207, Fall 2022
- * The BoggleStats will contain statsitics related to game play Boggle 
+ * The BoggleStats class contains statistics related to BoggleGame
  */
 
 public class BoggleStats implements Serializable {
+    /**
+     * instance attribute of BoggleStats as per the Singleton Design Pattern
+     */
     private static BoggleStats instance = null;
     /**
      * set of words the player finds in a given round 
      */  
-    public Set<String> playerWords = new HashSet<String>();
+    private Set<String> playerWords = new HashSet<String>();
     /**
      * set of words the computer finds in a given round 
      */  
-    public Set<String> computerWords = new HashSet<String>();
+    private Set<String> computerWords = new HashSet<String>();
     /**
      * the player's score for the current round
      */  
-    public int pScore;
+    private int pScore;
     /**
      * the computer's score for the current round
      */  
-    public int cScore;
+    private int cScore;
     /**
      * the player's total score across every round
      */  
-    public int pScoreTotal;
+    private int pScoreTotal;
     /**
      * the computer's total score across every round
      */  
-    public int cScoreTotal;
+    private int cScoreTotal;
     /**
      * the average number of words, per round, found by the player
      */  
@@ -47,30 +49,30 @@ public class BoggleStats implements Serializable {
     /**
      * the current round being played
      */  
-    public int round;
+    private int round;
     /**
      * the player's total score across all games
      */
-    public double pScoreAllTime;
-    /**
-     * the computer's total score across all games
-     */
-
-    public double pAverageWordsAllTime;
+    private double pScoreAllTime;
     /**
      * the average number of words, per round, found by the computer across all games
      */
-    public double totalRounds;
-
-    private double cAverageWordsAllTime;
+    private double pAverageWordsAllTime;
     /**
      * the number of rounds across all games
      */
+    private double totalRounds;
     /**
-     * enumarable types of players (human or computer)
+     * enumerable types of players (human or computer)
      */  
     public enum Player {
+        /**
+         * Represents a Human Player
+         */
         Human("Human"),
+        /**
+         * Represents the Computer
+         */
         Computer("Computer");
         private final String player;
         Player(final String player) {
@@ -78,8 +80,7 @@ public class BoggleStats implements Serializable {
         }
     }
 
-    /* BoggleStats constructor
-     * ----------------------
+    /** BoggleStats constructor NEEDS TO BE UPDATED
      * Sets round, totals and averages to 0.
      * Initializes word lists (which are sets) for computer and human players.
      */
@@ -94,19 +95,19 @@ public class BoggleStats implements Serializable {
         playerWords = new HashSet<String>();
         computerWords = new HashSet<String>();
 
+        // can make the below a separate method. Tries to read from previously saved stats
+        // If there is no such file, it starts from default values.
         try {
             FileInputStream file = new FileInputStream("boggle/SavedStats.ser");
             ObjectInputStream in = new ObjectInputStream(file);
             BoggleStats savedStats = (BoggleStats) in.readObject();
             pScoreAllTime = savedStats.pScoreAllTime;
             pAverageWordsAllTime = savedStats.pAverageWordsAllTime;
-            cAverageWordsAllTime = savedStats.cAverageWordsAllTime;
             totalRounds = savedStats.totalRounds;
         }
         catch (IOException e) {
             pScoreAllTime = 0;
             pAverageWordsAllTime = 0;
-            cAverageWordsAllTime = 0;
             totalRounds = 0;
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -119,9 +120,10 @@ public class BoggleStats implements Serializable {
             playerWords = new HashSet<String>();
             computerWords = new HashSet<String>();
         }
-        }
-    /*
-    * SingleTon Design Implementation:
+    }
+
+    /**
+    * Singleton Design Implementation:
     * A public method to return the instance of BoggleStats
     * @return BoggleStats instance
      */
@@ -132,22 +134,19 @@ public class BoggleStats implements Serializable {
         return instance;
     }
 
-    /* 
+    /**
      * Add a word to a given player's word list for the current round.
-     * You will also want to increment the player's score, as words are added.
-     *
-     * @param word     The word to be added to the list
-     * @param player  The player to whom the word was awarded
+     * The player's score is incremented, as words are added.
+     * @param word The word to be added to the list
+     * @param player The player to whom the word was awarded
      */
     public void addWord(String word, Player player) {
         word = word.toLowerCase();
         if (player == Player.Human){
             playerWords.add(word);
             if (word.length() >= 4){
-                System.out.println("Working");
                 String spliced = word.substring(4);
                 pScore += spliced.length() + 1;
-                System.out.println(pScore);
             }
         } else if (player == Player.Computer){
             computerWords.add(word.toLowerCase());
@@ -158,63 +157,34 @@ public class BoggleStats implements Serializable {
         }
     }
 
-    /* 
-     * End a given round.
-     * This will clear out the human and computer word lists, so we can begin again.
-     * The function will also update each player's total scores, average scores, and
-     * reset the current scores for each player to zero.
-     * Finally, increment the current round number by 1.
+    /**
+     * End a given round. This function will update each player's total scores, average scores,
+     * and increment the current round number by 1.
      */
     public void endRound() {
 
         pScoreTotal += pScore;
         cScoreTotal += cScore;
 
-        // All Time Stats Updated
         pScoreAllTime += pScore;
 
         totalRounds += 1;
-        System.out.println("Total Rounds:" + totalRounds);
 
-//        pScore = 0;
-//        cScore = 0;
         round += 1;
 
 
         pAverageWords = (pAverageWords * (round - 1)) / round + playerWords.size() / (double) round;
-        pAverageWordsAllTime =
-                (pAverageWordsAllTime * (totalRounds - 1)) / totalRounds + playerWords.size() / (double) totalRounds;
+
+        pAverageWordsAllTime = (pAverageWordsAllTime * (totalRounds - 1))
+                / totalRounds + playerWords.size() / (double) totalRounds;
 
         cAverageWords = (cAverageWords * (round - 1)) / round + computerWords.size() / (double) round;
-       
-        cAverageWordsAllTime =
-                (cAverageWordsAllTime * (totalRounds - 1)) / totalRounds + computerWords.size() / (double) totalRounds;
-
 
     }
 
-    /* 
-     * Summarize one round of boggle.  Print out:
-     * The words each player found this round.
-     * Each number of words each player found this round.
-     * Each player's score this round.
-     */
-    public void summarizeRound() {
-        System.out.println("Human Words: "+playerWords);
-        System.out.println("Computer Words: "+computerWords);
-
-        System.out.println("Number of Human Average Words: "+playerWords.size());
-        System.out.println("Number of Computer Average Words: "+computerWords.size());
-
-        System.out.println("Human Score For The Round: "+pScore);
-        System.out.println("Computer Score For The Round: "+cScore);
-    }
-
-    /*
-     * Summarize one round of boggle.  Print out:
-     * The words each player found this round.
-     * Each number of words each player found this round.
-     * Each player's score this round.
+    /**
+     * Generates a hashmap containing BoggleStats attributes
+     * @return HashMap a HashMap of BoggleStats attributes
      */
     public HashMap<String, Object> getStatsMap() {
         HashMap<String, Object> scoreMap = new HashMap<>();
@@ -245,15 +215,15 @@ public class BoggleStats implements Serializable {
         return "Computer Words: "+computerWords;
     }
     /**
-     * Getter for playerWords size
-     * @return playerWords size
+     * Getter for playerWords.size
+     * @return playerWords.size
      */
     public String playerwordsSize(){
         return "Number of Human Average Words: " + playerWords.size();
     }
     /**
-     * Getter for computerWords size
-     * @return computerWords size
+     * Getter for computerWords.size
+     * @return computerWords.size
      */
     public String computerwordsSize(){
         return "Number of Computer Average Words: "+computerWords.size();
@@ -262,25 +232,43 @@ public class BoggleStats implements Serializable {
      * Getter for pScore
      * @return pScore
      */
-    public String PScore(){
-        return "Human Score For The Round: "+pScore;
+    public int getPScore(){
+        return pScore;
     }
+
     /**
      * Getter for cScore
      * @return cScore
      */
-    public String CScore(){
-        return "Computer Score For The Round: "+cScore;
+    public int getCScore(){
+        return cScore;
+    }
+    /**
+     * Setter for pScore
+     * @param score the score to set pScore to
+     */
+    public void setPScore(int score){
+        this.pScore = score;
     }
 
-    /* 
-     * Summarize the entire boggle game.  Print out:
-     * The total number of rounds played.
-     * The total score for either player.
-     * The average number of words found by each player per round.
+    /**
+     * Setter for round
+     * @param num the number to set this.round to
      */
-    public void summarizeGame() {
-        // Save the stats of this game
+    public void setRound(int num){this.round = num;}
+
+    /**
+     * Clears this.playerWords and this.computerWords
+     */
+    public void clearWords() {
+        this.playerWords.clear();
+        this.computerWords.clear();
+    }
+    /**
+     * Stores the stats of a given game in the boggle/SavedStats.ser file
+     */
+    public void storeStats() {
+
         try {
             FileOutputStream file = new FileOutputStream("boggle/SavedStats.ser");
             ObjectOutputStream out = new ObjectOutputStream(file);
@@ -289,101 +277,91 @@ public class BoggleStats implements Serializable {
         catch (IOException e){
             System.out.println(e.getMessage());
         }
-
-        System.out.println("The Total Number of Rounds Played is: "+ round);
-        System.out.println("The Total Score for Human is: "+pScoreTotal);
-        System.out.println("The Total Score for Computer is: "+cScoreTotal);
-
-        System.out.println("The Average Number of Words Found by Human: "+pAverageWords);
-        System.out.println("The Average Number of Words Found by Computer: "+cAverageWords);
     }
 
-    /**
-     * Getter for total rounds
-     * @return round
-     */
-    public String Totalround(){
-        return "The Total Number of Rounds Played is: "+ round;
-    }
-    /**
-     * Getter for human total score
-     * @return pscoreTotal
-     */
-    public String pScoreTotal(){
-        return "The Total Score for Human is: "+pScoreTotal;
-    }
-    /**
-     * Getter for computer total score
-     * @return cScoreTotal
-     */
-    public String cScoreTotal(){
-        return "The Total Score for Computer is: "+cScoreTotal;
-    }
     /**
      * Getter for player average words
      * @return pAverageWords
      */
-    public String pAverageWords(){
-        return "The Average Number of Words Found by Human: "+pAverageWords;
+    public double getPAverageWords(){
+        return this.pAverageWords;
     }
     /**
      * Getter for computer average words
      * @return cAverageWords
      */
-    public String cAverageWords(){
-        return "The Average Number of Words Found by Computer: "+cAverageWords;
+    public double getCAverageWords(){
+        return this.cAverageWords;
     }
 
-    /*
-     * @return Set<String> The player's word list
+    /**
+     * Getter for player words
+     * @return Set The player's word list
      */
     public Set<String> getPlayerWords() {
         return this.playerWords;
     }
-    /*
-     * @return Set<String> The player's word list
+    /**
+     * Getter for this.computerWords
+     * @return Set The player's word list
      */
     public Set<String> getComputerWords() {
         return this.computerWords;
     }
 
     /**
+     * Getter for this.round
      * @return int The number of rounds played this game
      */
     public int getRound() { return this.round; }
 
     /**
+     * Getter for this.totalRounds
      * @return int The number of rounds played across all games
      */
     public int getTotalRounds() { return (int) this.totalRounds; }
 
     /**
-    * @return int The current player score
-    */
-    public int getPScore() {
-        return this.pScore;
-    }
-    /**
-     * @return int The current computer score
-     */
-    public int getCScore() {
-        return this.cScore;
-    }
-    /**
-     * Set the totalRounds attribute (for testing purposes)
+     * Setter for this.totalRounds
+     * @param totalRounds the number of totalRounds to be set
      */
     public void setTotalRounds(int totalRounds) {
         this.totalRounds = totalRounds;
     }
 
-
-    public double getTotalRound(){return this.totalRounds;}
-
-    public double getAvgWordsAllTime(){return this.pAverageWordsAllTime;}
-
-    public double getScoreAllTime(){return this.pScoreAllTime;}
-
-
-
+    /**
+     * Getter for this.pScoreTotal
+     * @return int this.pScoreTotal
+     */
+    public int getPScoreTotal(){return this.pScoreTotal;}
+    /**
+     * Getter for this.cScoreTotal
+     * @return int this.cScoreTotal
+     */
+    public int getCScoreTotal(){return this.cScoreTotal;}
+    /**
+     * Getter for this.pAverageWordsAllTime
+     * @return int this.pAverageWordsAllTime
+     */
+    public double getPAvgWordsAllTime(){return this.pAverageWordsAllTime;}
+    /**
+     * Setter for this.pAverageWordsAllTime
+     * @param avgWords the average number of words to set pAverageWordsAllTime to
+     */
+    public void setPAvgWordsAllTime(double avgWords){this.pAverageWordsAllTime = avgWords;}
+    /**
+     * Getter for this.pScoreAllTime
+     * @return double this.PScoreAllTime
+     */
+    public double getPScoreAllTime(){return this.pScoreAllTime;}
+    /**
+     * Setter for this.cScore
+     * @param score the score which this.cScore should be set to
+     */
+    public void setCScore(int score){this.cScore = score;}
+    /**
+     * Setter for this.pScoreAllTime
+     * @param score the score which this.pScoreAllTime should be set to
+     */
+    public void setPScoreAllTime(int score){this.pScoreAllTime = score;}
 }
-

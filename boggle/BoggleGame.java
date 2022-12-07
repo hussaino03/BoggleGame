@@ -1,17 +1,13 @@
 package boggle;
 
 import command.*;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
-import javafx.scene.control.Button;
-import src.gameWindow;
+import src.GameWindow;
 
-import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.util.*;
 
 /**
- * The BoggleGame class for the first Assignment in CSC207, Fall 2022
+ * The BoggleGame class serves as the Model for our game in the Model-View-Controller Software
+ * Architecture. The logic of the game is handled here.
  */
 public class BoggleGame {
 
@@ -22,7 +18,7 @@ public class BoggleGame {
     /**
      * window through which this game will be played
      */
-    public gameWindow window;
+    public GameWindow window;
     /**
      * CommandCenter to which commands will be sent
      */
@@ -53,12 +49,12 @@ public class BoggleGame {
                     "DISTTY", "EEGHNW", "EEINSU", "EHRTVW", "EIOSST", "ELRTTY", "HIMNQU", "AAAFRS", "HJKGBN", "ADENNN", "KLFGVC", "AEEGMU", "AEGMNN", "AFIRSY",
                     "BJKQXZ", "CCNSTW", "CEIILT", "CEILPT", "CEIPST", "DDHNOT", "DHHLOR", "DHLNOR", "EIIITT", "EMOTTT", "ENSSSU", "FIPRSY", "GORRVW", "HIPRRY", "NOOTUW", "OOOTTU"};
 
-    /* 
+    /**
      * BoggleGame constructor
+     * @param w the window on which this instance of BoggleGame is being played
      */
-    public BoggleGame(gameWindow w) {
+    public BoggleGame(GameWindow w) {
         this.choiceProcessor = new HashMap<String, String>();
-        this.choiceProcessor.put("Game Mode", "");
         this.choiceProcessor.put("Grid Size", "");
         this.choiceProcessor.put("Word", "_");
         this.choiceProcessor.put("choice", "_");
@@ -68,26 +64,6 @@ public class BoggleGame {
         this.commandCenter = CommandCenter.getInstance(window);
     }
 
-    /*
-     * Provide instructions to the user, so they know how to play the game.
-     */
-
-    // This is obsolete because of the How To Play screen
-    public void giveInstructions()
-    {
-        System.out.println("The Boggle board contains a grid of letters that are randomly placed.");
-        System.out.println("We're both going to try to find words in this grid by joining the letters.");
-        System.out.println("You can form a word by connecting adjoining letters on the grid.");
-        System.out.println("Two letters adjoin if they are next to each other horizontally, ");
-        System.out.println("vertically, or diagonally. The words you find must be at least 4 letters long, ");
-        System.out.println("and you can't use a letter twice in any single word. Your points ");
-        System.out.println("will be based on word length: a 4-letter word is worth 1 point, 5-letter");
-        System.out.println("words earn 2 points, and so on. After you find as many words as you can,");
-        System.out.println("I will find all the remaining words.");
-        System.out.println("\nHit return when you're ready...");
-    }
-
-
     /**
      * Gets information from the user to initialize a new Boggle game.
      * It will loop until the user indicates they are done playing.
@@ -95,23 +71,18 @@ public class BoggleGame {
     public void playGame() {
         int boardSize = 0;
         while(true){
-            String gameMode = choiceProcessor.get("Game Mode");
             String gridSize = choiceProcessor.get("Grid Size");
 
             //get grid size preference
 
-            if(gridSize.equals("four")) {
-                boardSize = 4;
-            } else if (gridSize.equals("five")) {
-                boardSize = 5;
-            } else if (gridSize.equals("six")){
-                boardSize = 6;
+            switch (gridSize) {
+                case "four" -> boardSize = 4;
+                case "five" -> boardSize = 5;
+                case "six" -> boardSize = 6;
             }
 
             if (!(gridSize.equals(""))) {
                 playRound(boardSize, randomizeLetters(boardSize));
-                System.out.println("pScore before summarizeRound(): " + BoggleStats.getInstance().pScore);
-                this.gameStats.summarizeRound();
                 this.gameStats.endRound();
                 this.choiceProcessor.put("Grid Size", "");
             }
@@ -121,26 +92,22 @@ public class BoggleGame {
                 }
             }
             if (this.choiceProcessor.get("choice").equals("Y")) {
-                BoggleStats.getInstance().playerWords.clear();
-                BoggleStats.getInstance().computerWords.clear();
-                BoggleStats.getInstance().pScore = 0;
-                BoggleStats.getInstance().cScore = 0;
+                BoggleStats.getInstance().getPlayerWords().clear();
+                BoggleStats.getInstance().getComputerWords().clear();
+                BoggleStats.getInstance().setPScore(0);
+                BoggleStats.getInstance().setCScore(0);
                 this.choiceProcessor.put("choice", "_");
             }
             //round is over! So, store the statistics, and end the round.
+
             //Shall we repeat?
-//            System.out.println("Play again? Type 'Y' or 'N'");
             if (this.choiceProcessor.get("choice").equals("N")) {
                 this.choiceProcessor.put("choice", "_");
                 break;
             }
-
-
         }
 
-        //we are done with the game! So, summarize all the play that has transpired and exit.
-        this.gameStats.summarizeGame();
-        System.out.println("Thanks for playing!");
+        this.gameStats.storeStats();
     }
 
     /**
@@ -148,11 +115,14 @@ public class BoggleGame {
      * This initializes the main objects: the board, the dictionary, the map of all
      * words on the board, and the set of words found by the user. These objects are
      * passed by reference from here to many other functions.
+     * @param size the width (and also height, since the board is square) of the boggle grid
+     * to be initialized
+     * @param letters the letters which should be assigned to each position of the boggle grid
      */
     public void playRound(int size, String letters) {
         //step 1. initialize the grid
         BoggleGrid grid = new BoggleGrid(size);
-        grid.initalizeBoard(letters);
+        grid.initializeBoard(letters);
         //step 2. initialize the dictionary of legal words
         Dictionary boggleDict = new Dictionary("wordlist.txt"); //you may have to change the path to the wordlist, depending on where you place it.
         //step 3. find all legal words on the board, given the dictionary and grid arrangement.
@@ -164,21 +134,16 @@ public class BoggleGame {
         commandCenter.handle(Id);
 
         //step 4. allow the user to try to find some words on the grid
-        humanMove(grid, allWords);
+        humanMove(allWords);
 //        //step 5. allow the computer to identify remaining words
         computerMove(allWords);
     }
 
     /**
-     * This method should return a String of letters (length 16 or 25 depending on the size of the grid).
-     * There will be one letter per grid position, and they will be organized left to right,
-     * top to bottom. A strategy to make this string of letters is as follows:
-     * -- Assign a one of the dice to each grid position (i.e. dice_big_grid or dice_small_grid)
-     * -- "Shuffle" the positions of the dice to randomize the grid positions they are assigned to
-     * -- Randomly select one of the letters on the given die at each grid position to determine
-     *    the letter at the given position
-     *
-     * @return String a String of random letters (length 16 or 25 depending on the size of the grid)
+     * This method returns a String of letters. There will be one letter per grid position,
+     * and they will be organized left to right, top to bottom.
+     * @return String a String of random letters (length 16, 25 or 36)
+     * depending on the size of the grid)
      */
     private String randomizeLetters(int size){
         List<String> four = Arrays.asList(four_by_four_grid);
@@ -217,42 +182,21 @@ public class BoggleGame {
         return "";
     }
 
-
     /**
-     * This should be a recursive function that finds all valid words on the boggle board.
+     * This is a recursive function that finds all valid words on the boggle board.
      * Every word should be valid (i.e. in the boggleDict) and of length 4 or more.
-     * Words that are found should be entered into the allWords HashMap.  This HashMap
+     * Words that are found are entered into the allWords HashMap. This HashMap
      * will be consulted as we play the game.
-     *
-     * Note that this function will be a recursive function.  You may want to write
-     * a wrapper for your recursion. Note that every legal word on the Boggle grid will correspond to
-     * a list of grid positions on the board, and that the Position class can be used to represent these
-     * positions. The strategy you will likely want to use when you write your recursion is as follows:
-     * -- At every Position on the grid:
-     * ---- add the Position of that point to a list of stored positions
-     * ---- if your list of stored positions is >= 4, add the corresponding word to the allWords Map
-     * ---- recursively search for valid, adjacent grid Positions to add to your list of stored positions.
-     * ---- Note that a valid Position to add to your list will be one that is either horizontal, diagonal, or
-     *      vertically touching the current Position
-     * ---- Note also that a valid Position to add to your list will be one that, in conjunction with those
-     *      Positions that precede it, form a legal PREFIX to a word in the Dictionary (this is important!)
-     * ---- Use the "isPrefix" method in the Dictionary class to help you out here!!
-     * ---- Positions that already exist in your list of stored positions will also be invalid.
-     * ---- You'll be finished when you have checked EVERY possible list of Positions on the board, to see
-     *      if they can be used to form a valid word in the dictionary.
-     * ---- Food for thought: If there are N Positions on the grid, how many possible lists of positions
-     *      might we need to evaluate?
-     *
      * @param allWords A mutable list of all legal words that can be found, given the boggleGrid grid letters
      * @param boggleDict A dictionary of legal words
      * @param boggleGrid A boggle grid, with a letter at each position on the grid
      */
     private void findAllWords(Map<String,ArrayList<Position>> allWords, Dictionary boggleDict, BoggleGrid boggleGrid) {
         String str = "";
-        boolean[][] tracker = new boolean[boggleGrid.numRows()][boggleGrid.numCols()];
+        boolean[][] tracker = new boolean[boggleGrid.getSize()][boggleGrid.getSize()];
 
-        for (int i = 0; i < boggleGrid.numRows(); i++)
-            for (int j = 0; j < boggleGrid.numCols(); j++)
+        for (int i = 0; i < boggleGrid.getSize(); i++)
+            for (int j = 0; j < boggleGrid.getSize(); j++)
                 traverse(allWords, boggleGrid, tracker, i, j, str, boggleDict);
     }
     /**
@@ -270,12 +214,12 @@ public class BoggleGame {
                            boolean[][] tracker, int row, int col,
                         String str, Dictionary boggleDict){
 
-        // create a arraylist to add the positions inside it and pass it into the allWords dict
+        // create an arraylist to add the positions inside it and pass it into the allWords dict
         ArrayList<Position> list = new ArrayList<>();
 
         // create attributes to loop through the total rows and cols and search the whole board for the word
-        int totalRows = boggle.numRows();
-        int totalCols = boggle.numCols();
+        int totalRows, totalCols;
+        totalRows = totalCols = boggle.getSize();
 
         // when the function gets called, we know we have already seen the particular position of the str
         tracker[row][col] = true;
@@ -317,32 +261,23 @@ public class BoggleGame {
      * If yes, add the word to the player's word list (in boggleStats) and increment
      * the player's score (in boggleStats).
      * End the turn once the user hits return (with no word).
-     *
-     * @param board The boggle board
-     * @param allWords A mutable list of all legal words that can be found, given the boggleGrid grid letters
+     * @param allWords A mutable list of all legal words that can be found,
+     * given the boggleGrid grid letters
      */
-    private void humanMove(BoggleGrid board, Map<String,ArrayList<Position>> allWords){
-        System.out.println("It's your turn to find some words!");
-//        Scanner sc = new Scanner(System.in);
+    private void humanMove(Map<String,ArrayList<Position>> allWords){
         Dictionary dict = new Dictionary("wordlist.txt");
         while(true) {
 
-//            System.out.println(board); Instead of printing this to the console, should be displayed
-//            System.out.println("Enter your word!");
             String word = this.choiceProcessor.get("Word");
 
             if (word.length() >= 4 && dict.containsWord(word) &&
                     !gameStats.getPlayerWords().contains(word) &&
                     allWords.containsKey(word.toUpperCase())){
-                System.out.println(word);
                 gameStats.addWord(word.toLowerCase(), BoggleStats.Player.Human);
                 commandCenter.handle("DisplayInGameStats; ");
 
-            }else {
-                if (!word.equals("")) {
-//                    System.out.println("Invalid Word! Sorry!");
-                }
             }
+
             if (choiceProcessor.get("Round Ended").equals("true")){
                 commandCenter.handle("DisplayRoundStats; ");
                 this.choiceProcessor.put("Round Ended", "false");
@@ -353,11 +288,9 @@ public class BoggleGame {
 
 
     /**
-     * Gets words from the computer.  The computer should find words that are
-     * both valid and not in the player's word list.  For each word that the computer
-     * finds, update the computer's word list and increment the
-     * computer's score (stored in boggleStats).
-     *
+     * Gets words from the computer. The computer should find words that are both valid
+     * and not in the player's word list.  For each word that the computer finds, update
+     * the computer's word list and increment the computer's score (stored in boggleStats).
      * @param all_words A mutable list of all legal words that can be found, given the boggleGrid grid letters
      */
     private void computerMove(Map<String,ArrayList<Position>> all_words){
@@ -369,15 +302,10 @@ public class BoggleGame {
     }
 
     /**
-     * This method checks if the game has received all the information necessary to begin.
-     * @return Returns true if the game is ready to begin and false otherwise
+     * This method checks whether the player has selected a grid size
+     * @return returns true if the player has selected a grid size and false otherwise
      */
-    public boolean ready() { // the game is ready to start iff the choiceProcessor is fully populated
-        for (String info : this.choiceProcessor.values()) { // go through each choice in choiceProcessor
-            if (info.equals("")) { // if a choice has not been made, the game is not ready to begin
-                return false;
-            }
-        }
-        return true; // if all choices have been made, the game is ready to start
+    public boolean gridSizeSelected() {
+        return !(choiceProcessor.get("Grid Size").equals(""));
     }
 }
