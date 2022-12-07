@@ -96,5 +96,4 @@
 [contributors-url]: https://github.com/hussaino03/CSC207-Project/graphs/contributors
 [issues-shield]: https://img.shields.io/github/issues/hussaino03/CSC207-Project?style=for-the-badge
 [issues-url]: https://github.com/hussaino03/CSC207-Project/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
 [product-screenshot]: loginpage.png
