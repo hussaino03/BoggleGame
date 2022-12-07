@@ -66,7 +66,7 @@
 * Each round statistics 
 * The game statistics, after the user chooses to end the current round 
 * How-to-play scene which briefly describes the game
-* Easy-access throughout different scenes with buttons either linking to main screen or the corresponding one 
+* Easy-access throughout different scenes with buttons either linking to main screen or the corresponding scene 
 
 ### Built With
 
