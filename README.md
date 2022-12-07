@@ -38,7 +38,7 @@
       </ul>
     </li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#usage">Team</a></li>
+    <li><a href="#team">Team</a></li>
   </ol>
 </details>
 
