@@ -13,7 +13,7 @@
   <h1 align="center">Boggle Game</h1>
 
   <p align="center">
-    A boggle game with a simple yet interactive User-Interface!
+    A boggle game with an interactive User-Interface and Real-Time In-Game Stats!
     <br>
     <br>
     <a href="https://github.com/hussaino03/CSC207-Project"><strong>Explore the docs »</strong></a>
@@ -52,26 +52,27 @@
 
 <!-- ABOUT THE PROJECT -->
 
-![image](demo.jpg)
-
-
-## Inspiration
-
-[insert text here]
-
-## What it does
-
-[insert text here]
+<p align="center">
+<img src="demo.png" width="600" height="600"  />
+</p>
 
 ### Features:
 
-* [Insert features]
+* Real-time stats for the current round the user is on
+* Grid Selection Scene (3 choices for grid sizes).
+* All-time stats page which gets updated with the user's stats written to a separate file, as well.
+* Accessibility Options (Keyboard based inputs/commands only).
+* Friendly and Interactive UI 
+* Each round statistics 
+* The game statistics, after the user chooses to end the current round 
+* How-to-play scene which briefly describes the game
+* Easy-access throughout different scenes with buttons either linking to main screen or the corresponding one 
 
 ### Built With
 
 * Java
-* JavaFx/Swing
-* Graphical User-Interface 
+* JavaFx
+* CSS
 
 <!-- GETTING STARTED -->
 # Getting Started
@@ -83,8 +84,10 @@
 <!-- ROADMAP -->
 ## Roadmap
 
-- [✅] [insert task]
-- [✅] [insert task]
+- [✅] [Sprint 1]
+- [✅] [Sprint 2]
+- [✅] [Sprint 3]
+- [✅] [Sprint 4]
 
 <!-- LICENSE -->
 ## License
