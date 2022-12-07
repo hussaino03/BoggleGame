@@ -148,9 +148,10 @@ public class GameWindow extends Application {
         Label normalGamemodeStats = new Label("Player Score: "+ game.gameStats.getPScore() + " | "+ "Round Number: " + (game.gameStats.getRound() + 1));
         Button goBackFromNormalGamemode = new Button("Return to Main Menu [R]");
         goBackFromNormalGamemode.setId("RedirectScreen; Main Scene");
-        Button endRound = new Button("End the Round [N]");
+        Button endRound = new Button("End the Round [ALT]");
         TextField inpWord = new TextField();
         inpWord.setPromptText("Input Here");
+        inpWord.requestFocus();
         HBox statsBar = new HBox();
         VBox buttonBar = new VBox();
         buttonBar.setAlignment(Pos.BOTTOM_RIGHT);
@@ -469,14 +470,15 @@ public class GameWindow extends Application {
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER) {
                     String word = inpWord.getText();
-                    if (word.length()==0) { // Do not handle empty words
+                    if (word.length() == 0) { // Do not handle empty words
                         return;
                     }
                     String Id = "UpdateUserChoice; Word, " + word;
                     inpWord.setText("");
                     commandCenter.handle(Id);
                 }
-                if (keyEvent.getCode() == KeyCode.N) {
+                if (keyEvent.getCode() == KeyCode.ALT) {
+                    inpWord.setFocusTraversable(false);
                     endRound.fire();
                 }
             }

@@ -45,6 +45,7 @@ public class DisplayGridElementsCommand implements Command {
                 }
                 boardLayout.setAlignment(Pos.CENTER); // Center the boggle board
                mainLayout.setCenter(boardLayout);
+               mainLayout.getBottom().requestFocus();
             });
         });
         t.start();

@@ -14,12 +14,12 @@ import src.*;
 /**
  * command.CommandCenter serves the purpose of an Invoker in the Command Design Pattern. The command.CommandCenter class is
  * responsible for processing events triggered by the user in the application. These events are encapsulated
- * into commands and executed within the command.CommandCenter.
+ * into commands and executed within the CommandCenter.
  */
 
 public class CommandCenter implements EventHandler<ActionEvent> {
     /**
-     * The application from which the command.CommandCenter processes events.
+     * The application from which the CommandCenter processes events.
      */
     private GameWindow gameWindow;
 
@@ -37,54 +37,13 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     private static CommandCenter instance = null;
 
     /**
-     * Constructor for the command.CommandCenter class. Initializes a comparator which determines the order of
-     * execution of commands, so that commandQueue can follow this order. The order is as follows:
-     * RedirectScreenCommand -> UpdateUserChoiceCommand -> StartGameCommand -> DisplayGridElementsCommand
-     * @param g The application from which command.CommandCenter should receive events to process.
+     * CommandCenter Constructor.
+     * @param g The application from which CommandCenter should receive events to process.
      */
     private CommandCenter(GameWindow g) {
-        /*
-        Initialize command.CommandCenter's attributes
-         */
         this.gameWindow = g;
-        this.commandComparator = new Comparator<Command>() {
-            @Override
-            public int compare(Command c1, Command c2) {
-                if (c1.getClass().equals(c2.getClass())) {
-                    return 0;
-                }
-                else if (c1 instanceof RedirectScreenCommand) {
-                    return -1;
-                }
-                else if (c1 instanceof UpdateUserChoiceCommand) {
-                    if (c2 instanceof RedirectScreenCommand) {
-                        return 1;
-                    }
-                    else if (c2 instanceof StartGameCommand) {
-                        return -1;
-                    }
-                    else if (c2 instanceof DisplayGridElementsCommand) {
-                        return -1;
-                    }
-                }
-                else if (c1 instanceof StartGameCommand) {
-                    if (c2 instanceof RedirectScreenCommand) {
-                        return 1;
-                    }
-                    else if (c2 instanceof UpdateUserChoiceCommand) {
-                        return 1;
-                    }
-                    else if (c2 instanceof DisplayGridElementsCommand) {
-                        return -1;
-                    }
-                }
-                else if (c1 instanceof DisplayGridElementsCommand) {
-                    return 1;
-                }
-                return 0;
-            }
-        };
-        commandQueue = new PriorityQueue<Command>(commandComparator);
+        commandComparator = generateComparator();
+        commandQueue = new PriorityQueue<>(commandComparator);
     }
 
     /**
@@ -157,7 +116,6 @@ public class CommandCenter implements EventHandler<ActionEvent> {
             this.processId(command, IdVariables, 0);
         }
         this.execute();
-
     }
 
     private void processId(String command, String[] IdVariables, int i) {
@@ -209,5 +167,39 @@ public class CommandCenter implements EventHandler<ActionEvent> {
             }
         return instance;
         }
+
+    /**
+     * Initializes a comparator which determines the order of execution of commands,
+     * so that commandQueue can follow this order. The order specifies which commands
+     * must happen before others.
+     * @return Comparator the comparator which commandQueue should use.
+     */
+
+    private Comparator<Command> generateComparator() {
+        return (c1, c2) -> {
+            if (c1.getClass().equals(c2.getClass())) {
+                return 0;
+            } else if (c1 instanceof RedirectScreenCommand) {
+                return -1;
+            } else if (c1 instanceof UpdateUserChoiceCommand) {
+                if (c2 instanceof RedirectScreenCommand) {
+                    return 1;
+                } else if (c2 instanceof StartGameCommand) {
+                    return -1;
+                } else if (c2 instanceof DisplayGridElementsCommand) {
+                    return -1;
+                }
+            } else if (c1 instanceof StartGameCommand) {
+                if (c2 instanceof RedirectScreenCommand) {
+                    return 1;
+                } else if (c2 instanceof UpdateUserChoiceCommand) {
+                    return 1;
+                } else if (c2 instanceof DisplayGridElementsCommand) {
+                    return -1;
+                }
+            }
+            return 0;
+        };
     }
+}
 
