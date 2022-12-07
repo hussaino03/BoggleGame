@@ -2,7 +2,6 @@
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
 
 <!-- PROJECT LOGO -->
 <br>
@@ -36,15 +35,10 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#team">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -89,15 +83,12 @@
 - [✅] Sprint 3
 - [✅] Sprint 4
 
-<!-- LICENSE -->
-## License
+## Team
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* [GitHub README.md template](https://github.com/othneildrew/Best-README-Template)
+* Hussain
+* Sebastian
+* Ved
+* Usman
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
@@ -106,5 +97,4 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [issues-shield]: https://img.shields.io/github/issues/hussaino03/CSC207-Project?style=for-the-badge
 [issues-url]: https://github.com/hussaino03/CSC207-Project/issues
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/hussaino03/CSC207-Project/blob/main/LICENSE.txt
 [product-screenshot]: loginpage.png
