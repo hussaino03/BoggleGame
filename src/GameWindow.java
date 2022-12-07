@@ -198,8 +198,8 @@ public class GameWindow extends Application {
         Text s = new Text();
         BoggleStats stats = BoggleStats.getInstance();
         r.setText("The total rounds played are: " + stats.getTotalRounds());
-        a.setText("The total score you have accumulated is: " + stats.pScoreAllTime);
-        s.setText("The average words per round are: " + stats.pAverageWordsAllTime);
+        a.setText("The total score you have accumulated is: " + stats.getPScoreAllTime());
+        s.setText("The average words per round are: " + stats.getPAvgWordsAllTime());
         VBox vbox = new VBox(5);
         vbox.getChildren().addAll(r,a,s);
         statsLayout.setCenter(vbox);
@@ -250,8 +250,8 @@ public class GameWindow extends Application {
 
         normalSummaryLayout.add(IntroText, 0, 4);
 
-        Label pscore = new Label(game.gameStats.PScore());
-        Label cscore = new Label(BoggleStats.getInstance().CScore());
+        Label pscore = new Label("Player Score for the Round: " + game.gameStats.getPScore());
+        Label cscore = new Label("Computer Score for the Round: " + BoggleStats.getInstance().getCScore());
         Label csize = new Label(BoggleStats.getInstance().computerwordsSize());
         Label psize = new Label(BoggleStats.getInstance().playerwordsSize());
         Label cwords = new Label(BoggleStats.getInstance().computerwords());

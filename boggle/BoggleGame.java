@@ -92,10 +92,10 @@ public class BoggleGame {
                 }
             }
             if (this.choiceProcessor.get("choice").equals("Y")) {
-                BoggleStats.getInstance().playerWords.clear();
-                BoggleStats.getInstance().computerWords.clear();
-                BoggleStats.getInstance().pScore = 0;
-                BoggleStats.getInstance().cScore = 0;
+                BoggleStats.getInstance().getPlayerWords().clear();
+                BoggleStats.getInstance().getComputerWords().clear();
+                BoggleStats.getInstance().setPScore(0);
+                BoggleStats.getInstance().setCScore(0);
                 this.choiceProcessor.put("choice", "_");
             }
             //round is over! So, store the statistics, and end the round.

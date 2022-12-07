@@ -175,31 +175,43 @@ public class CommandCenter implements EventHandler<ActionEvent> {
      * @return Comparator the comparator which commandQueue should use.
      */
 
+
     private Comparator<Command> generateComparator() {
-        return (c1, c2) -> {
-            if (c1.getClass().equals(c2.getClass())) {
+        Comparator<Command> comparator = new Comparator<Command>() {
+            @Override
+            public int compare(Command c1, Command c2) {
+                if (c1.getClass().equals(c2.getClass())) {
+                    return 0;
+                }
+                else if (c1 instanceof RedirectScreenCommand) {
+                    return -1;
+                }
+                else if (c1 instanceof UpdateUserChoiceCommand) {
+                    if (c2 instanceof RedirectScreenCommand) {
+                        return 1;
+                    } else if (c2 instanceof StartGameCommand) {
+                        return -1;
+                    } else if (c2 instanceof DisplayGridElementsCommand) {
+                        return -1;
+                    }
+                } else if (c1 instanceof StartGameCommand) {
+                    if (c2 instanceof RedirectScreenCommand) {
+                        return 1;
+                    } else if (c2 instanceof UpdateUserChoiceCommand) {
+                        return 1;
+                    } else if (c2 instanceof DisplayGridElementsCommand) {
+                        return -1;
+                    }
+                } else if (c1 instanceof DisplayGridElementsCommand ||
+                c1 instanceof DisplayRoundStatsCommand || c1 instanceof DisplayGameStatsCommand
+                || c1 instanceof DisplayInGameStatsCommand) {
+                    return 1;
+                }
                 return 0;
-            } else if (c1 instanceof RedirectScreenCommand) {
-                return -1;
-            } else if (c1 instanceof UpdateUserChoiceCommand) {
-                if (c2 instanceof RedirectScreenCommand) {
-                    return 1;
-                } else if (c2 instanceof StartGameCommand) {
-                    return -1;
-                } else if (c2 instanceof DisplayGridElementsCommand) {
-                    return -1;
-                }
-            } else if (c1 instanceof StartGameCommand) {
-                if (c2 instanceof RedirectScreenCommand) {
-                    return 1;
-                } else if (c2 instanceof UpdateUserChoiceCommand) {
-                    return 1;
-                } else if (c2 instanceof DisplayGridElementsCommand) {
-                    return -1;
-                }
             }
-            return 0;
         };
+
+        return comparator;
     }
 }
 

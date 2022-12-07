@@ -49,11 +49,11 @@ public class DisplayRoundStatsCommand implements Command{
                 HashSet cWords = (HashSet) statsMap.get("Computer Words");
 
 
-                Label pscore = new Label("Player Score: " + BoggleStats.getInstance().pScore);
-                Label cscore = new Label("Computer Score: " + BoggleStats.getInstance().cScore);
+                Label pscore = new Label("Player Score: " + BoggleStats.getInstance().getPScore());
+                Label cscore = new Label("Computer Score: " + BoggleStats.getInstance().getCScore());
                 Label csize = new Label("Number of Words Found By Computer: " + cNumWords);
-                Label psize = new Label("Number of Words Found By Player: " + BoggleStats.getInstance().playerWords.size());
-                Label pwords = new Label("Words Found By Player: " + BoggleStats.getInstance().playerWords);
+                Label psize = new Label("Number of Words Found By Player: " + BoggleStats.getInstance().getPlayerWords().size());
+                Label pwords = new Label("Words Found By Player: " + BoggleStats.getInstance().getPlayerWords());
                 Label cwords = new Label("Words Found By Computer: " + cWords);
 
                 cwords.setWrapText(true);

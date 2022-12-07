@@ -37,8 +37,8 @@ public class DisplayGameStatsCommand implements Command{
                 int numRounds = BoggleStats.getInstance().getRound();
 
                 Label numrounds = new Label("Total Number of Rounds Played: " + numRounds);
-                Label totalPScore = new Label("Total Score for Human is: " + BoggleStats.getInstance().pScoreTotal);
-                Label totalCScore = new Label("Total Score for Computer is: " + BoggleStats.getInstance().cScoreTotal);
+                Label totalPScore = new Label("Total Score for Human is: " + BoggleStats.getInstance().getPScoreTotal());
+                Label totalCScore = new Label("Total Score for Computer is: " + BoggleStats.getInstance().getCScoreTotal());
                 Label pAvgWords = new Label(
                         "Average Number of Words Found By Human: " + BoggleStats.getInstance().getStatsMap().get(
                                 "Player Average Words"));

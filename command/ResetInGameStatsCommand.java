@@ -17,10 +17,9 @@ public class ResetInGameStatsCommand implements Command{
      */
     @Override
     public void execute() {
-        BoggleStats.getInstance().playerWords.clear();
-        BoggleStats.getInstance().computerWords.clear();
-        BoggleStats.getInstance().pScore = 0;
-        BoggleStats.getInstance().cScore = 0;
-        BoggleStats.getInstance().round = 0;
+        BoggleStats.getInstance().clearWords();
+        BoggleStats.getInstance().setPScore(0);
+        BoggleStats.getInstance().setCScore(0);
+        BoggleStats.getInstance().setRound(0);
     }
 }
