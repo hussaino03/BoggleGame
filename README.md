@@ -82,7 +82,6 @@
 - [✅] Sprint 1
 - [✅] Sprint 2
 - [✅] Sprint 3
-- [✅] Sprint 4
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
