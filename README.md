@@ -40,7 +40,6 @@
       </ul>
     </li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#team">Team</a></li>
   </ol>
 </details>
 
@@ -84,13 +83,6 @@
 - [✅] Sprint 2
 - [✅] Sprint 3
 - [✅] Sprint 4
-
-## Team
-
-* Hussain
-* Sebastian
-* Ved
-* Usman
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
