@@ -2,7 +2,7 @@ import boggle.BoggleGame;
 import src.GameWindow;
 
 /**
- * The Main class for the first Assignment in CSC207, Fall 2022
+ * The Main class
  */
 public class Main {
     /**

@@ -82,20 +82,6 @@ public class CommandCenter implements EventHandler<ActionEvent> {
      * and process it directly, without needing to first convert an ActionEvent to a string
      * @param Id The id of the event to be processed
      */
-
-    /*
-    IDs should be of the following format:
-    "COMMANDS TO BE EXECUTED; COMMAND 1 INFO; COMMAND 2 INFO; ..."
-    COMMANDS TO BE EXECUTED -> "RedirectScreen, UpdateUserChoice, ..."
-    Info required by each command is as follows:
-        StartGame: no info ("")
-        DisplayStats: no info ("")
-        ResetStats: no info ("")
-        RedirectScreen: newScene ("Scene Name")
-        DisplayGridElements: letters ("letters")
-        UpdateUserChoice: choiceType, choice ("choiceType, choice")
-
-     */
     public void handle(String Id) {
         if (!(Id.contains("; "))) { // Ids of the wrong format should not be handled
             return;

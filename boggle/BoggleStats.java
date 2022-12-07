@@ -66,7 +66,13 @@ public class BoggleStats implements Serializable {
      * enumerable types of players (human or computer)
      */  
     public enum Player {
+        /**
+         * Represents a Human Player
+         */
         Human("Human"),
+        /**
+         * Represents the Computer
+         */
         Computer("Computer");
         private final String player;
         Player(final String player) {
@@ -179,6 +185,10 @@ public class BoggleStats implements Serializable {
 
     }
 
+    /**
+     * Generates a hashmap containing BoggleStats attributes
+     * @return HashMap a HashMap of BoggleStats attributes
+     */
     public HashMap<String, Object> getStatsMap() {
         HashMap<String, Object> scoreMap = new HashMap<>();
         scoreMap.put("Player Words", playerWords);
@@ -244,6 +254,10 @@ public class BoggleStats implements Serializable {
         this.pScore = score;
     }
 
+    /**
+     * Setter for round
+     * @param num the number to set this.round to
+     */
     public void setRound(int num){this.round = num;}
 
     /**
@@ -304,14 +318,16 @@ public class BoggleStats implements Serializable {
         return "The Average Number of Words Found by Computer: "+cAverageWords;
     }
 
-    /*
-     * @return Set<String> The player's word list
+    /**
+     * Getter for player words
+     * @return Set The player's word list
      */
     public Set<String> getPlayerWords() {
         return this.playerWords;
     }
-    /*
-     * @return Set<String> The player's word list
+    /**
+     * Getter for this.computerWords
+     * @return Set The player's word list
      */
     public Set<String> getComputerWords() {
         return this.computerWords;
@@ -337,15 +353,39 @@ public class BoggleStats implements Serializable {
         this.totalRounds = totalRounds;
     }
 
+    /**
+     * Getter for this.pScoreTotal
+     * @return int this.pScoreTotal
+     */
     public int getPScoreTotal(){return this.pScoreTotal;}
-
+    /**
+     * Getter for this.cScoreTotal
+     * @return int this.cScoreTotal
+     */
     public int getCScoreTotal(){return this.cScoreTotal;}
+    /**
+     * Getter for this.pAverageWordsAllTime
+     * @return int this.pAverageWordsAllTime
+     */
     public double getPAvgWordsAllTime(){return this.pAverageWordsAllTime;}
-
+    /**
+     * Setter for this.pAverageWordsAllTime
+     * @param avgWords the average number of words to set pAverageWordsAllTime to
+     */
     public void setPAvgWordsAllTime(double avgWords){this.pAverageWordsAllTime = avgWords;}
+    /**
+     * Getter for this.pScoreAllTime
+     * @return double this.PScoreAllTime
+     */
     public double getPScoreAllTime(){return this.pScoreAllTime;}
-
+    /**
+     * Setter for this.cScore
+     * @param score the score which this.cScore should be set to
+     */
     public void setCScore(int score){this.cScore = score;}
-
+    /**
+     * Setter for this.pScoreAllTime
+     * @param score the score which this.pScoreAllTime should be set to
+     */
     public void setPScoreAllTime(int score){this.pScoreAllTime = score;}
 }
