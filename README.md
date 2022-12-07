@@ -2,6 +2,8 @@
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Issues][issues-shield]][issues-url]
+[![GitHub pull-requests closed][PR-shield]][PR-url]
+
 
 <!-- PROJECT LOGO -->
 <br>
@@ -94,6 +96,8 @@
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/hussaino03/CSC207-Project?color=%23&style=for-the-badge
 [contributors-url]: https://github.com/hussaino03/CSC207-Project/graphs/contributors
-[issues-shield]: https://img.shields.io/github/issues/hussaino03/CSC207-Project?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues-closed/hussaino03/CSC207-Project?style=for-the-badge
 [issues-url]: https://github.com/hussaino03/CSC207-Project/issues
+[PR-url]: https://github.com/hussaino03/CSC207-Project/pulls
+[PR-shield]: https://img.shields.io/github/issues-pr-closed/hussaino03/CSC207-Project?style=for-the-badge
 [product-screenshot]: loginpage.png
