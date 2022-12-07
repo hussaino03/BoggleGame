@@ -23,8 +23,8 @@ public class BoggleGrid {
     }
 
     /**
-     * Assigns a letter in the string of letters to each grid position
-     * Letters are assigned left to right, top to bottom
+     * Assigns a letter in the string of letters to each grid position.
+     * Letters are assigned left to right, top to bottom.
      * @param letters a string of letters, one for each grid position.
      */
     public void initializeBoard(String letters) {

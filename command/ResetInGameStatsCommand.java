@@ -3,7 +3,7 @@ package command;
 import boggle.BoggleStats;
 
 /**
- * This command resets the stats for a given round before moving onto the next round/game.
+ * This command resets the stats for a given round before moving onto the next round or game.
  */
 
 public class ResetInGameStatsCommand implements Command{

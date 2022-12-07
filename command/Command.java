@@ -1,12 +1,12 @@
 package command;
 
 /**
- * The Command Interface forces the classes which implement the interface to override the execute() method to ensure
- * all such classes can polymorphically executed via the execute() method
+ * The Command Interface has an execute() method which is overriden by the classes that implement
+ * the Command Interface.
  */
 public interface Command {
     /**
-     * Abstract method to be implemented by classes which implement the Command Interface
+     * Abstract method to be overriden by classes which implement the Command Interface
      */
     void execute();
 }

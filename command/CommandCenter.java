@@ -12,7 +12,7 @@ import java.util.Comparator;
 import src.*;
 
 /**
- * command.CommandCenter serves the purpose of an Invoker in the Command Design Pattern. The command.CommandCenter class is
+ * CommandCenter serves the purpose of an Invoker in the Command Design Pattern. The CommandCenter class is
  * responsible for processing events triggered by the user in the application. These events are encapsulated
  * into commands and executed within the CommandCenter.
  */
@@ -24,7 +24,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     private GameWindow gameWindow;
 
     /**
-     * A queue of commands processed by the command.CommandCenter to be executed upon request.
+     * A queue of commands processed by the CommandCenter to be executed upon request.
      */
     public Queue<Command> commandQueue;
 
@@ -66,7 +66,7 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     }
 
     /**
-     * the handle() method processes events triggered by the user in the src.GameWindow application in order to
+     * the handle() method processes events triggered by the user in the GameWindow application in order to
      * encapsulate these events into specific commands
      * @param actionEvent the event that was set off (e.g. button was pressed)
      */
@@ -139,10 +139,10 @@ public class CommandCenter implements EventHandler<ActionEvent> {
     }
 
     /**
-     * Obtain an instance of CommandCenter. If no instance exists, create a new one
+     * Obtain an instance of CommandCenter. If no instance exists, create a new one.
      * Otherwise, obtain the same instance which already exists. This guarantees at most
      * one instance of CommandCenter exists at all times while the program runs. This is
-     * an implementation of the Singleton Design Pattern
+     * an implementation of the Singleton Design Pattern.
      * @param window the window which CommandCenter should transmit to and receive
      * commands from
      * @return CommandCenter the universal instance of CommandCenter

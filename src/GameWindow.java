@@ -62,14 +62,7 @@ public class GameWindow extends Application {
 
     /**
      * The start() method makes the window run
-     * Note that button IDs have the following format:
-     * "buttonName, transitionScene, choiceType, choice, gameState"
-     * buttonName refers to what button this is (e.g "Normal Mode")
-     * transitionScene refers to which scene to transition to (e.g. "Grid Selection Scene")
-     * choiceType refers to what kind of choice needs to be updated (e.g. "Game Mode")
-     * choice refers to the choice made by the user of a specific choiceType (e.g. "normal")
-     * gameState refers to how the gameState should be changed (e.g. "start")
-     * @param stage The game window to be displayed
+     * @param stage The stage on which the game window should be displayed
      * @throws Exception Thrown if game does not run
      */
     @Override
@@ -300,12 +293,11 @@ public class GameWindow extends Application {
 
         normalEndLayout.add(IntrText, 0, 3);
 
-        Label tRound = new Label(BoggleStats.getInstance().Totalround());
-        Label pscoreT = new Label(BoggleStats.getInstance().pScoreTotal());
-        Label cscoreT = new Label(BoggleStats.getInstance().cScoreTotal());
-        Label pAverage = new Label(BoggleStats.getInstance().pAverageWords());
-        Label cAverage = new Label(BoggleStats.getInstance().cAverageWords());
-
+        Label tRound = new Label("The Total Number of Rounds Played is: " + BoggleStats.getInstance().getRound());
+        Label pscoreT = new Label("The Total Score for The Human is: " + BoggleStats.getInstance().getPScoreTotal());
+        Label cscoreT = new Label("The Total Score for The Computer is: " + BoggleStats.getInstance().getCScoreTotal());
+        Label pAverage = new Label("The Average Number of Words Found by Human: " + BoggleStats.getInstance().getPAverageWords());
+        Label cAverage = new Label("The Average Number of Words Found by Computer: "+ BoggleStats.getInstance().getCAverageWords());
 
         normalEndLayout.add(tRound, 0, 5);
         normalEndLayout.add(pscoreT, 0, 6);

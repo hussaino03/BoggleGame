@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The BoggleStats class contains statistics related to game play Boggle
+ * The BoggleStats class contains statistics related to BoggleGame
  */
 
 public class BoggleStats implements Serializable {
@@ -158,11 +158,8 @@ public class BoggleStats implements Serializable {
     }
 
     /**
-     * End a given round.
-     * This will clear out the human and computer word lists, so we can begin again.
-     * The function will also update each player's total scores, average scores, and
-     * reset the current scores for each player to zero. Finally, this function
-     * increments the current round number by 1.
+     * End a given round. This function will update each player's total scores, average scores,
+     * and increment the current round number by 1.
      */
     public void endRound() {
 
@@ -218,15 +215,15 @@ public class BoggleStats implements Serializable {
         return "Computer Words: "+computerWords;
     }
     /**
-     * Getter for playerWords size
-     * @return playerWords size
+     * Getter for playerWords.size
+     * @return playerWords.size
      */
     public String playerwordsSize(){
         return "Number of Human Average Words: " + playerWords.size();
     }
     /**
-     * Getter for computerWords size
-     * @return computerWords size
+     * Getter for computerWords.size
+     * @return computerWords.size
      */
     public String computerwordsSize(){
         return "Number of Computer Average Words: "+computerWords.size();
@@ -283,39 +280,18 @@ public class BoggleStats implements Serializable {
     }
 
     /**
-     * Getter for total rounds
-     * @return round
-     */
-    public String Totalround(){
-        return "The Total Number of Rounds Played is: "+ round;
-    }
-    /**
-     * Getter for human total score
-     * @return pscoreTotal
-     */
-    public String pScoreTotal(){
-        return "The Total Score for Human is: "+pScoreTotal;
-    }
-    /**
-     * Getter for computer total score
-     * @return cScoreTotal
-     */
-    public String cScoreTotal(){
-        return "The Total Score for Computer is: "+cScoreTotal;
-    }
-    /**
      * Getter for player average words
      * @return pAverageWords
      */
-    public String pAverageWords(){
-        return "The Average Number of Words Found by Human: "+pAverageWords;
+    public double getPAverageWords(){
+        return this.pAverageWords;
     }
     /**
      * Getter for computer average words
      * @return cAverageWords
      */
-    public String cAverageWords(){
-        return "The Average Number of Words Found by Computer: "+cAverageWords;
+    public double getCAverageWords(){
+        return this.cAverageWords;
     }
 
     /**
