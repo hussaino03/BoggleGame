@@ -37,8 +37,8 @@
         <li><a href="#prerequisites">Prerequisites</a></li>
       </ul>
     </li>
-    <li><a href="#team">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#usage">Team</a></li>
   </ol>
 </details>
 
