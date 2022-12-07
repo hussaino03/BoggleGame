@@ -16,7 +16,14 @@ import java.util.Queue;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains the unit tests related to the src and command packages
+ */
 public class GameWindowTests {
+    /**
+     * GameWindowTests Constructor
+     */
+    public GameWindowTests(){}
     JFXPanel panel = new JFXPanel(); // a GUI element needs to be made before the tests can run
     @Test
     void blankButtonIdTest() {
@@ -79,14 +86,6 @@ public class GameWindowTests {
         assertEquals(q.poll().getClass(), DisplayGridElementsCommand.class);
     }
 
-    @Test
-    void initialScoreValues() {
-        GameWindow gameWindow = new GameWindow();
-        Assertions.assertEquals(0, gameWindow.getRoundScore());
-        Assertions.assertEquals(0, gameWindow.getCompScore());
-        Assertions.assertEquals(0, gameWindow.getTotalScore());
-        Assertions.assertEquals(0, gameWindow.getRoundNumber());
-    }
     /*
     Check whether instantiating command center several times always returns the same instance
      */

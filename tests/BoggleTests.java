@@ -13,7 +13,15 @@ import src.GameWindow;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains the unit tests related to the boggle package
+ */
 public class BoggleTests {
+
+    /**
+     * BoggleTests Constructor
+     */
+    public BoggleTests(){}
 
     //BoggleGame  Test
     @Test

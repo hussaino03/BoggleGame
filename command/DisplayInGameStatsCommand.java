@@ -11,17 +11,34 @@ import javafx.stage.Stage;
 import java.util.HashMap;
 
 /**
- * Display the most updated boggle score
+ * This command displays the BoggleStats attributes corresponding to the current round
+ * on the Normal Gamemode Screen
  */
 public class DisplayInGameStatsCommand implements Command {
-
+    /**
+     * the statsMap from which to get the displayed values
+     */
     HashMap<String, Object> statsMap;
+    /**
+     * the stage on which to display the statistics
+     */
     public Stage stage;
+
+    /**
+     * DisplayInGameStatsCommand Constructor
+     * @param map the statsMap from which to get the displayed values
+     * @param s the stage on which to display the statistics
+     */
 
     public DisplayInGameStatsCommand(HashMap<String, Object> map, Stage s) {
         this.statsMap =  map;
         this.stage = s;
     }
+
+    /**
+     * This command displays the BoggleStats attributes for the current round on the top of the
+     * Normal Gamemode Scene
+     */
     @Override
     public void execute() {
         BorderPane mainLayout = (BorderPane) stage.getScene().getRoot(); // get the layout of

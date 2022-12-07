@@ -16,16 +16,34 @@ import javafx.stage.Stage;
  * the letters in a grid
  */
 public class DisplayGridElementsCommand implements Command {
-
+    /**
+     * the letters to be displayed on the Boggle board in the GUI
+     */
     public String letters;
+    /**
+     * the width of the Boggle board to be displayed in the GUI
+     */
     public int gridWidth;
+    /**
+     * the stage on which to display the Boggle board
+     */
     public Stage stage;
 
+    /**
+     * DisplayGridElementsCommand Constructor
+     * @param l the letters to be displayed on the Boggle board in the GUI
+     * @param s the stage on which to display the Boggle board
+     */
     public DisplayGridElementsCommand(String l, Stage s) {
         this.letters = l;
         this.gridWidth = (int) Math.sqrt(l.length());
         this.stage = s;
     }
+
+    /**
+     * Generates a grid of buttons containing the characters in this.letters and displays
+     * them on the screen.
+     */
     @Override
     public void execute() {
         BorderPane mainLayout = (BorderPane) stage.getScene().getRoot(); // get the layout of

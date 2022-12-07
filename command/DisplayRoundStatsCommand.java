@@ -11,15 +11,32 @@ import javax.swing.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicReference;
-
+/**
+ * This command displays the round stats on the Round Summary Screen
+ */
 public class DisplayRoundStatsCommand implements Command{
+    /**
+     * the statsMap from which to get the displayed values
+     */
     HashMap<String, Object> statsMap;
+    /**
+     * the stage on which to display the statistics
+     */
     public Stage stage;
 
+    /**
+     * DisplayRoundStatsCommand Constructor
+     * @param map the statsMap from which to get the displayed values
+     * @param s the stage on which to display the statistics
+     */
     public DisplayRoundStatsCommand(HashMap<String, Object> map, Stage s) {
         this.statsMap =  map;
         this.stage = s;
     }
+    /**
+     * This method displays the round stats by replacing the labels on the Round Summary Screen
+     * with labels containing updated stats values.
+     */
     @Override
     public void execute() {
         GridPane normalSummaryLayout = (GridPane) stage.getScene().getRoot(); // get the layout of

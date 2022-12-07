@@ -13,14 +13,33 @@ import javafx.stage.Stage;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * This command displays the game stats on the Game Summary Screen
+ */
 public class DisplayGameStatsCommand implements Command{
+    /**
+     * the statsMap from which to get the displayed values
+     */
     HashMap<String, Object> statsMap;
+    /**
+     * the stage on which to display the statistics
+     */
     public Stage stage;
 
+    /**
+     * DisplayGameStatsCommand Constructor
+     * @param map the statsMap from which to get the displayed values
+     * @param s the stage on which to display the statistics
+     */
     public DisplayGameStatsCommand(HashMap<String, Object> map, Stage s) {
         this.statsMap =  map;
         this.stage = s;
     }
+
+    /**
+     * This method displays the game stats by replacing the labels on the Game Summary Screen
+     * with labels containing updated stats values.
+     */
     @Override
     public void execute() {
         GridPane normalSummaryLayout = (GridPane) stage.getScene().getRoot(); // get the layout of
@@ -34,9 +53,7 @@ public class DisplayGameStatsCommand implements Command{
                             node -> GridPane.getColumnIndex(node) == 0 && GridPane.getRowIndex(node) == row);
                 }
 
-                int numRounds = BoggleStats.getInstance().getRound();
-
-                Label numrounds = new Label("Total Number of Rounds Played: " + numRounds);
+                Label numrounds = new Label("Total Number of Rounds Played: " + BoggleStats.getInstance().getRound());
                 Label totalPScore = new Label("Total Score for Human is: " + BoggleStats.getInstance().getPScoreTotal());
                 Label totalCScore = new Label("Total Score for Computer is: " + BoggleStats.getInstance().getCScoreTotal());
                 Label pAvgWords = new Label(
