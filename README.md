@@ -84,10 +84,10 @@
 <!-- ROADMAP -->
 ## Roadmap
 
-- [✅] [Sprint 1]
-- [✅] [Sprint 2]
-- [✅] [Sprint 3]
-- [✅] [Sprint 4]
+- [✅] Sprint 1
+- [✅] Sprint 2
+- [✅] Sprint 3
+- [✅] Sprint 4
 
 <!-- LICENSE -->
 ## License
